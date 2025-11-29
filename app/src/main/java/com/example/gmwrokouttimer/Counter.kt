@@ -12,7 +12,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 @Composable
 fun Counter(
     // The viewModel() function gets an existing ViewModel instance or creates a new one
-    viewModel: AppViewModel = viewModel()
+//    viewModel: AppViewModel = viewModel()
+    viewModel: AppViewModel
 ) {
     Column(
         modifier = Modifier

@@ -1,5 +1,9 @@
 package com.example.gmwrokouttimer
 
+data class Exercise(val id: Int, val name: String, val image: String)
+
+//data class WorkoutSet(val id: Int, val name: String, val exercises: List<Exercise>)
+data class WorkoutSet(val id: Int, val name: String, val exerciseIdList: List<Int>)
 val sampleExercises = listOf(
     Exercise(1, "Push ups", "image"),
     Exercise(2, "Pull ups", "image"),

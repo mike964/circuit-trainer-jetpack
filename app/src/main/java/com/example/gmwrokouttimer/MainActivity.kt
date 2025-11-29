@@ -1,26 +1,22 @@
 package com.example.gmwrokouttimer
 
-import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.gmwrokouttimer.components.LocalGifExample
-import com.example.gmwrokouttimer.components.shared.GifImage
 import com.example.gmwrokouttimer.ui.theme.GMWrokoutTimerTheme
 
 class MainActivity : ComponentActivity() {
@@ -28,11 +24,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            val sampleMessages = listOf(
-                Message("Android", "Hey, check out Jetpack Compose!"),
-                Message("Developer", "Lists are super easy with LazyColumn."),
-                Message("Android", "And they are performant by default!")
-            )
+            val vm = viewModel<AppViewModel>()
+            val countdownVm = viewModel<CountdownViewModel>()
 
             GMWrokoutTimerTheme {
                 Surface(
@@ -53,9 +46,12 @@ class MainActivity : ComponentActivity() {
                         Text("Push Ups", Modifier.padding(4.dp))
 //                        GifImage()
                         LocalGifExample()
-//                        Counter()
+                        Counter(vm)
+//                        Button({ countdownVm.startPauseTimer() }) {
+//                            Text("+")
+//                        }
 //                        StopwatchScreen()
-                        CountdownScreen()
+                        CountdownScreen(countdownVm)
 
 //                        TimerOne(
 //                            totalTime = 100L * 1000L,
@@ -66,7 +62,7 @@ class MainActivity : ComponentActivity() {
 //                        )
 //                        BasicCountdownTimer()
 //                        MessageList(sampleMessages)
-                        WorkoutSetList(sampleWorkoutSets)
+                        WorkoutSetList(sampleWorkoutSets, countdownVm)
                     }
                 }
             }

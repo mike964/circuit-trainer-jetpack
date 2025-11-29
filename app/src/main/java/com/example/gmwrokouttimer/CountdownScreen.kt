@@ -24,7 +24,10 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
-fun CountdownScreen(viewModel: CountdownViewModel = viewModel()) {
+fun CountdownScreen(
+//    viewModel: CountdownViewModel = viewModel()
+    viewModel: CountdownViewModel
+) {
     val timeRemaining by viewModel.timeRemaining.collectAsState()
     val circuitNumber by viewModel.circuitNumber.collectAsState()
     val isRunning by viewModel.isRunning.collectAsState()
