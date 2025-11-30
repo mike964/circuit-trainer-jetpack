@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.gmwrokouttimer.components.PlayButton
 
 
 @Composable
@@ -76,10 +77,7 @@ fun WorkoutSetCard(item: WorkoutSet , vm:CountdownViewModel ) {
                     .weight(2f)
 //                    .background(Color.Cyan),
             ) {
-//                PlayButton()
-                Button({ vm.startPauseTimer() }) {
-                    Text("+")
-                }
+                PlayButton { vm.startPauseTimer() }
             }
         }
     }

@@ -14,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.gmwrokouttimer.components.LocalGifExample
@@ -43,10 +44,10 @@ class MainActivity : ComponentActivity() {
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
 
-                        Text("Push Ups", Modifier.padding(4.dp))
+                        Text(text = "Push Ups", fontWeight = FontWeight.Bold, modifier = Modifier.padding(4.dp))
 //                        GifImage()
                         LocalGifExample()
-                        Counter(vm)
+//                        Counter(vm)
 //                        Button({ countdownVm.startPauseTimer() }) {
 //                            Text("+")
 //                        }

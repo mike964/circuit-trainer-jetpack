@@ -10,9 +10,9 @@ import androidx.compose.ui.unit.dp
 import com.example.gmwrokouttimer.R
 
 @Composable
-fun PlayButton() {
+fun PlayButton(onClick:()->Unit) {
     // For a clickable icon (e.g., in a TopAppBar):
-    IconButton(onClick = { /* action */ }) {
+    IconButton(onClick ) {
         Icon(
 //            imageVector = Icons.Default.PlayArrow,
             painter = painterResource(id = R.drawable.play_circle_24dp),

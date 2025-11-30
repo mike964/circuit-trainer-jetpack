@@ -53,7 +53,6 @@ fun CountdownScreen(
             horizontalArrangement = Arrangement.spacedBy(16.dp),
                     modifier = Modifier
 //                    .fillMaxWidth()
-//                .height(60.dp)
 //                .background(Color.White)
                 .background(Color(0xFF101F56),  shape = RoundedCornerShape(46.dp))
                 .padding(horizontal = 16.dp , vertical = 12.dp)
