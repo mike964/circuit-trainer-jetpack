@@ -3,7 +3,7 @@ package com.example.gmwrokouttimer
 data class Exercise(val id: Int, val name: String, val image: String)
 
 //data class WorkoutSet(val id: Int, val name: String, val exercises: List<Exercise>)
-data class WorkoutSet(val id: Int, val name: String, val exerciseIdList: List<Int>)
+data class Preset(val id: Int, val name: String, val exerciseIdList: List<Int>)
 val sampleExercises = listOf(
     Exercise(1, "Push ups", "image"),
     Exercise(2, "Pull ups", "image"),
@@ -18,11 +18,11 @@ val sampleExercises = listOf(
     Exercise(11, "Dips", "image"),
     Exercise(12, "Stretch", "image"),
 )
-val sampleWorkoutSets = listOf(
-    WorkoutSet(1, "Morning 10 mins", listOf(1,2,3)),
-    WorkoutSet(2, "Upper Body Strength Circuit", listOf(2,3,4)),
-    WorkoutSet(3, "Gym Day A : Chest & Biceps", listOf(4,5,6)),
-    WorkoutSet(4, "Gym Day B : Back & Triceps", listOf(7,8,9)),
-    WorkoutSet(5, "Outdoor Park Training", listOf(12,11,2,3,4)),
-    WorkoutSet(6, "Burn Calories at Home", listOf(12,3,4,6, 1, 2))
+val sampleWorkoutPresets = listOf(
+    Preset(1, "Morning 10 mins", listOf(1,2,3)),
+    Preset(2, "Upper Body Strength Circuit", listOf(2,3,4)),
+    Preset(3, "Gym Day A : Chest & Biceps", listOf(4,5,6)),
+    Preset(4, "Gym Day B : Back & Triceps", listOf(7,8,9)),
+    Preset(5, "Outdoor Park Training", listOf(12,11,2,3,4)),
+    Preset(6, "Burn Calories at Home", listOf(12,3,4,6, 1, 2))
 )

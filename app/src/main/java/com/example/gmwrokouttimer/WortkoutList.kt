@@ -23,7 +23,7 @@ import com.example.gmwrokouttimer.components.PlayButton
 
 
 @Composable
-fun WorkoutsetList(items: List<WorkoutSet>, appVm: AppViewModel, countdownVm: CountdownViewModel) {
+fun WorkoutsetList(items: List<Preset>, appVm: AppViewModel, countdownVm: CountdownViewModel) {
     LazyColumn(modifier = Modifier.padding(4.dp)) {
         items(items, key = { item -> item.name }) { item ->
             WorkoutsetCard(item) {
@@ -36,7 +36,7 @@ fun WorkoutsetList(items: List<WorkoutSet>, appVm: AppViewModel, countdownVm: Co
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun WorkoutsetCard(item: WorkoutSet , onPlayClick :()->Unit ) {
+fun WorkoutsetCard(item: Preset , onPlayClick :()->Unit ) {
 
     Card(
         modifier = Modifier

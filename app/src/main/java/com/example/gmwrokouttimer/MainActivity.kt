@@ -29,7 +29,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             val appViewModel = viewModel<AppViewModel>()
             val countdownVm = viewModel<CountdownViewModel>()
-            val currentWorkoutsetId by appViewModel.currentWorkoutSetId.collectAsState()
+//            val isPaused by viewModel.isPaused.collectAsState()
+            val currentPreset = appViewModel.currentPreset
 
             GMWrokoutTimerTheme {
                 Surface(
@@ -47,7 +48,8 @@ class MainActivity : ComponentActivity() {
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
 
-                        Text(text = "Current Workout Set Id : $currentWorkoutsetId", fontWeight = FontWeight.Bold, modifier = Modifier.padding(4.dp))
+                        Text(text = "Preset Id : ${currentPreset.id}", fontWeight = FontWeight.Bold, modifier = Modifier.padding(4.dp))
+                        Text(text = "Preset Title : ${currentPreset.name}", fontWeight = FontWeight.Bold, modifier = Modifier.padding(4.dp))
                         Text(text = "Current Exercise : Push Ups", fontWeight = FontWeight.Bold, modifier = Modifier.padding(4.dp))
 //                        GifImage()
                         LocalGifExample()
@@ -67,7 +69,7 @@ class MainActivity : ComponentActivity() {
 //                        )
 //                        BasicCountdownTimer()
 //                        MessageList(sampleMessages)
-                        WorkoutsetList(sampleWorkoutSets,appViewModel, countdownVm)
+                        WorkoutsetList(appViewModel.workoutList,appViewModel, countdownVm)
                     }
                 }
             }

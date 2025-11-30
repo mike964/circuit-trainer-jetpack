@@ -85,7 +85,7 @@ fun CountdownScreen(
                 Text(text = "Reset")
             }
         }
-        Spacer(modifier = Modifier.height(4.dp))
+        Spacer(modifier = Modifier.height(8.dp))
         // # Show Work/Rest title when click start
         if (isRunning) {
             Text(
