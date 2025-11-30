@@ -13,12 +13,17 @@ import kotlinx.coroutines.launch
 class CountdownViewModel : ViewModel() {
 
     private val initialTimeSeconds = 10
-    private val initialCircuitsCount = 5
+    private val initialCircuitsCount = 4
+    private val initExerciseCounter = 1
     private val _timeRemaining = MutableStateFlow(initialTimeSeconds)
     private val _circuitsCount = MutableStateFlow(initialCircuitsCount)
+    // Get total number of work & rest circles
+    private val _circles = MutableStateFlow((initialCircuitsCount * 2) - 1)
+     val  exerciseCounter = MutableStateFlow(initExerciseCounter)
 
     val timeRemaining: StateFlow<Int> = _timeRemaining.asStateFlow()
     val circuitNumber: StateFlow<Int> = _circuitsCount.asStateFlow()
+    val circles: StateFlow<Int> = _circles.asStateFlow()
 
     private val _isRunning = MutableStateFlow(false)
     private val _isPaused = MutableStateFlow(false)
@@ -37,12 +42,13 @@ class CountdownViewModel : ViewModel() {
 
     private fun startTimer() {
         if (_timeRemaining.value > 0 && timerJob?.isActive != true) {
-
             _isRunning.value = true
             _isPaused.value = false
+
             timerJob = viewModelScope.launch {
 //                Log.d("xx", "Bitch..")
-                while (_circuitsCount.value > 0) {
+
+                while (_circles.value > 0) {
 //                    Log.d("xx", "while count..")
                     while (_timeRemaining.value > 0) {
 //                        Log.d("xx", "while time..")
@@ -53,7 +59,10 @@ class CountdownViewModel : ViewModel() {
 //                _isRunning.value = false
                     // Re-run timer
                     _timeRemaining.value = initialTimeSeconds
-                    _circuitsCount.value -= 1
+                    _circles.value -= 1
+                    if (!checkNumber(_circles.value)){
+                         exerciseCounter.value++
+                    }
 //                    Log.d("xx", "Circuit end..")
                 }
                 _isRunning.value = false
@@ -72,7 +81,7 @@ class CountdownViewModel : ViewModel() {
         _isRunning.value = false
         _isPaused.value = false
         _timeRemaining.value = initialTimeSeconds
-         _circuitsCount.value = initialCircuitsCount
+        _circuitsCount.value = initialCircuitsCount
     }
 
     // Ensure the job is cancelled when the ViewModel is cleared

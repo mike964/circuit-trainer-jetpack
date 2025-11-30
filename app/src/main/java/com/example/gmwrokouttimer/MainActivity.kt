@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.gmwrokouttimer.components.LocalGifExample
 import com.example.gmwrokouttimer.ui.theme.GMWrokoutTimerTheme
+import kotlin.math.abs
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,7 +31,10 @@ class MainActivity : ComponentActivity() {
             val appViewModel = viewModel<AppViewModel>()
             val countdownVm = viewModel<CountdownViewModel>()
 //            val isPaused by viewModel.isPaused.collectAsState()
+            val exerciseCounter by countdownVm.exerciseCounter.collectAsState()
             val currentPreset = appViewModel.currentPreset
+//            val currentExerciseId =   exerciseCounter-1
+            val currentExercise = getExerciseNameById(currentPreset.exerciseIdList[ exerciseCounter-1])
 
             GMWrokoutTimerTheme {
                 Surface(
@@ -48,9 +52,10 @@ class MainActivity : ComponentActivity() {
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
 
-                        Text(text = "Preset Id : ${currentPreset.id}", fontWeight = FontWeight.Bold, modifier = Modifier.padding(4.dp))
-                        Text(text = "Preset Title : ${currentPreset.name}", fontWeight = FontWeight.Bold, modifier = Modifier.padding(4.dp))
-                        Text(text = "Current Exercise : Push Ups", fontWeight = FontWeight.Bold, modifier = Modifier.padding(4.dp))
+//                        Text(text = "Preset Id : ${currentPreset.id}", fontWeight = FontWeight.Bold, modifier = Modifier.padding(4.dp))
+                        Text(text = "Preset : ${currentPreset.name}", fontWeight = FontWeight.Bold, modifier = Modifier.padding(4.dp))
+//                        Text(text = "Current Exercise ID : $currentExerciseId", fontWeight = FontWeight.Bold, modifier = Modifier.padding(4.dp))
+                        Text(text = "Current Exercise : $currentExercise", fontWeight = FontWeight.Bold, modifier = Modifier.padding(4.dp))
 //                        GifImage()
                         LocalGifExample()
 //                        Counter(vm)
