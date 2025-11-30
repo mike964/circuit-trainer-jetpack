@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,8 +27,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            val vm = viewModel<AppViewModel>()
+            val appViewModel = viewModel<AppViewModel>()
             val countdownVm = viewModel<CountdownViewModel>()
+            val currentWorkoutsetId by appViewModel.currentWorkoutSetId.collectAsState()
 
             GMWrokoutTimerTheme {
                 Surface(
@@ -44,7 +47,8 @@ class MainActivity : ComponentActivity() {
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
 
-                        Text(text = "Push Ups", fontWeight = FontWeight.Bold, modifier = Modifier.padding(4.dp))
+                        Text(text = "Current Workout Set Id : $currentWorkoutsetId", fontWeight = FontWeight.Bold, modifier = Modifier.padding(4.dp))
+                        Text(text = "Current Exercise : Push Ups", fontWeight = FontWeight.Bold, modifier = Modifier.padding(4.dp))
 //                        GifImage()
                         LocalGifExample()
 //                        Counter(vm)
@@ -63,7 +67,7 @@ class MainActivity : ComponentActivity() {
 //                        )
 //                        BasicCountdownTimer()
 //                        MessageList(sampleMessages)
-                        WorkoutSetList(sampleWorkoutSets, countdownVm)
+                        WorkoutsetList(sampleWorkoutSets,appViewModel, countdownVm)
                     }
                 }
             }

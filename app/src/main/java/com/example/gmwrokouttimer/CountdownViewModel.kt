@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 class CountdownViewModel : ViewModel() {
 
     private val initialTimeSeconds = 10
-    private val initialCircuitsCount = 3
+    private val initialCircuitsCount = 5
     private val _timeRemaining = MutableStateFlow(initialTimeSeconds)
     private val _circuitsCount = MutableStateFlow(initialCircuitsCount)
 
@@ -21,7 +21,9 @@ class CountdownViewModel : ViewModel() {
     val circuitNumber: StateFlow<Int> = _circuitsCount.asStateFlow()
 
     private val _isRunning = MutableStateFlow(false)
+    private val _isPaused = MutableStateFlow(false)
     val isRunning: StateFlow<Boolean> = _isRunning.asStateFlow()
+    val isPaused: StateFlow<Boolean> = _isPaused.asStateFlow()
 
     private var timerJob: Job? = null
 
@@ -37,6 +39,7 @@ class CountdownViewModel : ViewModel() {
         if (_timeRemaining.value > 0 && timerJob?.isActive != true) {
 
             _isRunning.value = true
+            _isPaused.value = false
             timerJob = viewModelScope.launch {
 //                Log.d("xx", "Bitch..")
                 while (_circuitsCount.value > 0) {
@@ -53,17 +56,21 @@ class CountdownViewModel : ViewModel() {
                     _circuitsCount.value -= 1
 //                    Log.d("xx", "Circuit end..")
                 }
+                _isRunning.value = false
             }
         }
     }
 
     private fun pauseTimer() {
         timerJob?.cancel()
+        _isPaused.value = true
         _isRunning.value = false
     }
 
     fun resetTimer() {
-        pauseTimer()
+        timerJob?.cancel()
+        _isRunning.value = false
+        _isPaused.value = false
         _timeRemaining.value = initialTimeSeconds
          _circuitsCount.value = initialCircuitsCount
     }

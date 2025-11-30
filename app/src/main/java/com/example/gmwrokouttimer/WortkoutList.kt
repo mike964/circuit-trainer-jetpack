@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
@@ -24,17 +23,21 @@ import com.example.gmwrokouttimer.components.PlayButton
 
 
 @Composable
-fun WorkoutSetList(items: List<WorkoutSet>, countdownVm: CountdownViewModel) {
+fun WorkoutsetList(items: List<WorkoutSet>, appVm: AppViewModel, countdownVm: CountdownViewModel) {
     LazyColumn(modifier = Modifier.padding(4.dp)) {
         items(items, key = { item -> item.name }) { item ->
-            WorkoutSetCard(item, countdownVm)
+            WorkoutsetCard(item) {
+//                appVm.setCurrentWorkoutsetId(item.id)
+                countdownVm.startPauseTimer()
+            }
         }
     }
 }
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun WorkoutSetCard(item: WorkoutSet , vm:CountdownViewModel ) {
+fun WorkoutsetCard(item: WorkoutSet , onPlayClick :()->Unit ) {
+
     Card(
         modifier = Modifier
             .padding(vertical = 4.dp, horizontal = 4.dp)
@@ -77,7 +80,7 @@ fun WorkoutSetCard(item: WorkoutSet , vm:CountdownViewModel ) {
                     .weight(2f)
 //                    .background(Color.Cyan),
             ) {
-                PlayButton { vm.startPauseTimer() }
+                PlayButton(onPlayClick)
             }
         }
     }

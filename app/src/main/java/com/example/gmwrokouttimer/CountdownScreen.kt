@@ -26,11 +26,21 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 @Composable
 fun CountdownScreen(
 //    viewModel: CountdownViewModel = viewModel()
-    viewModel: CountdownViewModel
+    viewModel: CountdownViewModel,
 ) {
     val timeRemaining by viewModel.timeRemaining.collectAsState()
     val circuitNumber by viewModel.circuitNumber.collectAsState()
     val isRunning by viewModel.isRunning.collectAsState()
+    val isPaused by viewModel.isPaused.collectAsState()
+
+    fun timerBgColor(): Long {
+//        val Purple40 = Color(0xFFD58812)
+        if (isRunning || isPaused){
+            return if (checkNumber(circuitNumber))  0xFFD58812
+            else 0xFF4ABE1A
+        }
+        return  0xFF101F56
+    }
 
     Column(
         modifier = Modifier
@@ -39,23 +49,22 @@ fun CountdownScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text("Round: $circuitNumber")
+        Text("Round: $circuitNumber of 3")
 
         Text(
             text = "Time left: $timeRemaining s",
-            fontSize =   30.sp
+            fontSize = 30.sp
         )
-
 
         Spacer(modifier = Modifier.height(12.dp))
 
         Row(
             horizontalArrangement = Arrangement.spacedBy(16.dp),
-                    modifier = Modifier
+            modifier = Modifier
 //                    .fillMaxWidth()
 //                .background(Color.White)
-                .background(Color(0xFF101F56),  shape = RoundedCornerShape(46.dp))
-                .padding(horizontal = 16.dp , vertical = 12.dp)
+                .background(Color(timerBgColor()), shape = RoundedCornerShape(46.dp))
+                .padding(horizontal = 16.dp, vertical = 12.dp)
         ) {
 //            Button(onClick = { viewModel.startPauseTimer() }) {
 //                Text(text = if (isRunning) "Pause" else "Start")
@@ -70,9 +79,32 @@ fun CountdownScreen(
                 )
             }
 
-            Button(onClick = { viewModel.resetTimer() }) {
+            Button(onClick = {
+                viewModel.resetTimer()
+            }) {
                 Text(text = "Reset")
             }
         }
+        Spacer(modifier = Modifier.height(4.dp))
+        // # Show Work/Rest title when click start
+        if (isRunning) {
+            Text(
+                text = (if (checkNumber(circuitNumber)) "REST" else "WORK")
+            )
+        } else if (isPaused) {
+            Text(
+                text = ("PAUSED")
+            )
+        }
     }
+
+
+
+
 }
+
+fun checkNumber(number: Int): Boolean {
+    // If number is even return true, else return false
+    return number % 2 == 0
+}
+
