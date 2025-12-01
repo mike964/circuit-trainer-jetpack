@@ -36,13 +36,10 @@ class AppViewModel : ViewModel() {
        _currentPreset.value =  getPresetById(presetId)
     }
 
-
-
     // # SIMPLE COUNTER
 // The state variable that holds the count value
     private var _count by mutableIntStateOf(0)
-    private var _currentWorkoutsetId =  MutableStateFlow(0)
-    val currentWorkoutSetId : StateFlow<Int> = _currentWorkoutsetId.asStateFlow()
+
     val count: Int
         get() = _count
 

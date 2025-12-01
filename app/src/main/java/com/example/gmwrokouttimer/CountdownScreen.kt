@@ -1,5 +1,6 @@
 package com.example.gmwrokouttimer
 
+import android.view.SoundEffectConstants
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -18,6 +19,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -28,8 +30,9 @@ fun CountdownScreen(
 //    viewModel: CountdownViewModel = viewModel()
     viewModel: CountdownViewModel,
 ) {
+    val view = LocalView.current
     val timeRemaining by viewModel.timeRemaining.collectAsState()
-    val circuitNumber by viewModel.circles.collectAsState()
+    val circle by viewModel.circles.collectAsState()
     val exerciseCounter by viewModel.exerciseCounter.collectAsState()
     val isRunning by viewModel.isRunning.collectAsState()
     val isPaused by viewModel.isPaused.collectAsState()
@@ -37,7 +40,7 @@ fun CountdownScreen(
     fun timerBgColor(): Long {
 //        val Purple40 = Color(0xFFD58812)
         if (isRunning || isPaused){
-            return if (checkNumber(circuitNumber))  0xFFD58812
+            return if (checkNumber(circle))  0xFFD58812
             else 0xFF4ABE1A
         }
         return  0xFF101F56
@@ -50,8 +53,7 @@ fun CountdownScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text("Circle: $circuitNumber")
-        Text("Exercise: $exerciseCounter")
+        Text("Round $exerciseCounter - $circle")
 
         Text(
             text = "Time left: $timeRemaining s",
@@ -63,15 +65,16 @@ fun CountdownScreen(
         Row(
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             modifier = Modifier
-//                    .fillMaxWidth()
-//                .background(Color.White)
                 .background(Color(timerBgColor()), shape = RoundedCornerShape(46.dp))
                 .padding(horizontal = 16.dp, vertical = 12.dp)
         ) {
 //            Button(onClick = { viewModel.startPauseTimer() }) {
 //                Text(text = if (isRunning) "Pause" else "Start")
 //            }
-            IconButton(onClick = { viewModel.startPauseTimer() }) {
+            IconButton(onClick = {
+                view.playSoundEffect(SoundEffectConstants.CLICK)
+                viewModel.startPauseTimer()
+            }) {
                 Icon(
 //                    imageVector = if (isRunning) Icons.Filled.Close else Icons.Filled.PlayArrow,
                     painter = painterResource(id = if (isRunning) R.drawable.pause_circle_24dp else R.drawable.play_circle),
@@ -91,7 +94,7 @@ fun CountdownScreen(
         // # Show Work/Rest title when click start
         if (isRunning) {
             Text(
-                text = (if (checkNumber(circuitNumber)) "REST" else "WORK")
+                text = (if (checkNumber(circle)) "REST" else "WORK")
             )
         } else if (isPaused) {
             Text(

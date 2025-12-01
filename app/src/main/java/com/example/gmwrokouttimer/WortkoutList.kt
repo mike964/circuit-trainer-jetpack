@@ -31,7 +31,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.gmwrokouttimer.components.PlayButton
-import kotlinx.coroutines.flow.StateFlow
 
 
 @Composable
@@ -46,6 +45,7 @@ fun WorkoutsetList(items: List<Preset>, appVm: AppViewModel, countdownVm: Countd
             WorkoutsetCard(item , selectedPresetId,  {
                 setSelectedPresetId(item.id)
                 appVm.setCurrentPreset(item.id)
+                countdownVm.setRoundsCount(item.exerciseIdList.size)
             }) {
 //                // onPlayClick() Lambda
                 countdownVm.startPauseTimer()

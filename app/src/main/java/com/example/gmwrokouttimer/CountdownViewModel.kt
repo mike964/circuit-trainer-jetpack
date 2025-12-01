@@ -1,6 +1,9 @@
 package com.example.gmwrokouttimer
 
 import android.util.Log
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Job
@@ -13,17 +16,19 @@ import kotlinx.coroutines.launch
 class CountdownViewModel : ViewModel() {
 
     private val initialTimeSeconds = 10
-    private val initialCircuitsCount = 4
+    // total rounds count same as total exercises in a preset
+    private var _roundsCount by mutableIntStateOf(6)
     private val initExerciseCounter = 1
     private val _timeRemaining = MutableStateFlow(initialTimeSeconds)
-    private val _circuitsCount = MutableStateFlow(initialCircuitsCount)
+
     // Get total number of work & rest circles
-    private val _circles = MutableStateFlow((initialCircuitsCount * 2) - 1)
+    private var _circles = MutableStateFlow((_roundsCount * 2) - 1)
      val  exerciseCounter = MutableStateFlow(initExerciseCounter)
 
+
     val timeRemaining: StateFlow<Int> = _timeRemaining.asStateFlow()
-    val circuitNumber: StateFlow<Int> = _circuitsCount.asStateFlow()
     val circles: StateFlow<Int> = _circles.asStateFlow()
+    val roundsCount: Int get() = _roundsCount
 
     private val _isRunning = MutableStateFlow(false)
     private val _isPaused = MutableStateFlow(false)
@@ -31,6 +36,11 @@ class CountdownViewModel : ViewModel() {
     val isPaused: StateFlow<Boolean> = _isPaused.asStateFlow()
 
     private var timerJob: Job? = null
+
+    fun setRoundsCount(x:Int){
+        _roundsCount = x
+        _circles.value = (x * 2) - 1
+    }
 
     fun startPauseTimer() {
         if (_isRunning.value) {
@@ -81,7 +91,6 @@ class CountdownViewModel : ViewModel() {
         _isRunning.value = false
         _isPaused.value = false
         _timeRemaining.value = initialTimeSeconds
-        _circuitsCount.value = initialCircuitsCount
     }
 
     // Ensure the job is cancelled when the ViewModel is cleared

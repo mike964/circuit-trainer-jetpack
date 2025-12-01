@@ -24,9 +24,9 @@ val sampleExercises = listOf(
 )
 val sampleWorkoutPresets = listOf(
     Preset(1, "Morning 10 mins", listOf(1,2,3)),
-    Preset(2, "Upper Body Strength Circuit", listOf(2,3,4)),
-    Preset(3, "Gym Day A : Chest & Biceps", listOf(4,5,6)),
-    Preset(4, "Gym Day B : Back & Triceps", listOf(7,8,9)),
+    Preset(2, "Full Body Strength", listOf(2,3,4)),
+    Preset(3, "Gym A - Chest & Biceps", listOf(4,5,6)),
+    Preset(4, "Gym B - Back & Triceps", listOf(7,8,9)),
     Preset(5, "Outdoor Park Training", listOf(12,11,2,3,4)),
     Preset(6, "Burn Calories at Home", listOf(12,3,4,6, 1, 2))
 )
