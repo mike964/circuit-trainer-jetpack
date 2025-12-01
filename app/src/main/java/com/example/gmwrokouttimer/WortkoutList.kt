@@ -1,12 +1,9 @@
 package com.example.gmwrokouttimer
 
 import android.util.Log
-import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -22,26 +19,34 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.innerShadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.shadow.Shadow
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.gmwrokouttimer.components.PlayButton
+import kotlinx.coroutines.flow.StateFlow
 
 
 @Composable
 fun WorkoutsetList(items: List<Preset>, appVm: AppViewModel, countdownVm: CountdownViewModel) {
+
+    val currentPreset by appVm.currentPreset.collectAsState()
+    var selectedPresetId by remember { mutableIntStateOf(currentPreset.id) }
+    fun setSelectedPresetId(id:Int){ selectedPresetId = id}
+
     LazyColumn(modifier = Modifier.padding(4.dp)) {
         items(items, key = { item -> item.id }) { item ->
-            WorkoutsetCard(item, { appVm.setCurrentPreset(item.id) }) {
+            WorkoutsetCard(item , selectedPresetId,  {
+                setSelectedPresetId(item.id)
+                appVm.setCurrentPreset(item.id)
+            }) {
 //                // onPlayClick() Lambda
                 countdownVm.startPauseTimer()
             }
@@ -51,11 +56,10 @@ fun WorkoutsetList(items: List<Preset>, appVm: AppViewModel, countdownVm: Countd
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun WorkoutsetCard(item: Preset, onCardClick: () -> Unit, onPlayClick: () -> Unit) {
-    val interactionSource = remember { MutableInteractionSource() }
-    val isPressed by interactionSource.collectIsPressedAsState()
+fun WorkoutsetCard(item: Preset,selectedPresetId:Int,   onCardClick: () -> Unit, onPlayClick: () -> Unit) {
     // State to track if the row is selected
-    var isSelected by remember { mutableStateOf(false) }
+//    var isSelected by remember { mutableStateOf(false) }
+    val isSelected: Boolean = (selectedPresetId == item.id)
 
     // Define border properties based on the condition
     val borderColor = if (isSelected) Color(0xFF5E5E60) else Color.Gray
@@ -76,13 +80,13 @@ fun WorkoutsetCard(item: Preset, onCardClick: () -> Unit, onPlayClick: () -> Uni
                 .border(
                     border = BorderStroke(
                         width = borderWidth,
-                        color =borderColor
+                        color = borderColor
                     ),
                     shape = RoundedCornerShape(12.dp)
                 )
                 .clickable {
                     Log.d("xx", "Clicked..")
-                    isSelected = !isSelected
+//                    isSelected = !isSelected
                     onCardClick()
                 }
         ) {
