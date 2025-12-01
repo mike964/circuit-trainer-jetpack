@@ -1,5 +1,9 @@
 package com.example.gmwrokouttimer
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+
 data class Exercise(val id: Int, val name: String, val image: String)
 
 //data class WorkoutSet(val id: Int, val name: String, val exercises: List<Exercise>)
@@ -26,3 +30,20 @@ val sampleWorkoutPresets = listOf(
     Preset(5, "Outdoor Park Training", listOf(12,11,2,3,4)),
     Preset(6, "Burn Calories at Home", listOf(12,3,4,6, 1, 2))
 )
+fun getExerciseNameById(id: Int): String {
+    val result = sampleExercises.filter { it.id == id }
+    return result[0].name
+}
+fun getPresetById(id: Int): Preset {
+    val result = sampleWorkoutPresets.filter { it.id == id }
+    return result[0]
+}
+
+@Composable
+fun StringListDisplay(items: List<String>) {
+    Column { // or Row, Box, etc.
+        for (name in items) {
+            Text(name)
+        }
+    }
+}

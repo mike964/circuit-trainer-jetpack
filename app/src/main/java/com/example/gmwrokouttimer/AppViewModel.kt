@@ -1,6 +1,7 @@
 package com.example.gmwrokouttimer
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -19,7 +20,8 @@ class AppViewModel : ViewModel() {
     // The internal, mutable list (private)
     private val _workoutList = mutableStateListOf<Preset>()
     // # Current Selected Workout preset
-     var currentPreset by mutableStateOf( Preset(1, "Morning 10 mins", listOf(1,2,3)))
+     private var _currentPreset: MutableStateFlow<Preset> = MutableStateFlow( Preset(1, "Morning 10 mins", listOf(1,2,3)))
+    val  currentPreset: StateFlow<Preset> = _currentPreset.asStateFlow()
 
     // The public, immutable list for the UI to observe
     val workoutList: List<Preset> get() = _workoutList
@@ -28,11 +30,18 @@ class AppViewModel : ViewModel() {
         // Initialize with some dummy data
         _workoutList.addAll( sampleWorkoutPresets)
     }
+
+    fun setCurrentPreset(presetId:Int){
+        Log.d("xx", getPresetById(presetId).toString())
+       _currentPreset.value =  getPresetById(presetId)
+    }
+
+
+
     // # SIMPLE COUNTER
 // The state variable that holds the count value
     private var _count by mutableIntStateOf(0)
     private var _currentWorkoutsetId =  MutableStateFlow(0)
-    private var _currentWorkoutsetExerciseCount by mutableIntStateOf(0)
     val currentWorkoutSetId : StateFlow<Int> = _currentWorkoutsetId.asStateFlow()
     val count: Int
         get() = _count
@@ -40,9 +49,6 @@ class AppViewModel : ViewModel() {
     // Function to increment the counter
     fun incrementCount() {
         _count++
-    }
-    fun setCurrentWorkoutsetId(id:Int){
-        _currentWorkoutsetId.value = id
     }
 
     // Function to decrement the counter (optional)

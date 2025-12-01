@@ -32,7 +32,7 @@ class MainActivity : ComponentActivity() {
             val countdownVm = viewModel<CountdownViewModel>()
 //            val isPaused by viewModel.isPaused.collectAsState()
             val exerciseCounter by countdownVm.exerciseCounter.collectAsState()
-            val currentPreset = appViewModel.currentPreset
+            val currentPreset by appViewModel.currentPreset.collectAsState()
 //            val currentExerciseId =   exerciseCounter-1
             val currentExercise = getExerciseNameById(currentPreset.exerciseIdList[ exerciseCounter-1])
 

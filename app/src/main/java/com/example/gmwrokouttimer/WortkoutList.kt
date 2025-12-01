@@ -1,5 +1,7 @@
 package com.example.gmwrokouttimer
 
+import android.util.Log
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -25,9 +27,9 @@ import com.example.gmwrokouttimer.components.PlayButton
 @Composable
 fun WorkoutsetList(items: List<Preset>, appVm: AppViewModel, countdownVm: CountdownViewModel) {
     LazyColumn(modifier = Modifier.padding(4.dp)) {
-        items(items, key = { item -> item.name }) { item ->
-            WorkoutsetCard(item) {
-//                appVm.setCurrentWorkoutsetId(item.id)
+        items(items, key = { item -> item.id }) { item ->
+            WorkoutsetCard(item, { appVm.setCurrentPreset(item.id) }) {
+//                // onPlayClick() Lambda
                 countdownVm.startPauseTimer()
             }
         }
@@ -36,7 +38,7 @@ fun WorkoutsetList(items: List<Preset>, appVm: AppViewModel, countdownVm: Countd
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun WorkoutsetCard(item: Preset , onPlayClick :()->Unit ) {
+fun WorkoutsetCard(item: Preset ,onCardClick:()->Unit, onPlayClick :()->Unit ) {
 
     Card(
         modifier = Modifier
@@ -50,6 +52,10 @@ fun WorkoutsetCard(item: Preset , onPlayClick :()->Unit ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
+                .clickable{
+                    Log.d("xx", "Clicked..")
+                    onCardClick()
+                }
         ) {
             Column(modifier = Modifier
                 .padding(12.dp)
@@ -86,16 +92,3 @@ fun WorkoutsetCard(item: Preset , onPlayClick :()->Unit ) {
     }
 }
 
-fun getExerciseNameById(id: Int): String {
-    val result = sampleExercises.filter { it.id == id }
-    return result[0].name
-}
-
-@Composable
-fun StringListDisplay(items: List<String>) {
-    Column { // or Row, Box, etc.
-        for (name in items) {
-            Text(name)
-        }
-    }
-}
