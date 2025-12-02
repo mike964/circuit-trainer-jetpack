@@ -17,18 +17,19 @@ class CountdownViewModel : ViewModel() {
 
     private val initialTimeSeconds = 10
     // total rounds count same as total exercises in a preset
-    private var _roundsCount by mutableIntStateOf(6)
+    private val _roundsCount = MutableStateFlow(1)
     private val initExerciseCounter = 1
     private val _timeRemaining = MutableStateFlow(initialTimeSeconds)
 
     // Get total number of work & rest circles
-    private var _circles = MutableStateFlow((_roundsCount * 2) - 1)
+    private var _circles = MutableStateFlow((_roundsCount.value * 2) - 1)
      val  exerciseCounter = MutableStateFlow(initExerciseCounter)
 
 
     val timeRemaining: StateFlow<Int> = _timeRemaining.asStateFlow()
     val circles: StateFlow<Int> = _circles.asStateFlow()
-    val roundsCount: Int get() = _roundsCount
+    // Public immutable state for the UI to observe
+    val rounds: StateFlow<Int> = _roundsCount.asStateFlow()
 
     private val _isRunning = MutableStateFlow(false)
     private val _isPaused = MutableStateFlow(false)
@@ -38,7 +39,7 @@ class CountdownViewModel : ViewModel() {
     private var timerJob: Job? = null
 
     fun setRoundsCount(x:Int){
-        _roundsCount = x
+        _roundsCount.value = x
         _circles.value = (x * 2) - 1
     }
 
@@ -91,6 +92,8 @@ class CountdownViewModel : ViewModel() {
         _isRunning.value = false
         _isPaused.value = false
         _timeRemaining.value = initialTimeSeconds
+        exerciseCounter.value = 1
+        _circles.value = (_roundsCount.value * 2) - 1
     }
 
     // Ensure the job is cancelled when the ViewModel is cleared

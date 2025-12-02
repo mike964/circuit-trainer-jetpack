@@ -45,18 +45,18 @@ fun CountdownScreen(
         }
     }
     val timeRemaining by viewModel.timeRemaining.collectAsState()
-    val circle by viewModel.circles.collectAsState()
+    val circles by viewModel.circles.collectAsState()
     val exerciseCounter by viewModel.exerciseCounter.collectAsState()
     val isRunning by viewModel.isRunning.collectAsState()
     val isPaused by viewModel.isPaused.collectAsState()
 
     fun timerBgColor(): Long {
 //        val Purple40 = Color(0xFFD58812)
-        if (isRunning || isPaused){
-            return if (checkEvenNumber(circle))  0xFFD58812
+        if (isRunning || isPaused) {
+            return if (checkEvenNumber(circles)) 0xFFD58812
             else 0xFF4ABE1A
         }
-        return  0xFF101F56
+        return 0xFF101F56
     }
 
     Column(
@@ -66,20 +66,29 @@ fun CountdownScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text("Round $exerciseCounter / $circle")
 
-        Text(
-            text = "Time left: $timeRemaining s",
-            fontSize = 30.sp
-        )
-
-        Spacer(modifier = Modifier.height(12.dp))
+//        Text(   text = "Left : $timeRemaining sec"   )
+        // # Show Work/Rest title when click start
+        if (isRunning) {
+            Text(
+                text = (if (checkEvenNumber(circles)) "REST" else "WORK")
+            )
+        } else {
+            if (isPaused) Text("PAUSED")
+            if (exerciseCounter == 1) Text("Select a Plan and click Start")
+        }
+        if (circles == 0 && exerciseCounter > 1) {
+            Text(
+                text = ("Finished. Good Job 💪😁")
+            )
+        }
+        Spacer(Modifier.height(8.dp))
 
         Row(
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             modifier = Modifier
                 .background(Color(timerBgColor()), shape = RoundedCornerShape(46.dp))
-                .padding(horizontal = 16.dp, vertical = 12.dp)
+                .padding(horizontal = 16.dp, vertical = 8.dp)
         ) {
 //            Button(onClick = { viewModel.startPauseTimer() }) {
 //                Text(text = if (isRunning) "Pause" else "Start")
@@ -103,25 +112,9 @@ fun CountdownScreen(
                 Text(text = "Reset")
             }
         }
-        Spacer(modifier = Modifier.height(8.dp))
-        // # Show Work/Rest title when click start
-        if (isRunning) {
-            Text(
-                text = (if (checkEvenNumber(circle)) "REST" else "WORK")
-            )
-        } else if (isPaused) {
-            Text(
-                text = ("PAUSED")
-            )
-        }
-        if (circle == 0) {
-            Text(
-                text = ("Finished. Good Job 💪😁")
-            )
-        }
+        Text("Round $exerciseCounter / $circles")
+
     }
-
-
 
 
 }
