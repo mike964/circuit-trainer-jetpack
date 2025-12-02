@@ -14,11 +14,14 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -30,7 +33,17 @@ fun CountdownScreen(
 //    viewModel: CountdownViewModel = viewModel()
     viewModel: CountdownViewModel,
 ) {
-    val view = LocalView.current
+    val context = LocalContext.current
+    // Initialize the SoundManager and handle its lifecycle
+    val soundManager = remember {
+        SoundManager(context)
+    }
+    // Ensure the soundPool is released when the screen is disposed
+    DisposableEffect(Unit) {
+        onDispose {
+            soundManager.release()
+        }
+    }
     val timeRemaining by viewModel.timeRemaining.collectAsState()
     val circle by viewModel.circles.collectAsState()
     val exerciseCounter by viewModel.exerciseCounter.collectAsState()
@@ -40,7 +53,7 @@ fun CountdownScreen(
     fun timerBgColor(): Long {
 //        val Purple40 = Color(0xFFD58812)
         if (isRunning || isPaused){
-            return if (checkNumber(circle))  0xFFD58812
+            return if (checkEvenNumber(circle))  0xFFD58812
             else 0xFF4ABE1A
         }
         return  0xFF101F56
@@ -53,7 +66,7 @@ fun CountdownScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text("Round $exerciseCounter - $circle")
+        Text("Round $exerciseCounter / $circle")
 
         Text(
             text = "Time left: $timeRemaining s",
@@ -72,7 +85,7 @@ fun CountdownScreen(
 //                Text(text = if (isRunning) "Pause" else "Start")
 //            }
             IconButton(onClick = {
-                view.playSoundEffect(SoundEffectConstants.CLICK)
+                soundManager.playClickSound()
                 viewModel.startPauseTimer()
             }) {
                 Icon(
@@ -94,11 +107,16 @@ fun CountdownScreen(
         // # Show Work/Rest title when click start
         if (isRunning) {
             Text(
-                text = (if (checkNumber(circle)) "REST" else "WORK")
+                text = (if (checkEvenNumber(circle)) "REST" else "WORK")
             )
         } else if (isPaused) {
             Text(
                 text = ("PAUSED")
+            )
+        }
+        if (circle == 0) {
+            Text(
+                text = ("Finished. Good Job 💪😁")
             )
         }
     }
@@ -108,7 +126,7 @@ fun CountdownScreen(
 
 }
 
-fun checkNumber(number: Int): Boolean {
+fun checkEvenNumber(number: Int): Boolean {
     // If number is even return true, else return false
     return number % 2 == 0
 }

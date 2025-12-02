@@ -70,7 +70,7 @@ class CountdownViewModel : ViewModel() {
                     // Re-run timer
                     _timeRemaining.value = initialTimeSeconds
                     _circles.value -= 1
-                    if (!checkNumber(_circles.value)){
+                    if (!checkEvenNumber(_circles.value)){
                          exerciseCounter.value++
                     }
 //                    Log.d("xx", "Circuit end..")
