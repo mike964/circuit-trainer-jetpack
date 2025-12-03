@@ -105,7 +105,7 @@ fun WorkoutsetCard(item: Preset,selectedPresetId:Int,   onCardClick: () -> Unit,
                 ) {
                     for (exercise in item.exerciseIdList) {
                         Text(
-                            "${getExerciseNameById(exercise)}, ",
+                            "${getExerciseById(exercise).name}, ",
                             color = Color(0xFF787C85)
                         )
                     }

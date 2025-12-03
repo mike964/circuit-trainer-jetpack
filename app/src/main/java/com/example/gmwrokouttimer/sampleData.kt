@@ -2,25 +2,26 @@ package com.example.gmwrokouttimer
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import com.example.gmwrokouttimer.R
+import androidx.compose.ui.unit.dp
 
-data class Exercise(val id: Int, val name: String, val image: String)
-
+data class Exercise(val id: Int, val name: String, val imageId: Int)
 //data class WorkoutSet(val id: Int, val name: String, val exercises: List<Exercise>)
 data class Preset(val id: Int, val name: String, val exerciseIdList: List<Int>)
+data class LocalImage(val id: Int, val contentDescription: String)
 val sampleExercises = listOf(
-    Exercise(1, "Push ups", "image"),
-    Exercise(2, "Pull ups", "image"),
-    Exercise(3, "Jump rope", "image"),
-    Exercise(4, "Squats", "image"),
-    Exercise(5, "Lat raise", "image"),
-    Exercise(6, "Hammer press", "image"),
-    Exercise(7, "Bicep Curl", "image"),
-    Exercise(8, "Chest Fly", "image"),
-    Exercise(9, "Triceps Ext", "image"),
-    Exercise(10, "Shrugs", "image"),
-    Exercise(11, "Dips", "image"),
-    Exercise(12, "Stretch", "image"),
+    Exercise(1, "Push ups", R.drawable.lat_raise),
+    Exercise(2, "Pull ups", R.drawable.arm_circles),
+    Exercise(3, "Jump rope", R.drawable.bicycle_ab),
+    Exercise(4, "Squats", R.drawable.st_shoulder_press),
+    Exercise(5, "Lat raise", R.drawable.bicycle_ab),
+    Exercise(6, "Hammer press", R.drawable.burpees),
+    Exercise(7, "Bicep Curl", R.drawable.db_lunge),
+    Exercise(8, "Chest Fly", R.drawable.high_knees),
+    Exercise(9, "Triceps Ext", R.drawable.high_knees),
+    Exercise(10, "Shrugs", R.drawable.jump_squat),
+    Exercise(11, "Dips", R.drawable.jump_squat),
+    Exercise(12, "Stretch", R.drawable.side_bends),
 )
 val sampleWorkoutPresets = listOf(
     Preset(1, "Morning 10 mins", listOf(1,2,3)),
@@ -30,20 +31,27 @@ val sampleWorkoutPresets = listOf(
     Preset(5, "Outdoor Park Training", listOf(12,11,2,3,4)),
     Preset(6, "Burn Calories at Home", listOf(12,3,4,6, 1, 2))
 )
-fun getExerciseNameById(id: Int): String {
+
+val exerciseImages = listOf(
+    LocalImage(id = R.drawable.lat_raise, contentDescription = "Description for image one"),
+    LocalImage(id = R.drawable.inc_pushup, contentDescription = "Description for image two"),
+    LocalImage(id = R.drawable.side_bends, contentDescription = "Description for image three"),
+    // Add more images as needed
+)
+fun getExerciseById(id: Int): Exercise {
     val result = sampleExercises.filter { it.id == id }
-    return result[0].name
+    return result[0]
 }
 fun getPresetById(id: Int): Preset {
     val result = sampleWorkoutPresets.filter { it.id == id }
     return result[0]
 }
 
-@Composable
-fun StringListDisplay(items: List<String>) {
-    Column { // or Row, Box, etc.
-        for (name in items) {
-            Text(name)
-        }
-    }
-}
+//@Composable
+//fun StringListDisplay(items: List<String>) {
+//    Column { // or Row, Box, etc.
+//        for (name in items) {
+//            Text(name)
+//        }
+//    }
+//}

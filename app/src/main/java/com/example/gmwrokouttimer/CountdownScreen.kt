@@ -74,7 +74,7 @@ fun CountdownScreen(
                 text = (if (checkEvenNumber(circles)) "REST" else "WORK")
             )
         } else {
-            if (isPaused) Text("PAUSED")
+            if (isPaused) Text("PAUSED" ) else
             if (exerciseCounter == 1) Text("Select a Plan and click Start")
         }
         if (circles == 0 && exerciseCounter > 1) {
