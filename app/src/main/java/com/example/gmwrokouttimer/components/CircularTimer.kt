@@ -50,8 +50,8 @@ fun CircularTimer(progress:Float , time:Int) {
         CircularProgressIndicator(
             progress = animatedProgress,
             modifier = Modifier
-                .width(94.dp)
-                .height(94.dp),
+                .width(99.dp)
+                .height(99.dp),
             strokeWidth = 6.dp,
             strokeCap = StrokeCap.Round, // Makes the ends rounded
         )

@@ -89,28 +89,18 @@ class MainActivity : ComponentActivity() {
                         LocalGifExample(currentExercise.imageId)
 
 
-//                        Image(
-////                            painter = painterResource(id = currentImageId),
-//                            painter = painterResource(id = currentExercise.imageId),
-//                            contentDescription = currentExercise.name,
-//                            contentScale = ContentScale.Crop,
-//                            modifier = Modifier
-////                   .height(200.dp)
-////                   .fillMaxWidth()
-//                                .size(150.dp)
-//                        )
-
                         Spacer(Modifier.height(16.dp))
 
                         // # Circular Remaining time n Rounds counters
                         if (isRunning || isPaused) {
                             Box(
                                 contentAlignment = Alignment.Center,
-                                modifier = Modifier.size(100.dp)
+                                modifier = Modifier.size(120.dp)
                             ) {
                                 CircularProgressBar(
                                     percentage = 1 - (circles.toFloat() / totalCircles.toFloat()),
-                                    number = null
+                                    number = null,
+                                    radius = 55.dp
                                 )
                                 CircularTimer(1 - (timeRemaining.toFloat() / 10), timeRemaining)
                             }

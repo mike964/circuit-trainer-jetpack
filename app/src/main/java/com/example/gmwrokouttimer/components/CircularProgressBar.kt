@@ -27,8 +27,9 @@ import androidx.compose.ui.unit.sp
 // Philipp Lack
 @Composable
 fun CircularProgressBar(
-    percentage: Float, number: Int?, fontSize: TextUnit = 28.sp,
-    radius: Dp = 50.dp, color: Color = Color.Green,
+    percentage: Float, number: Int?,
+    fontSize: TextUnit = 28.sp,
+    radius: Dp = 50.dp, color: Color = Color(0xFF4ABE1A),
     strokeWidth: Dp = 8.dp,
     animDuration: Int = 1000,
     animDelay: Int = 0,
@@ -57,15 +58,15 @@ fun CircularProgressBar(
                 style = Stroke(strokeWidth.toPx(), cap = StrokeCap.Round),
             )
         }
-        number?.let{
-           Text(
+        number?.let {
+            Text(
 //               text = (curPercentage.value  * number).toInt().toString(),
-               text =   number.toString(),
-               color = Color(0xFF0A620F),
-               fontSize = fontSize,
-               fontWeight = FontWeight.Bold
-           )
-       }
+                text = number.toString(),
+                color = Color(0xFF0A620F),
+                fontSize = fontSize,
+                fontWeight = FontWeight.Bold
+            )
+        }
     }
 
 }
