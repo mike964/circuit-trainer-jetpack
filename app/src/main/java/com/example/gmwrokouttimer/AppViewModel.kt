@@ -21,7 +21,7 @@ class AppViewModel : ViewModel() {
     private val _workoutList = mutableStateListOf<Preset>()
     private val _exerciseImages = mutableStateListOf<LocalImage>()
     // # Current Selected Workout preset
-     private var _currentPreset: MutableStateFlow<Preset> = MutableStateFlow( Preset(1, "Morning 10 mins", listOf(1,2,3)))
+     private var _currentPreset: MutableStateFlow<Preset> = MutableStateFlow( getPresetById(7))
     val  currentPreset: StateFlow<Preset> = _currentPreset.asStateFlow()
 
     // The public, immutable list for the UI to observe

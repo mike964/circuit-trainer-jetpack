@@ -46,6 +46,7 @@ fun WorkoutsetList(items: List<Preset>, appVm: AppViewModel, countdownVm: Countd
                 setSelectedPresetId(item.id)
                 appVm.setCurrentPreset(item.id)
                 countdownVm.setRoundsCount(item.exerciseIdList.size)
+                countdownVm.resetTimer()
             }) {
 //                // onPlayClick() Lambda
                 countdownVm.startPauseTimer()

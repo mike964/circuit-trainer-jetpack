@@ -29,10 +29,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.gmwrokouttimer.components.AnimatedCountdownTimer
 import com.example.gmwrokouttimer.components.CircularProgressBar
 import com.example.gmwrokouttimer.components.CircularTimer
-import com.example.gmwrokouttimer.components.ExerciseImageList
-import com.example.gmwrokouttimer.components.ImageCard
 import com.example.gmwrokouttimer.components.LocalGifExample
 import com.example.gmwrokouttimer.ui.theme.GMWrokoutTimerTheme
 
@@ -54,7 +53,6 @@ class MainActivity : ComponentActivity() {
             val isPaused by countdownVm.isPaused.collectAsState()
             val totalCircles = ((rounds * 2) - 1)
 
-//            var currentImageId by remember { mutableIntStateOf(R.drawable.hamr_curl) }
 
             GMWrokoutTimerTheme {
                 Surface(
@@ -84,15 +82,13 @@ class MainActivity : ComponentActivity() {
                             modifier = Modifier.padding(4.dp)
                         )
 
-//                        LocalGifExample(currentExercise.imageId)
-//                        LocalGifExample(R.drawable.push_up)
                         LocalGifExample(currentExercise.imageId)
 
 
                         Spacer(Modifier.height(16.dp))
 
-                        // # Circular Remaining time n Rounds counters
-                        if (isRunning || isPaused) {
+                        // # Remaining time n Rounds circular counters
+                        if (isRunning || isPaused || exerciseCounter > 1 ) {
                             Box(
                                 contentAlignment = Alignment.Center,
                                 modifier = Modifier.size(120.dp)
@@ -100,9 +96,9 @@ class MainActivity : ComponentActivity() {
                                 CircularProgressBar(
                                     percentage = 1 - (circles.toFloat() / totalCircles.toFloat()),
                                     number = null,
-                                    radius = 55.dp
+                                    radius = 56.dp
                                 )
-                                CircularTimer(1 - (timeRemaining.toFloat() / 10), timeRemaining)
+                                CircularTimer(1 - (timeRemaining.toFloat() / 10000), timeRemaining , 10)
                             }
                         }
 

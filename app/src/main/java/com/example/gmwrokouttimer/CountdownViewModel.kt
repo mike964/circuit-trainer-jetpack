@@ -15,11 +15,11 @@ import kotlinx.coroutines.launch
 
 class CountdownViewModel : ViewModel() {
 
-    private val initialTimeSeconds = 10
+    private val initialTimeMilliseconds = 10000
     // total rounds count same as total exercises in a preset
     private val _roundsCount = MutableStateFlow(1)
     private val initExerciseCounter = 1
-    private val _timeRemaining = MutableStateFlow(initialTimeSeconds)
+    private val _timeRemaining = MutableStateFlow(initialTimeMilliseconds)
 
     // Get total number of work & rest circles
     private var _circles = MutableStateFlow((_roundsCount.value * 2) - 1)
@@ -63,13 +63,13 @@ class CountdownViewModel : ViewModel() {
 //                    Log.d("xx", "while count..")
                     while (_timeRemaining.value > 0) {
 //                        Log.d("xx", "while time..")
-                        delay(1000L) // Delay for one second
-                        _timeRemaining.value -= 1
+                        delay(10L) // Delay for one second
+                        _timeRemaining.value -= 10
                     }
                     // Timer finished
 //                _isRunning.value = false
                     // Re-run timer
-                    _timeRemaining.value = initialTimeSeconds
+                    _timeRemaining.value = initialTimeMilliseconds
                     _circles.value -= 1
                     if (!checkEvenNumber(_circles.value)){
                          exerciseCounter.value++
@@ -91,7 +91,7 @@ class CountdownViewModel : ViewModel() {
         timerJob?.cancel()
         _isRunning.value = false
         _isPaused.value = false
-        _timeRemaining.value = initialTimeSeconds
+        _timeRemaining.value = initialTimeMilliseconds
         exerciseCounter.value = 1
         _circles.value = (_roundsCount.value * 2) - 1
     }

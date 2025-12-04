@@ -13,6 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
@@ -21,10 +22,10 @@ import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
 
 @Composable
-fun CircularTimer(progress:Float , time:Int) {
-    val totalTime = 60L // Total time in seconds
-    var currentTime by remember { mutableStateOf(totalTime) }
-    var isTimerRunning by remember { mutableStateOf(true) }
+fun CircularTimer(progress: Float, time: Int, totalTime: Int) {
+//    val totalTime = 60L // Total time in seconds
+//    var currentTime by remember { mutableStateOf(totalTime) }
+//    var isTimerRunning by remember { mutableStateOf(true) }
 
     // LaunchedEffect to manage the countdown logic
 //    LaunchedEffect(key1 = currentTime, key2 = isTimerRunning) {
@@ -38,8 +39,8 @@ fun CircularTimer(progress:Float , time:Int) {
 //    val progress = currentTime.toFloat() / totalTime.toFloat()
     // Optional: Add smooth animation to the progress bar movement
     val animatedProgress by animateFloatAsState(
-        targetValue = progress,
-        animationSpec = tween(1000),
+        targetValue = if(time / 1000 == totalTime) 1f else  progress,
+        animationSpec = tween(100),
         label = "Timer Progress Animation"
     )
 
@@ -48,15 +49,29 @@ fun CircularTimer(progress:Float , time:Int) {
         modifier = Modifier.size(92.dp)
     ) {
         CircularProgressIndicator(
-            progress = animatedProgress,
+            trackColor = Color(0xFFD7D7DE),
+            progress = { animatedProgress },
             modifier = Modifier
-                .width(99.dp)
-                .height(99.dp),
+                .size(100.dp),
             strokeWidth = 6.dp,
             strokeCap = StrokeCap.Round, // Makes the ends rounded
         )
 //        Text(text = "$currentTime s") // Display the time
-        Text(text = "$time",  fontSize = 30.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary) // Display the time
+        if (time / 1000 == totalTime) {
+            Text(
+                "DONE",
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.primary
+            )
+        } else {
+            Text(
+                text = "${((time + 1000) / 1000)}",
+                fontSize = 30.sp,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.primary
+            ) // Display the time
+        }
     }
     // Add buttons here to control the timer (Start/Pause/Reset)
     // ...
