@@ -33,6 +33,7 @@ import com.example.gmwrokouttimer.components.AnimatedCountdownTimer
 import com.example.gmwrokouttimer.components.CircularProgressBar
 import com.example.gmwrokouttimer.components.CircularTimer
 import com.example.gmwrokouttimer.components.LocalGifExample
+import com.example.gmwrokouttimer.presentation.MainScreen
 import com.example.gmwrokouttimer.ui.theme.GMWrokoutTimerTheme
 
 class MainActivity : ComponentActivity() {
@@ -41,73 +42,13 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             val appViewModel = viewModel<AppViewModel>()
-            val countdownVm = viewModel<CountdownViewModel>()
-            val exerciseCounter by countdownVm.exerciseCounter.collectAsState()
-            val currentPreset by appViewModel.currentPreset.collectAsState()
-            val currentExercise =
-                getExerciseById(currentPreset.exerciseIdList[exerciseCounter - 1])
-            val timeRemaining by countdownVm.timeRemaining.collectAsState()
-            val rounds by countdownVm.rounds.collectAsState()
-            val circles by countdownVm.circles.collectAsState()
-            val isRunning by countdownVm.isRunning.collectAsState()
-            val isPaused by countdownVm.isPaused.collectAsState()
-            val totalCircles = ((rounds * 2) - 1)
-
 
             GMWrokoutTimerTheme {
                 Surface(
                     color = Color(0xFFCCCED0),
                     modifier = Modifier.fillMaxSize()
                 ) {
-                    Column(
-                        // The modifier is applied to the Column itself
-                        modifier = Modifier
-                            .fillMaxSize() // Make the column occupy the whole screen
-                            .padding(top = 50.dp),
-                        // Arrange children evenly along the main (vertical) axis
-                        verticalArrangement = Arrangement.SpaceAround,
-                        // Center children horizontally within the column
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-
-                        Text(
-                            text = currentPreset.name,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier.padding(4.dp)
-                        )
-//                        Text(text = "Current Exercise ID : $currentExerciseId", fontWeight = FontWeight.Bold, modifier = Modifier.padding(4.dp))
-                        Text(
-                            text = currentExercise.name,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier.padding(4.dp)
-                        )
-
-                        LocalGifExample(currentExercise.imageId)
-
-
-                        Spacer(Modifier.height(16.dp))
-
-                        // # Remaining time n Rounds circular counters
-                        if (isRunning || isPaused || exerciseCounter > 1 ) {
-                            Box(
-                                contentAlignment = Alignment.Center,
-                                modifier = Modifier.size(120.dp)
-                            ) {
-                                CircularProgressBar(
-                                    percentage = 1 - (circles.toFloat() / totalCircles.toFloat()),
-                                    number = null,
-                                    radius = 56.dp
-                                )
-                                CircularTimer(1 - (timeRemaining.toFloat() / 10000), timeRemaining , 10)
-                            }
-                        }
-
-                        CountdownScreen(countdownVm)
-
-                        WorkoutsetList(appViewModel.workoutList, appViewModel, countdownVm)
-//                        ExerciseImageList(appViewModel.exerciseImageList)
-//                        ImageCard(LocalImage(id =  R.drawable.lat_raise , contentDescription = "Description for image one"))
-                    }
+                    MainScreen(viewModel = appViewModel)
                 }
             }
         }
