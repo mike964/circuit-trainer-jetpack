@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -16,6 +17,9 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+//        ksp {
+//            arg("room.schemaLocation", "$projectDir/schemas")
+//        }
     }
 
     buildTypes {
@@ -37,7 +41,9 @@ android {
     buildFeatures {
         compose = true
     }
+
 }
+
 
 dependencies {
 
@@ -71,4 +77,13 @@ dependencies {
     implementation("io.coil-kt:coil-gif:2.7.0")
     // # Icons
     implementation("androidx.compose.material:material-icons-core:1.7.8")
+    // Room Database
+    val roomVersion = "2.7.0" // Or latest stable 2.8.x in 2026
+    implementation("androidx.room:room-runtime:$roomVersion")
+    implementation("androidx.room:room-ktx:$roomVersion")
+    // Use KSP instead of kapt for the compiler
+    ksp("androidx.room:room-compiler:$roomVersion")
+    // Optional: Paging 3 integration
+    implementation("androidx.room:room-paging:$roomVersion")
 }
+
