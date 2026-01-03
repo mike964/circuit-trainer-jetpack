@@ -8,10 +8,15 @@ class NoteRepository(private val noteDao: NoteDao) {
     val allNotes: Flow<List<Note>> = noteDao.getAllNotes()
 
     suspend fun insert(note: Note) {
-        noteDao.insertNote(note)
+        noteDao.upsertNote(note)
+    }
+    suspend fun update(note: Note) {
+        noteDao.upsertNote(note)
     }
 
     suspend fun delete(note: Note) {
         noteDao.deleteNote(note)
     }
+
+
 }

@@ -1,9 +1,6 @@
-package com.example.gmwrokouttimer
+package com.example.gmwrokouttimer.presentation
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.material3.Text
 import com.example.gmwrokouttimer.R
-import androidx.compose.ui.unit.dp
 
 data class Exercise(val id: Int, val name: String, val imageId: Int)
 //data class WorkoutSet(val id: Int, val name: String, val exercises: List<Exercise>)

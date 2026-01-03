@@ -1,4 +1,4 @@
-package com.example.gmwrokouttimer
+package com.example.gmwrokouttimer.presentation
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Box

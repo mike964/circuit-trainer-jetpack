@@ -1,8 +1,9 @@
-package com.example.gmwrokouttimer
+package com.example.gmwrokouttimer.presentation
 
 import android.content.Context
 import android.media.AudioAttributes
 import android.media.SoundPool
+import com.example.gmwrokouttimer.R
 
 class SoundManager(context: Context) {
     private val audioAttributes = AudioAttributes.Builder()

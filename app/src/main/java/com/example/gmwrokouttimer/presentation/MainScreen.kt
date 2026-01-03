@@ -17,14 +17,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.gmwrokouttimer.AppViewModel
-import com.example.gmwrokouttimer.CountdownScreen
-import com.example.gmwrokouttimer.CountdownViewModel
-import com.example.gmwrokouttimer.WorkoutsetList
 import com.example.gmwrokouttimer.components.CircularProgressBar
 import com.example.gmwrokouttimer.components.CircularTimer
 import com.example.gmwrokouttimer.components.LocalGifExample
-import com.example.gmwrokouttimer.getExerciseById
 
 @Composable
 fun MainScreen(viewModel: AppViewModel){
