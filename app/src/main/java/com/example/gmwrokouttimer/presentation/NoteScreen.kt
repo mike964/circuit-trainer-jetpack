@@ -15,22 +15,23 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavHostController
 import com.example.gmwrokouttimer.database.model.Note
 
 @Composable
-fun NoteScreen(viewModel: NoteViewModel) {
-    val notes by viewModel.notes.collectAsStateWithLifecycle()
+fun NoteScreen(vm: NoteViewModel,  navController: NavHostController) {
+    val notes by vm.notes.collectAsStateWithLifecycle()
     var title by remember { mutableStateOf("") }
 
     Column(modifier = Modifier.padding(16.dp)) {
         TextField(value = title, onValueChange = { title = it }, label = { Text("Title") })
-        Button(onClick = { viewModel.addNote(title, "Note content..."); title = "" }) {
+        Button(onClick = { vm.addNote(title, "Note content..."); title = "" }) {
             Text("Save Note")
         }
 
         LazyColumn {
             items(notes, key = { it.id }) { note ->
-                NoteItem(note, onDelete = { viewModel.deleteNote(note) })
+                NoteItem(note, onDelete = { vm.deleteNote(note) })
             }
         }
     }

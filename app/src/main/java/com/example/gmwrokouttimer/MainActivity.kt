@@ -14,6 +14,7 @@ import com.example.gmwrokouttimer.presentation.AppViewModel
 import com.example.gmwrokouttimer.presentation.NoteScreen
 import com.example.gmwrokouttimer.presentation.NoteViewModel
 import com.example.gmwrokouttimer.presentation.NoteViewModelFactory
+import com.example.gmwrokouttimer.presentation.NavigationBar
 import com.example.gmwrokouttimer.repository.NoteRepository
 import com.example.gmwrokouttimer.ui.theme.GMWrokoutTimerTheme
 
@@ -23,12 +24,12 @@ class MainActivity : ComponentActivity() {
         //
         val database = NoteDatabase.Companion.getDatabase(applicationContext)
         val repository = NoteRepository(database.noteDao())
-        val factory = NoteViewModelFactory(repository)
+        val noteViewModelfactory = NoteViewModelFactory(repository)
 
-         enableEdgeToEdge()
+        enableEdgeToEdge()
         setContent {
             val appViewModel = viewModel<AppViewModel>()
-            val noteViewModel = viewModel<NoteViewModel>(factory = factory)
+            val noteViewModel = viewModel<NoteViewModel>(factory = noteViewModelfactory)
 
             GMWrokoutTimerTheme {
                 Surface(
@@ -36,7 +37,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.Companion.fillMaxSize()
                 ) {
 //                    MainScreen(viewModel = appViewModel)
-                    NoteScreen(noteViewModel)
+//                    NoteScreen(noteViewModel)
+                    NavigationBar(appViewModel, noteViewModel)
                 }
             }
         }

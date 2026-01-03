@@ -85,5 +85,8 @@ dependencies {
     ksp("androidx.room:room-compiler:$roomVersion")
     // Optional: Paging 3 integration
     implementation("androidx.room:room-paging:$roomVersion")
+    // # Navigation
+    implementation("androidx.navigation:navigation-compose:2.7.4")
+//    implementation("org.jetbrains.kotlinx-serialization:kotlinx-serialization-json:1.6.3")
 }
 

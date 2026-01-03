@@ -17,12 +17,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import com.example.gmwrokouttimer.components.CircularProgressBar
 import com.example.gmwrokouttimer.components.CircularTimer
 import com.example.gmwrokouttimer.components.LocalGifExample
 
 @Composable
-fun MainScreen(viewModel: AppViewModel){
+fun MainScreen(viewModel: AppViewModel, navController: NavHostController){
     Column(
         // The modifier is applied to the Column itself
         modifier = Modifier
