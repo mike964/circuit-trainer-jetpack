@@ -22,9 +22,9 @@ fun HomeScreen(navController: NavController) {
         Spacer(modifier = Modifier.height(24.dp))
         Button(onClick = {
             // Navigate to the detail screen using its route
-            navController.navigate(Screen.Profile.route)
+            navController.navigate(Screen.Progress.route)
         }) {
-            Text("Go to Profile Screen")
+            Text("Go to Progress Screen")
         }
     }
 }
