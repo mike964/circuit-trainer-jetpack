@@ -26,7 +26,7 @@ import com.example.gmwrokouttimer.navigation.Screen
 import com.example.gmwrokouttimer.navigation.navBarItems
 import com.example.gmwrokouttimer.presentation.screens.ProfileScreen
 import com.example.gmwrokouttimer.presentation.screens.SearchScreen
-
+import com.example.gmwrokouttimer.ui.theme.GMWrokoutTimerTheme
 
 
 // # Bottom Navigation Bar
@@ -49,6 +49,7 @@ fun NavigationBar(
             NavigationBar(
                 modifier = Modifier.fillMaxWidth(),
                 containerColor = MaterialTheme.colorScheme.background,
+//                containerColor = Color(0xFF6B5991),
                 tonalElevation = 10.dp
             ) {
                 navBarItems.forEachIndexed { index, item ->

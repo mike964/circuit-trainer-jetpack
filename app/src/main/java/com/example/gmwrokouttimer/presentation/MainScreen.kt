@@ -1,5 +1,6 @@
 package com.example.gmwrokouttimer.presentation
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,6 +15,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -24,28 +26,27 @@ import com.example.gmwrokouttimer.components.LocalGifExample
 
 @Composable
 fun MainScreen(viewModel: AppViewModel, navController: NavHostController){
+    val countdownVm = viewModel<CountdownViewModel>()
+    val exerciseCounter by countdownVm.exerciseCounter.collectAsState()
+    val currentPreset by viewModel.currentPreset.collectAsState()
+    val currentExercise =
+        getExerciseById(currentPreset.exerciseIdList[exerciseCounter - 1])
+    val timeRemaining by countdownVm.timeRemaining.collectAsState()
+    val rounds by countdownVm.rounds.collectAsState()
+    val circles by countdownVm.circles.collectAsState()
+    val isRunning by countdownVm.isRunning.collectAsState()
+    val isPaused by countdownVm.isPaused.collectAsState()
+    val totalCircles = ((rounds * 2) - 1)
+
     Column(
-        // The modifier is applied to the Column itself
         modifier = Modifier
+            .background(Color(0xFFE8E8E8))
             .fillMaxSize() // Make the column occupy the whole screen
             .padding(top = 50.dp),
-        // Arrange children evenly along the main (vertical) axis
         verticalArrangement = Arrangement.SpaceAround,
-        // Center children horizontally within the column
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        val countdownVm = viewModel<CountdownViewModel>()
-        val exerciseCounter by countdownVm.exerciseCounter.collectAsState()
-        val currentPreset by viewModel.currentPreset.collectAsState()
-        val currentExercise =
-            getExerciseById(currentPreset.exerciseIdList[exerciseCounter - 1])
-        val timeRemaining by countdownVm.timeRemaining.collectAsState()
-        val rounds by countdownVm.rounds.collectAsState()
-        val circles by countdownVm.circles.collectAsState()
-        val isRunning by countdownVm.isRunning.collectAsState()
-        val isPaused by countdownVm.isPaused.collectAsState()
-        val totalCircles = ((rounds * 2) - 1)
+        horizontalAlignment = Alignment.CenterHorizontally,
 
+    ) {
         Text(
             text = currentPreset.name,
             fontWeight = FontWeight.Bold,
@@ -59,7 +60,6 @@ fun MainScreen(viewModel: AppViewModel, navController: NavHostController){
         )
 
         LocalGifExample(currentExercise.imageId)
-
 
         Spacer(Modifier.height(16.dp))
 

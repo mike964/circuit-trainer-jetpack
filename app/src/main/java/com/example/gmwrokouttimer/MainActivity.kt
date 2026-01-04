@@ -24,16 +24,16 @@ class MainActivity : ComponentActivity() {
         //
         val database = NoteDatabase.Companion.getDatabase(applicationContext)
         val repository = NoteRepository(database.noteDao())
-        val noteViewModelfactory = NoteViewModelFactory(repository)
+        val noteViewModelFactory = NoteViewModelFactory(repository)
 
         enableEdgeToEdge()
         setContent {
             val appViewModel = viewModel<AppViewModel>()
-            val noteViewModel = viewModel<NoteViewModel>(factory = noteViewModelfactory)
+            val noteViewModel = viewModel<NoteViewModel>(factory = noteViewModelFactory)
 
             GMWrokoutTimerTheme {
                 Surface(
-                    color = Color(0xFFCCCED0),
+                    color = Color(0xFFA5A5A9),
                     modifier = Modifier.Companion.fillMaxSize()
                 ) {
 //                    MainScreen(viewModel = appViewModel)
