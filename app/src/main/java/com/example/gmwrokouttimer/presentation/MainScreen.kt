@@ -41,6 +41,7 @@ import com.example.gmwrokouttimer.components.CircularProgressBar
 import com.example.gmwrokouttimer.components.CircularTimer
 import com.example.gmwrokouttimer.components.HorizontalNumberPicker
 import com.example.gmwrokouttimer.components.LocalGifExample
+import kotlin.concurrent.timer
 
 @Composable
 fun MainScreen(viewModel: AppViewModel, navController: NavHostController) {
@@ -50,11 +51,12 @@ fun MainScreen(viewModel: AppViewModel, navController: NavHostController) {
     val currentExercise =
         getExerciseById(currentPreset.exerciseIdList[exerciseCounter - 1])
     val timeRemaining by countdownVm.timeRemaining.collectAsState()
-    val rounds by countdownVm.rounds.collectAsState()
+//    val rounds by countdownVm.rounds.collectAsState()
     val circles by countdownVm.circles.collectAsState()
     val isRunning by countdownVm.isRunning.collectAsState()
     val isPaused by countdownVm.isPaused.collectAsState()
-    val totalCircles = ((rounds * 2) - 1)
+    val timerState by countdownVm.uiState.collectAsState()
+//    val totalCircles = ((rounds * 2) - 1)
     // State to control popup visibility
     var showPopup by remember { mutableStateOf(false) }
 
@@ -69,7 +71,6 @@ fun MainScreen(viewModel: AppViewModel, navController: NavHostController) {
                     modifier = Modifier
                         .width(400.dp)
                         .height(540.dp)
-                    //                        .padding(16.dp)
                         .dropShadow(
                             shape = RoundedCornerShape(16.dp),
                             shadow = Shadow(
@@ -85,15 +86,22 @@ fun MainScreen(viewModel: AppViewModel, navController: NavHostController) {
                             shape = RoundedCornerShape(16.dp)
                         ),
                     contentAlignment =  Alignment.Center
-
                 ) {
                     Column {
                         Text("This is a Popup Window!")
                         Spacer(modifier = Modifier.height(8.dp))
-                        Text("Work time" )
-                        Text("Rest time" )
+                        Text("Work (Seconds)" )
+                        HorizontalNumberPicker(height = 30.dp) {
+
+                        }
+                        Text("Rest (Seconds)" )
+                        HorizontalNumberPicker(height = 30.dp) {
+
+                        }
                         Text("Rounds" )
-                        HorizontalNumberPicker {  }
+                        HorizontalNumberPicker(default = timerState.initRounds, height = 30.dp) {
+                            countdownVm.updateInitRounds(it)
+                        }
                         Button(onClick = { showPopup = false }) {
                             Text("Save")
                         }
@@ -167,11 +175,11 @@ fun MainScreen(viewModel: AppViewModel, navController: NavHostController) {
                 contentAlignment = Alignment.Center,
                 modifier = Modifier.size(120.dp)
             ) {
-                CircularProgressBar(
-                    percentage = 1 - (circles.toFloat() / totalCircles.toFloat()),
-                    number = null,
-                    radius = 56.dp
-                )
+//                CircularProgressBar(
+//                    percentage = 1 - (circles.toFloat() / totalCircles.toFloat()),
+//                    number = null,
+//                    radius = 56.dp
+//                )
                 CircularTimer(1 - (timeRemaining.toFloat() / 10000), timeRemaining, 10)
             }
         }

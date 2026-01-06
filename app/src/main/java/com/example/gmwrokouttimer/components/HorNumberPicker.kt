@@ -1,6 +1,5 @@
 package com.example.gmwrokouttimer.components
 
-import android.graphics.Color
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -15,12 +14,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -37,7 +34,7 @@ import com.example.gmwrokouttimer.R
 @Preview(name = "Horizontal number picker")
 @Composable
 fun HorizontalNumberPicker(
-    modifier: Modifier = Modifier,
+//    modifier: Modifier = Modifier,
     height: Dp = 45.dp,
     min: Int = 0,
     max: Int = 10,
@@ -50,14 +47,14 @@ fun HorizontalNumberPicker(
         PickerButton(
             size = height,
             drawable = R.drawable.ic_arrow_left,
-            enabled = number.value > min,
+            enabled = number.intValue > min,
             onClick = {
-                if (number.value > min) number.value--
-                onValueChange(number.value)
+                if (number.intValue > min) number.intValue--
+                onValueChange(number.intValue)
             }
         )
         Text(
-            text = number.value.toString(),
+            text = number.intValue.toString(),
             fontSize = (height.value / 2).sp,
             modifier = Modifier.padding(10.dp)
                 .height(IntrinsicSize.Max)
@@ -66,10 +63,10 @@ fun HorizontalNumberPicker(
         PickerButton(
             size = height,
             drawable = R.drawable.ic_arrow_right,
-            enabled = number.value < max,
+            enabled = number.intValue < max,
             onClick = {
-                if (number.value < max) number.value++
-                onValueChange(number.value)
+                if (number.intValue < max) number.intValue++
+                onValueChange(number.intValue)
             }
         )
     }

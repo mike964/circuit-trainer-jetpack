@@ -19,6 +19,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.gmwrokouttimer.R
+import kotlin.concurrent.timer
 
 @Composable
 fun CountdownScreen(
@@ -41,6 +42,7 @@ fun CountdownScreen(
     val exerciseCounter by viewModel.exerciseCounter.collectAsState()
     val isRunning by viewModel.isRunning.collectAsState()
     val isPaused by viewModel.isPaused.collectAsState()
+    val timerState by viewModel.uiState.collectAsState()
 
     fun timerBgColor(): Long {
 //        val Purple40 = Color(0xFFD58812)
@@ -104,7 +106,9 @@ fun CountdownScreen(
                 Text(text = "Reset")
             }
         }
-        Text("Round $exerciseCounter / $circles")
+        Text("Exercise $exerciseCounter / ${timerState.initExercises}")
+        Text("Circle $circles")
+        Text("Round $exerciseCounter / ${timerState.initRounds}")
 
     }
 
