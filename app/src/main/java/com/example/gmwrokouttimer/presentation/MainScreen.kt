@@ -11,24 +11,35 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.Button
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.dropShadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.shadow.Shadow
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Popup
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.gmwrokouttimer.components.CircularProgressBar
 import com.example.gmwrokouttimer.components.CircularTimer
+import com.example.gmwrokouttimer.components.HorizontalNumberPicker
 import com.example.gmwrokouttimer.components.LocalGifExample
 
 @Composable
@@ -44,6 +55,53 @@ fun MainScreen(viewModel: AppViewModel, navController: NavHostController) {
     val isRunning by countdownVm.isRunning.collectAsState()
     val isPaused by countdownVm.isPaused.collectAsState()
     val totalCircles = ((rounds * 2) - 1)
+    // State to control popup visibility
+    var showPopup by remember { mutableStateOf(false) }
+
+    Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        if (showPopup) {
+            Popup(
+                onDismissRequest = { showPopup = false }, // Dismisses when tapping outside
+                alignment = Alignment.Center // Centers the popup on the screen
+            ) {
+                // Content of the popup window
+                Box(
+                    modifier = Modifier
+                        .width(400.dp)
+                        .height(540.dp)
+                    //                        .padding(16.dp)
+                        .dropShadow(
+                            shape = RoundedCornerShape(16.dp),
+                            shadow = Shadow(
+                                radius = 9.dp,
+                                spread = 3.dp,
+                                color = Color(0x40000000),
+                                offset = DpOffset(x = 1.dp, 1.dp)
+                            )
+                        )
+                        .align(Alignment.Center)
+                        .background(
+                            color = Color.White,
+                            shape = RoundedCornerShape(16.dp)
+                        ),
+                    contentAlignment =  Alignment.Center
+
+                ) {
+                    Column {
+                        Text("This is a Popup Window!")
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text("Work time" )
+                        Text("Rest time" )
+                        Text("Rounds" )
+                        HorizontalNumberPicker {  }
+                        Button(onClick = { showPopup = false }) {
+                            Text("Save")
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -81,8 +139,8 @@ fun MainScreen(viewModel: AppViewModel, navController: NavHostController) {
             Box(Modifier.weight(3f), contentAlignment = Alignment.Center) {
                 IconButton(
                     onClick = {
-                        // Define the action to take when the button is clicked
-                        println("Settings button clicked!")
+                        showPopup = true
+//                        println("Settings button clicked!")
                     }
                 ) {
                     Icon(
