@@ -40,6 +40,7 @@ fun CountdownScreen(
     val timeRemaining by viewModel.timeRemaining.collectAsState()
     val circles by viewModel.circles.collectAsState()
     val exerciseCounter by viewModel.exerciseCounter.collectAsState()
+    val roundsCounter by viewModel.roundsCounter.collectAsState()
     val isRunning by viewModel.isRunning.collectAsState()
     val isPaused by viewModel.isPaused.collectAsState()
     val timerState by viewModel.uiState.collectAsState()
@@ -108,7 +109,7 @@ fun CountdownScreen(
         }
         Text("Exercise $exerciseCounter / ${timerState.initExercises}")
         Text("Circle $circles")
-        Text("Round $exerciseCounter / ${timerState.initRounds}")
+        Text("Round $roundsCounter / ${timerState.initRounds}")
 
     }
 

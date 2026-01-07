@@ -46,6 +46,7 @@ import kotlin.concurrent.timer
 @Composable
 fun MainScreen(viewModel: AppViewModel, navController: NavHostController) {
     val countdownVm = viewModel<CountdownViewModel>()
+    val timerState by countdownVm.uiState.collectAsState()
     val exerciseCounter by countdownVm.exerciseCounter.collectAsState()
     val currentPreset by viewModel.currentPreset.collectAsState()
     val currentExercise =
@@ -55,8 +56,8 @@ fun MainScreen(viewModel: AppViewModel, navController: NavHostController) {
     val circles by countdownVm.circles.collectAsState()
     val isRunning by countdownVm.isRunning.collectAsState()
     val isPaused by countdownVm.isPaused.collectAsState()
-    val timerState by countdownVm.uiState.collectAsState()
-//    val totalCircles = ((rounds * 2) - 1)
+
+    val totalCircles = ((timerState.initExercises * 2) - 1)
     // State to control popup visibility
     var showPopup by remember { mutableStateOf(false) }
 
@@ -165,6 +166,7 @@ fun MainScreen(viewModel: AppViewModel, navController: NavHostController) {
             modifier = Modifier.padding(8.dp)
         )
 
+
         LocalGifExample(currentExercise.imageId)
 
         Spacer(Modifier.height(16.dp))
@@ -175,12 +177,13 @@ fun MainScreen(viewModel: AppViewModel, navController: NavHostController) {
                 contentAlignment = Alignment.Center,
                 modifier = Modifier.size(120.dp)
             ) {
-//                CircularProgressBar(
-//                    percentage = 1 - (circles.toFloat() / totalCircles.toFloat()),
-//                    number = null,
-//                    radius = 56.dp
-//                )
-                CircularTimer(1 - (timeRemaining.toFloat() / 10000), timeRemaining, 10)
+                CircularProgressBar(
+                    percentage = 1 - (circles.toFloat() / totalCircles.toFloat()),
+                    number = null,
+                    radius = 56.dp
+                )
+                CircularTimer(1 - (timeRemaining.toFloat() / 10000), timeRemaining, timerState.workTimeSeconds)
+                Text(timeRemaining.toString())
             }
         }
 
