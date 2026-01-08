@@ -39,6 +39,7 @@ fun HorizontalNumberPicker(
     min: Int = 0,
     max: Int = 10,
     default: Int = min,
+    displayNumber: Int? = null ,
     onValueChange: (Int) -> Unit = {}
 ) {
     val number = remember { mutableIntStateOf(default) }
@@ -53,8 +54,16 @@ fun HorizontalNumberPicker(
                 onValueChange(number.intValue)
             }
         )
+
         Text(
-            text = number.intValue.toString(),
+            text =   number.intValue.toString(),
+            fontSize = (height.value / 2).sp,
+            modifier = Modifier.padding(10.dp)
+                .height(IntrinsicSize.Max)
+                .align(CenterVertically)
+        )
+        Text(
+            text = displayNumber?.toString() ?: number.intValue.toString(),
             fontSize = (height.value / 2).sp,
             modifier = Modifier.padding(10.dp)
                 .height(IntrinsicSize.Max)

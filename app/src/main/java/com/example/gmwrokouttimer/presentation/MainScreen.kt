@@ -41,7 +41,6 @@ import com.example.gmwrokouttimer.components.CircularProgressBar
 import com.example.gmwrokouttimer.components.CircularTimer
 import com.example.gmwrokouttimer.components.HorizontalNumberPicker
 import com.example.gmwrokouttimer.components.LocalGifExample
-import kotlin.concurrent.timer
 
 @Composable
 fun MainScreen(viewModel: AppViewModel, navController: NavHostController) {
@@ -86,20 +85,25 @@ fun MainScreen(viewModel: AppViewModel, navController: NavHostController) {
                             color = Color.White,
                             shape = RoundedCornerShape(16.dp)
                         ),
-                    contentAlignment =  Alignment.Center
+                    contentAlignment = Alignment.Center
                 ) {
                     Column {
                         Text("This is a Popup Window!")
                         Spacer(modifier = Modifier.height(8.dp))
-                        Text("Work (Seconds)" )
+                        Text("Work (Seconds)")
+                        HorizontalNumberPicker(
+                            default = 1,
+                            displayNumber = timerState.workTimeSeconds  ,
+                            min = 2, max = 20,
+                            height = 30.dp
+                        ) {
+                            countdownVm.updateWorkTime(it )
+                        }
+                        Text("Rest (Seconds)")
                         HorizontalNumberPicker(height = 30.dp) {
 
                         }
-                        Text("Rest (Seconds)" )
-                        HorizontalNumberPicker(height = 30.dp) {
-
-                        }
-                        Text("Rounds" )
+                        Text("Rounds")
                         HorizontalNumberPicker(default = timerState.initRounds, height = 30.dp) {
                             countdownVm.updateInitRounds(it)
                         }
@@ -182,7 +186,11 @@ fun MainScreen(viewModel: AppViewModel, navController: NavHostController) {
                     number = null,
                     radius = 56.dp
                 )
-                CircularTimer(1 - (timeRemaining.toFloat() / 10000), timeRemaining, timerState.workTimeSeconds)
+                CircularTimer(
+                    1 - (timeRemaining.toFloat() / 10000),
+                    timeRemaining,
+                    timerState.workTimeSeconds
+                )
                 Text(timeRemaining.toString())
             }
         }

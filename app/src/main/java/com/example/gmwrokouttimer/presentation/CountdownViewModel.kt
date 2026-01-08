@@ -15,7 +15,7 @@ data class TimerState(
 //    val todoList: List<TodoItem> = emptyList(),
     val isLoading: Boolean = false,
 //    val error: String? = null
-    val workTimeSeconds: Int = 9, // *1000 to get milliseconds
+    val workTimeSeconds: Int = 5, // *1000 to get milliseconds
     val restTimeSeconds: Int = 10,
     val initRounds: Int = 1,
     val initExercises: Int = 1, // total exercise count comes from selected preset
@@ -85,7 +85,7 @@ class CountdownViewModel : ViewModel() {
                 while (_circles.value > 0) {
 //                    Log.d("xx", "while count..")
                     while (_timeRemaining.value > 0) {
-                        Log.d("xx", _timeRemaining.value.toString())
+//                        Log.d("xx", _timeRemaining.value.toString())
                         delay(100L) // Delay for one second
                         _timeRemaining.value -= 100
                     }
@@ -148,22 +148,17 @@ class CountdownViewModel : ViewModel() {
                 initRounds = x
             )
         }
-        _roundsCounter.value = x
+//        _roundsCounter.value = x
     }
-
-    fun incRounds() {
+    fun updateWorkTime(x: Int) {
+        val y = x* 5
+        Log.d(y.toString(), "xx")
         _uiState.update { currentState ->
             currentState.copy(
-                initRounds = currentState.initRounds + 1
+                workTimeSeconds = y
             )
         }
     }
 
-    fun decRounds() {
-        _uiState.update { currentState ->
-            currentState.copy(
-                initRounds = currentState.initRounds - 1
-            )
-        }
-    }
+
 }
