@@ -57,21 +57,21 @@ fun CircularTimer(progress: Float, time: Int, totalTime: Int) {
             strokeCap = StrokeCap.Round, // Makes the ends rounded
         )
 //        Text(text = "$currentTime s") // Display the time
-        if (time / 1000 == totalTime) {
-            Text(
-                "DONE",
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.primary
-            )
-        } else {
+//        if (time / 1000 == totalTime) {
+//            Text(
+//                "DONE",
+//                fontSize = 24.sp,
+//                fontWeight = FontWeight.Bold,
+//                color = MaterialTheme.colorScheme.primary
+//            )
+//        } else {
             Text(
                 text = "${((time + 1000) / 1000)}",
                 fontSize = 30.sp,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.primary
             ) // Display the time
-        }
+//        }
     }
     // Add buttons here to control the timer (Start/Pause/Reset)
     // ...

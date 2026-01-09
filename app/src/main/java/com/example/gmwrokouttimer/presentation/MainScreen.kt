@@ -41,6 +41,9 @@ import com.example.gmwrokouttimer.components.CircularProgressBar
 import com.example.gmwrokouttimer.components.CircularTimer
 import com.example.gmwrokouttimer.components.HorizontalNumberPicker
 import com.example.gmwrokouttimer.components.LocalGifExample
+import com.example.gmwrokouttimer.components.SimpleCountdownTimer
+import com.example.gmwrokouttimer.components.Stopwatch
+import com.example.gmwrokouttimer.utils.formatSeconds
 
 @Composable
 fun MainScreen(viewModel: AppViewModel, navController: NavHostController) {
@@ -93,11 +96,11 @@ fun MainScreen(viewModel: AppViewModel, navController: NavHostController) {
                         Text("Work (Seconds)")
                         HorizontalNumberPicker(
                             default = 1,
-                            displayNumber = timerState.workTimeSeconds  ,
+                            displayNumber = timerState.workTimeSeconds,
                             min = 2, max = 20,
                             height = 30.dp
                         ) {
-                            countdownVm.updateWorkTime(it )
+                            countdownVm.updateWorkTime(it)
                         }
                         Text("Rest (Seconds)")
                         HorizontalNumberPicker(height = 30.dp) {
@@ -107,6 +110,13 @@ fun MainScreen(viewModel: AppViewModel, navController: NavHostController) {
                         HorizontalNumberPicker(default = timerState.initRounds, height = 30.dp) {
                             countdownVm.updateInitRounds(it)
                         }
+                        Text(
+                            "Total time :" +
+                                    " ${formatSeconds(((timerState.workTimeSeconds) * timerState.initRounds * circles).toLong())}"
+                        )
+
+                        Spacer(modifier = Modifier.height(8.dp))
+
                         Button(onClick = { showPopup = false }) {
                             Text("Save")
                         }
@@ -170,7 +180,6 @@ fun MainScreen(viewModel: AppViewModel, navController: NavHostController) {
             modifier = Modifier.padding(8.dp)
         )
 
-
         LocalGifExample(currentExercise.imageId)
 
         Spacer(Modifier.height(16.dp))
@@ -187,15 +196,20 @@ fun MainScreen(viewModel: AppViewModel, navController: NavHostController) {
                     radius = 56.dp
                 )
                 CircularTimer(
-                    1 - (timeRemaining.toFloat() / 10000),
+                    1 - (timeRemaining.toFloat() / (timerState.workTimeSeconds * 1000)),
                     timeRemaining,
                     timerState.workTimeSeconds
                 )
-                Text(timeRemaining.toString())
             }
+            Text(timeRemaining.toString())
+//            Text((timeRemaining.toFloat() / (timerState.workTimeSeconds*1000)).toString())
         }
 
         CountdownScreen(countdownVm)
+        Text(timerState.workTimeSeconds.toString())
+
+//        SimpleCountdownTimer(120)
+//        Stopwatch()
 
         WorkoutsetList(viewModel.workoutList, viewModel, countdownVm)
 //                        ExerciseImageList(appViewModel.exerciseImageList)

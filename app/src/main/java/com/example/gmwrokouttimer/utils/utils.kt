@@ -1,0 +1,19 @@
+package com.example.gmwrokouttimer.utils
+
+import kotlin.time.Duration.Companion.seconds
+
+fun formatSeconds(totalSeconds: Long): String {
+    val duration = totalSeconds.seconds
+    // toComponents splits the duration into hours, minutes, seconds
+    return duration.toComponents { _, minutes, seconds, _ ->
+        "%02d:%02d".format(minutes, seconds)
+    }
+}
+
+/*
+fun main() {
+    println(formatSeconds(130)) // Output: 02:10
+    println(formatSeconds(65))  // Output: 01:05
+    println(formatSeconds(5))   // Output: 00:05
+}
+ */
