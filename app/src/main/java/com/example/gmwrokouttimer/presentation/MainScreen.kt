@@ -40,11 +40,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.gmwrokouttimer.components.CircularProgressBar
 import com.example.gmwrokouttimer.components.CircularTimer
-import com.example.gmwrokouttimer.components.CountdownTimerWithControls
 import com.example.gmwrokouttimer.components.HorizontalNumberPicker
 import com.example.gmwrokouttimer.components.LocalGifExample
-import com.example.gmwrokouttimer.components.SimpleCountdownTimer
-import com.example.gmwrokouttimer.components.Stopwatch
 import com.example.gmwrokouttimer.utils.formatMilliseconds
 import com.example.gmwrokouttimer.utils.formatSeconds
 
@@ -64,9 +61,9 @@ fun MainScreen(viewModel: AppViewModel, navController: NavHostController) {
     val roundsCounter by countdownVm.roundsCounter.collectAsState()
     val isRunning by countdownVm.isRunning.collectAsState()
     val isPaused by countdownVm.isPaused.collectAsState()
+    val isWork =  checkEvenNumber(circles)  //  (if (checkEvenNumber(circles)) "REST" else "WORK")
 
-    val totalCircles = ((timerState.initExercises * 2) - 1)
-    val totalTimeSeconds =  ((timerState.workTimeSeconds) * timerState.initRounds * totalCircles)
+    val totalCircles = ((timerState.initExercises * timerState.initRounds * 2) - 1)
 
     // State to control popup visibility
     var showPopup by remember { mutableStateOf(false) }
@@ -119,7 +116,7 @@ fun MainScreen(viewModel: AppViewModel, navController: NavHostController) {
                             countdownVm.setInitRounds(it)
                         }
                         Text(  "Total time : "
-                                + formatSeconds((totalTimeSeconds).toLong()))
+                                + formatSeconds((totalTime).toLong()))
 
                         Spacer(modifier = Modifier.height(8.dp))
 
@@ -127,7 +124,6 @@ fun MainScreen(viewModel: AppViewModel, navController: NavHostController) {
                             showPopup = false
                             Log.d("xx", "TimerState:")
                             Log.d("xx", timerState.toString())
-                            Log.d("xx", "totalTime $totalTimeSeconds")
                             Log.d("xx", "totalTime $totalTime")
                         }) {
                             Text("Save")
@@ -201,7 +197,8 @@ fun MainScreen(viewModel: AppViewModel, navController: NavHostController) {
         Spacer(Modifier.height(8.dp))
 
         // # Remaining time n Rounds circular counters
-        if (isRunning || isPaused || roundsCounter > timerState.initRounds) {
+        if (isRunning || isPaused || circles == 0 ) {
+            // # circles == 0 means "finished"
             Box(
                 contentAlignment = Alignment.Center,
                 modifier = Modifier.size(120.dp)
@@ -209,13 +206,16 @@ fun MainScreen(viewModel: AppViewModel, navController: NavHostController) {
                 CircularProgressBar(
                     percentage = 1 - (circles.toFloat() / totalCircles.toFloat()),
                     number = null,
-                    radius = 56.dp
+                    radius = 56.dp,
+                    color = Color(0xFF1F3C94),
                 )
                 CircularTimer(
                     1 - (timeRemaining.toFloat() / (timerState.workTimeSeconds * 1000)),
                     timeRemaining,
                     timerState.workTimeSeconds,
-                    finished = roundsCounter > timerState.initRounds
+//                    finished = roundsCounter > timerState.initRounds
+                    finished = circles == 0,
+                    color = if (isWork) Color(0xFFD58812) else Color(0xFF4ABE1A)
                 )
             }
             Text(timeRemaining.toString())

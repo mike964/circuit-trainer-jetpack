@@ -3,26 +3,27 @@ package com.example.gmwrokouttimer.components
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ProgressIndicatorDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import kotlinx.coroutines.delay
 
 @Composable
-fun CircularTimer(progress: Float, time: Int, totalTime: Int, finished: Boolean = false) {
+fun CircularTimer(
+    progress: Float,
+    time: Int,
+    totalTime: Int,
+    finished: Boolean = false,
+    color: Color = Color(0xFF442585)
+) {
 //    val totalTime = 60L // Total time in seconds
 //    var currentTime by remember { mutableStateOf(totalTime) }
 //    var isTimerRunning by remember { mutableStateOf(true) }
@@ -50,6 +51,7 @@ fun CircularTimer(progress: Float, time: Int, totalTime: Int, finished: Boolean 
     ) {
         CircularProgressIndicator(
             trackColor = Color(0xFFD7D7DE),
+            color = color,
             progress = { animatedProgress },
             modifier = Modifier
                 .size(100.dp),
@@ -69,7 +71,7 @@ fun CircularTimer(progress: Float, time: Int, totalTime: Int, finished: Boolean 
                 text = if (finished) "DONE" else "${((time + 1000) / 1000)}",
                 fontSize = if (finished)  24.sp else 30.sp ,
                 fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.primary
+                color = if (finished)  Color(0xFF1F3C94) else color
             )
 //        }
     }
