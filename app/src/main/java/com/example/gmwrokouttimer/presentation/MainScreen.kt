@@ -61,6 +61,7 @@ fun MainScreen(viewModel: AppViewModel, navController: NavHostController) {
     val totalTimeLeft by countdownVm.totalTimeLeft.collectAsState()
 //    val rounds by countdownVm.rounds.collectAsState()
     val circles by countdownVm.circles.collectAsState()
+    val roundsCounter by countdownVm.roundsCounter.collectAsState()
     val isRunning by countdownVm.isRunning.collectAsState()
     val isPaused by countdownVm.isPaused.collectAsState()
 
@@ -185,18 +186,22 @@ fun MainScreen(viewModel: AppViewModel, navController: NavHostController) {
             }
         }
 //                        Text(text = "Current Exercise ID : $currentExerciseId", fontWeight = FontWeight.Bold, modifier = Modifier.padding(4.dp))
+
+        // # Total workout time countdown in MM:SS
+        Text(formatMilliseconds(totalTimeLeft))
+        Spacer(Modifier.height(8.dp))
+        LocalGifExample(currentExercise.imageId)
+
         Text(
             text = currentExercise.name,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(8.dp)
         )
 
-        LocalGifExample(currentExercise.imageId)
-
-        Spacer(Modifier.height(16.dp))
+        Spacer(Modifier.height(8.dp))
 
         // # Remaining time n Rounds circular counters
-        if (isRunning || isPaused || exerciseCounter > 1) {
+        if (isRunning || isPaused || roundsCounter > timerState.initRounds) {
             Box(
                 contentAlignment = Alignment.Center,
                 modifier = Modifier.size(120.dp)
@@ -209,7 +214,8 @@ fun MainScreen(viewModel: AppViewModel, navController: NavHostController) {
                 CircularTimer(
                     1 - (timeRemaining.toFloat() / (timerState.workTimeSeconds * 1000)),
                     timeRemaining,
-                    timerState.workTimeSeconds
+                    timerState.workTimeSeconds,
+                    finished = roundsCounter > timerState.initRounds
                 )
             }
             Text(timeRemaining.toString())
@@ -219,9 +225,6 @@ fun MainScreen(viewModel: AppViewModel, navController: NavHostController) {
         CountdownScreen(countdownVm)
 //        Text(timerState.workTimeSeconds.toString())
 
-//        SimpleCountdownTimer(120 )
-//        Stopwatch()
-        Text(formatMilliseconds(totalTimeLeft))
 
         WorkoutsetList(viewModel.workoutList, viewModel, countdownVm)
 //                        ExerciseImageList(appViewModel.exerciseImageList)

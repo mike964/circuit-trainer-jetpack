@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
 
 @Composable
-fun CircularTimer(progress: Float, time: Int, totalTime: Int) {
+fun CircularTimer(progress: Float, time: Int, totalTime: Int, finished: Boolean = false) {
 //    val totalTime = 60L // Total time in seconds
 //    var currentTime by remember { mutableStateOf(totalTime) }
 //    var isTimerRunning by remember { mutableStateOf(true) }
@@ -66,11 +66,11 @@ fun CircularTimer(progress: Float, time: Int, totalTime: Int) {
 //            )
 //        } else {
             Text(
-                text = "${((time + 1000) / 1000)}",
-                fontSize = 30.sp,
+                text = if (finished) "DONE" else "${((time + 1000) / 1000)}",
+                fontSize = if (finished)  24.sp else 30.sp ,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.primary
-            ) // Display the time
+            )
 //        }
     }
     // Add buttons here to control the timer (Start/Pause/Reset)

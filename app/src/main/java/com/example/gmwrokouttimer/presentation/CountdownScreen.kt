@@ -56,7 +56,7 @@ fun CountdownScreen(
 
     Column(
         modifier = Modifier
-//            .fillMaxSize()
+            .fillMaxWidth()
             .padding(12.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -69,14 +69,17 @@ fun CountdownScreen(
                 text = (if (checkEvenNumber(circles)) "REST" else "WORK")
             )
         } else {
-            if (isPaused) Text("PAUSED" ) else
-            if (exerciseCounter == 1) Text("Select a Plan and click Start")
+            if (isPaused) Text("PAUSED" )
+            if (roundsCounter>  timerState.initRounds ) {
+                Text(
+                    text = ("Finished. Good Job 💪😁")
+                )
+            } else {
+                if (exerciseCounter == 1 )
+                    Text("Select a Plan and click Start")
+            }
         }
-        if (circles == 0 && exerciseCounter > 1) {
-            Text(
-                text = ("Finished. Good Job 💪😁")
-            )
-        }
+
         Spacer(Modifier.height(8.dp))
 
         Row(
@@ -107,10 +110,10 @@ fun CountdownScreen(
                 Text(text = "Reset")
             }
         }
+        // Hide details below when Workout finishes : roundsCounter > initialRounds
         Text("Exercise $exerciseCounter / ${timerState.initExercises}")
         Text("Circle $circles")
         Text("Round $roundsCounter / ${timerState.initRounds}")
-
     }
 
 
