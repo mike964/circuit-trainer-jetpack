@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import com.example.gmwrokouttimer.components.HorizontalNumberPicker
 
 @Composable
-fun SettingsPopup(showPopup : Boolean = false, initRounds: Int, updateInitRounds : (Int) -> Unit) {
+fun SettingsPopup(showPopup : Boolean = false, initRounds: Int, setInitRounds : (Int) -> Unit) {
     Popup(
         onDismissRequest = { showPopup   }, // Dismisses when tapping outside
         alignment = Alignment.Center // Centers the popup on the screen
@@ -59,7 +59,7 @@ fun SettingsPopup(showPopup : Boolean = false, initRounds: Int, updateInitRounds
                 }
                 Text("Rounds" )
                 HorizontalNumberPicker(default = initRounds, height = 30.dp) {
-                   updateInitRounds(it)
+                   setInitRounds(it)
                 }
 //                Button(onClick = { showPopup = false }) {
 //                    Text("Save")

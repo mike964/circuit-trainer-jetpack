@@ -1,5 +1,6 @@
 package com.example.gmwrokouttimer.presentation
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -39,10 +40,12 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.gmwrokouttimer.components.CircularProgressBar
 import com.example.gmwrokouttimer.components.CircularTimer
+import com.example.gmwrokouttimer.components.CountdownTimerWithControls
 import com.example.gmwrokouttimer.components.HorizontalNumberPicker
 import com.example.gmwrokouttimer.components.LocalGifExample
 import com.example.gmwrokouttimer.components.SimpleCountdownTimer
 import com.example.gmwrokouttimer.components.Stopwatch
+import com.example.gmwrokouttimer.utils.formatMilliseconds
 import com.example.gmwrokouttimer.utils.formatSeconds
 
 @Composable
@@ -54,12 +57,16 @@ fun MainScreen(viewModel: AppViewModel, navController: NavHostController) {
     val currentExercise =
         getExerciseById(currentPreset.exerciseIdList[exerciseCounter - 1])
     val timeRemaining by countdownVm.timeRemaining.collectAsState()
+    val totalTime  by countdownVm.totalTimeSeconds.collectAsState()
+    val totalTimeLeft by countdownVm.totalTimeLeft.collectAsState()
 //    val rounds by countdownVm.rounds.collectAsState()
     val circles by countdownVm.circles.collectAsState()
     val isRunning by countdownVm.isRunning.collectAsState()
     val isPaused by countdownVm.isPaused.collectAsState()
 
     val totalCircles = ((timerState.initExercises * 2) - 1)
+    val totalTimeSeconds =  ((timerState.workTimeSeconds) * timerState.initRounds * totalCircles)
+
     // State to control popup visibility
     var showPopup by remember { mutableStateOf(false) }
 
@@ -100,7 +107,7 @@ fun MainScreen(viewModel: AppViewModel, navController: NavHostController) {
                             min = 2, max = 20,
                             height = 30.dp
                         ) {
-                            countdownVm.updateWorkTime(it)
+                            countdownVm.setWorkTime(it)
                         }
                         Text("Rest (Seconds)")
                         HorizontalNumberPicker(height = 30.dp) {
@@ -108,16 +115,20 @@ fun MainScreen(viewModel: AppViewModel, navController: NavHostController) {
                         }
                         Text("Rounds")
                         HorizontalNumberPicker(default = timerState.initRounds, height = 30.dp) {
-                            countdownVm.updateInitRounds(it)
+                            countdownVm.setInitRounds(it)
                         }
-                        Text(
-                            "Total time :" +
-                                    " ${formatSeconds(((timerState.workTimeSeconds) * timerState.initRounds * circles).toLong())}"
-                        )
+                        Text(  "Total time : "
+                                + formatSeconds((totalTimeSeconds).toLong()))
 
                         Spacer(modifier = Modifier.height(8.dp))
 
-                        Button(onClick = { showPopup = false }) {
+                        Button(onClick = {
+                            showPopup = false
+                            Log.d("xx", "TimerState:")
+                            Log.d("xx", timerState.toString())
+                            Log.d("xx", "totalTime $totalTimeSeconds")
+                            Log.d("xx", "totalTime $totalTime")
+                        }) {
                             Text("Save")
                         }
                     }
@@ -206,10 +217,11 @@ fun MainScreen(viewModel: AppViewModel, navController: NavHostController) {
         }
 
         CountdownScreen(countdownVm)
-        Text(timerState.workTimeSeconds.toString())
+//        Text(timerState.workTimeSeconds.toString())
 
-//        SimpleCountdownTimer(120)
+//        SimpleCountdownTimer(120 )
 //        Stopwatch()
+        Text(formatMilliseconds(totalTimeLeft))
 
         WorkoutsetList(viewModel.workoutList, viewModel, countdownVm)
 //                        ExerciseImageList(appViewModel.exerciseImageList)

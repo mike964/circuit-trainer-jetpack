@@ -1,10 +1,12 @@
 package com.example.gmwrokouttimer.components
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.unit.sp
+import com.example.gmwrokouttimer.utils.formatSeconds
 import kotlinx.coroutines.delay
 
 @Composable
@@ -24,9 +26,10 @@ fun SimpleCountdownTimer(initialTime: Int) {
 }
 
 @Composable
-fun CountdownTimerWithControls(totalSeconds: Int) {
+fun CountdownTimerWithControls(totalSeconds: Int, isRunning : Boolean = false) {
     var timeLeft by remember { mutableIntStateOf(totalSeconds) }
-    var isRunning by remember { mutableStateOf(false) }
+//    var isRunning by remember { mutableStateOf(false) }
+    var isRunning by remember { mutableStateOf(isRunning) }
 
     // Core Timer Logic
     LaunchedEffect(key1 = timeLeft, key2 = isRunning) {
@@ -39,17 +42,19 @@ fun CountdownTimerWithControls(totalSeconds: Int) {
     }
 
     Column {
-        Text(text = "Time: ${timeLeft}s", fontSize = 48.sp)
+        Text(text = "Time: ${formatSeconds(timeLeft.toLong())}s", fontSize = 32.sp)
 
-        Button(onClick = { isRunning = !isRunning }) {
-            Text(if (isRunning) "Pause" else "Start")
-        }
+       Row{
+           Button(onClick = { isRunning = !isRunning }) {
+               Text(if (isRunning) "Pause" else "Start")
+           }
 
-        Button(onClick = {
-            isRunning = false
-            timeLeft = totalSeconds
-        }) {
-            Text("Reset")
-        }
+           Button(onClick = {
+               isRunning = false
+               timeLeft = totalSeconds
+           }) {
+               Text("Reset")
+           }
+       }
     }
 }

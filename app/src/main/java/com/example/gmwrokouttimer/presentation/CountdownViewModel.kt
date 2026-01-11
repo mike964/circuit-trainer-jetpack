@@ -40,8 +40,14 @@ class CountdownViewModel : ViewModel() {
     private var _circles = MutableStateFlow(1)
     val circles: StateFlow<Int> = _circles.asStateFlow()
     val exerciseCounter = MutableStateFlow(1)
-
+    // # time remaining in a circle (work or rest)
     val timeRemaining: StateFlow<Int> = _timeRemaining.asStateFlow()
+
+    private val _totalTimeSeconds = MutableStateFlow( uiState.value.workTimeSeconds  * uiState.value.initRounds * circles.value)   // Total time left in seconds
+    // # Total time left in milliseconds
+    private val _totalTimeLeft = MutableStateFlow(_totalTimeSeconds.value.toLong()*1000)
+    val totalTimeSeconds: StateFlow<Int> = _totalTimeSeconds
+    val totalTimeLeft: StateFlow<Long> = _totalTimeLeft
 
 
     private val _isRunning = MutableStateFlow(false)
@@ -51,16 +57,6 @@ class CountdownViewModel : ViewModel() {
 
     private var timerJob: Job? = null
 
-    fun setTotalExercises(x: Int) {
-
-        _uiState.update { currentState ->
-            currentState.copy(
-                initExercises = x
-            )
-        }
-        Log.d("xx", x.toString())
-        _circles.value = (x * 2) - 1
-    }
 
     fun startPauseTimer() {
         if (_isRunning.value) {
@@ -88,6 +84,7 @@ class CountdownViewModel : ViewModel() {
 //                        Log.d("xx", _timeRemaining.value.toString())
                         delay(100L) // Delay for one second
                         _timeRemaining.value -= 100
+                        _totalTimeLeft.value-=100
                     }
                     // Re-run timer
                     _timeRemaining.value = uiState.value.workTimeSeconds * 1000
@@ -142,15 +139,25 @@ class CountdownViewModel : ViewModel() {
     }
      */
 
-    fun updateInitRounds(x: Int) {
+    fun setTotalExercises(x: Int) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                initExercises = x
+            )
+        }
+//        Log.d("xx", x.toString())
+        _circles.value = (x * 2) - 1
+    }
+    fun setInitRounds(x: Int) {
         _uiState.update { currentState ->
             currentState.copy(
                 initRounds = x
             )
         }
-//        _roundsCounter.value = x
+        _totalTimeSeconds.value = (x * uiState.value.workTimeSeconds * circles.value)
+        _totalTimeLeft.value = ((x * uiState.value.workTimeSeconds * circles.value)*1000).toLong()
     }
-    fun updateWorkTime(x: Int) {
+    fun setWorkTime(x: Int) {
         val y = x* 5
         Log.d(y.toString(), "xx")
         _uiState.update { currentState ->
@@ -158,7 +165,7 @@ class CountdownViewModel : ViewModel() {
                 workTimeSeconds = y
             )
         }
+        _totalTimeSeconds.value = (y * uiState.value.initRounds * circles.value)
+        _totalTimeLeft.value = ((y * uiState.value.initRounds * circles.value)*1000).toLong()
     }
-
-
 }
