@@ -1,13 +1,12 @@
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     id("com.google.devtools.ksp")
 }
 
 android {
     namespace = "com.example.gmwrokouttimer"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.example.gmwrokouttimer"
@@ -32,11 +31,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-    kotlinOptions {
-        jvmTarget = "11"
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
     buildFeatures {
         compose = true
@@ -65,7 +61,7 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
     // View Model
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.9.0")
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
 
     // Core Coil 3 library for Compose
 //    implementation("io.coil-kt.coil3:coil-compose:3.0.4")
@@ -73,21 +69,20 @@ dependencies {
 //    implementation("io.coil-kt.coil3:coil-network-okhttp:3.0.4")
     // GIF support - Essential for GIF loading
 //    implementation("io.coil-kt.coil3:coil-gif:3.0.4")
-    implementation("io.coil-kt:coil-compose:2.7.0")
+    implementation(libs.coil.compose)
     // For GIF support
-    implementation("io.coil-kt:coil-gif:2.7.0")
+    implementation(libs.coil.gif)
     // # Icons
-    implementation("androidx.compose.material:material-icons-core:1.7.8")
+    implementation(libs.androidx.compose.material.icons.core)
     // Room Database
-    val roomVersion = "2.7.0" // Or latest stable 2.8.x in 2026
-    implementation("androidx.room:room-runtime:$roomVersion")
-    implementation("androidx.room:room-ktx:$roomVersion")
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
     // Use KSP instead of kapt for the compiler
-    ksp("androidx.room:room-compiler:$roomVersion")
+    ksp(libs.androidx.room.compiler)
     // Optional: Paging 3 integration
-    implementation("androidx.room:room-paging:$roomVersion")
+    implementation(libs.androidx.room.paging)
     // # Navigation
-    implementation("androidx.navigation:navigation-compose:2.7.4")
+    implementation(libs.androidx.navigation.compose)
 //    implementation("org.jetbrains.kotlinx-serialization:kotlinx-serialization-json:1.6.3")
 }
 
