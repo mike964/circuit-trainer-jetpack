@@ -6,7 +6,7 @@ data class Exercise(val id: Int, val name: String, val imageId: Int)
 //data class WorkoutSet(val id: Int, val name: String, val exercises: List<Exercise>)
 data class Preset(val id: Int, val name: String, val exerciseIdList: List<Int>)
 data class LocalImage(val id: Int, val contentDescription: String)
-val sampleExercises = listOf(
+val exerciseList = listOf(
     Exercise(1, "Push up", R.drawable.push_up),
     Exercise(2, "Pull up", R.drawable.pullup),
     Exercise(3, "Jump Rope", R.drawable.jumprope),
@@ -53,7 +53,7 @@ val exerciseImages = listOf(
     // Add more images as needed
 )
 fun getExerciseById(id: Int): Exercise {
-    val result = sampleExercises.filter { it.id == id }
+    val result = exerciseList.filter { it.id == id }
     return result[0]
 }
 fun getPresetById(id: Int): Preset {

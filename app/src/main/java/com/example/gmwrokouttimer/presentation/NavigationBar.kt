@@ -94,7 +94,7 @@ fun NavigationBar(
                 )
             }
             composable(Screen.Plans.route) {
-                NoteScreen(vm = noteViewModel, navController = navController)
+                NoteScreen(appVm = appViewModel , noteVm = noteViewModel, navController = navController)
             }
             composable(Screen.Progress.route) {
                 SearchScreen(navController = navController)

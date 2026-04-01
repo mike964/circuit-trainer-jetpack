@@ -23,10 +23,16 @@ class AppViewModel : ViewModel() {
     val workoutList: List<Preset> get() = _workoutList
     val exerciseImageList: List<LocalImage> get() = _exerciseImages
 
+    // Expose the list of notes as a state
+    private val _exercises = mutableStateListOf<Exercise>()
+    val exercises: List<Exercise> = _exercises
+
     init {
         // Initialize with some dummy data
         _workoutList.addAll( sampleWorkoutPresets)
         _exerciseImages.addAll(exerciseImages)
+        // Add all exercises
+        _exercises.addAll(exerciseList)
     }
 
     fun setCurrentPreset(presetId:Int){

@@ -31,10 +31,8 @@ Created on 07/16/2025
 * \[ ] Hide extra bs when in workout mode
 * \[x] Add todos.md  2026.03.29
 * \[x] Update Gradle  26.03.29
-* \[x] Add
-* \[x] Add
-* \[x] Add
-* \[x] Add
+* \[x] Show all exercises in list   4.1
+* \[x] Add 
 
 Later
 Now do only essentials. Later polish.

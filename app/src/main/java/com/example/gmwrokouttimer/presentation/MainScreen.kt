@@ -142,17 +142,17 @@ fun MainScreen(viewModel: AppViewModel, navController: NavHostController) {
         horizontalAlignment = Alignment.CenterHorizontally,
 
         ) {
-        Row(
-            Modifier
-                .fillMaxWidth()
-                .height(60.dp)
-                .background(color = Color(0xFF28336B)),
-            verticalAlignment = CenterVertically,
-            horizontalArrangement = Arrangement.SpaceEvenly,
-        ) {
-            Text("GM TRAINER 🥇", color = Color.White)
-        }
-        Spacer(Modifier.height(10.dp))
+//        Row(
+//            Modifier
+//                .fillMaxWidth()
+//                .height(60.dp)
+//                .background(color = Color(0xFF28336B)),
+//            verticalAlignment = CenterVertically,
+//            horizontalArrangement = Arrangement.SpaceEvenly,
+//        ) {
+//            Text("GM TRAINER 🥇", color = Color.White)
+//        }
+//        Spacer(Modifier.height(10.dp))
 
 
         // # Current Preset and Exercise)

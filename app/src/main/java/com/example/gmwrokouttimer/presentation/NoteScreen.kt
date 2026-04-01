@@ -19,19 +19,27 @@ import androidx.navigation.NavHostController
 import com.example.gmwrokouttimer.database.model.Note
 
 @Composable
-fun NoteScreen(vm: NoteViewModel,  navController: NavHostController) {
-    val notes by vm.notes.collectAsStateWithLifecycle()
+fun NoteScreen(appVm: AppViewModel, noteVm: NoteViewModel,  navController: NavHostController) {
+//    val notes by vm.notes.collectAsStateWithLifecycle()
+//    var title by remember { mutableStateOf("") }
+    val exercises = appVm.exercises
     var title by remember { mutableStateOf("") }
 
     Column(modifier = Modifier.padding(16.dp)) {
         TextField(value = title, onValueChange = { title = it }, label = { Text("Title") })
-        Button(onClick = { vm.addNote(title, "Note content..."); title = "" }) {
+        Button(onClick = { noteVm.addNote(title, "Note content..."); title = "" }) {
             Text("Save Note")
         }
 
+//        LazyColumn {
+//            items(notes, key = { it.id }) { note ->
+//                NoteItem(note, onDelete = { vm.deleteNote(note) })
+//            }
+//        }
+
         LazyColumn {
-            items(notes, key = { it.id }) { note ->
-                NoteItem(note, onDelete = { vm.deleteNote(note) })
+            items(exercises, key = { it.id }) { itm ->
+                ExerciseItem(itm )
             }
         }
     }
@@ -41,5 +49,13 @@ fun NoteScreen(vm: NoteViewModel,  navController: NavHostController) {
 fun NoteItem(note: Note, onDelete: (Note) -> Unit) {
     // Design your individual note item UI here (e.g., Card, Text fields, delete button)
     Text(text = note.title)
+    // ...
+}
+@Composable
+fun ExerciseItem(exercise: Exercise
+              //   , onDelete: (Exercise) -> Unit
+) {
+    // Design your individual note item UI here (e.g., Card, Text fields, delete button)
+    Text(text = exercise.name)
     // ...
 }
