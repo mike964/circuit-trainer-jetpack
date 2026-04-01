@@ -32,15 +32,10 @@ class MainActivity : ComponentActivity() {
             val noteViewModel = viewModel<NoteViewModel>(factory = noteViewModelFactory)
 
             GMWrokoutTimerTheme {
-                Surface(
-                    color = Color(0xFFA5A5A9),
-                    modifier = Modifier.Companion.fillMaxSize()
-                ) {
 //                    MainScreen(viewModel = appViewModel)
 //                    NoteScreen(noteViewModel)
                     NavigationBar(appViewModel, noteViewModel)
                 }
-            }
         }
     }
 }
