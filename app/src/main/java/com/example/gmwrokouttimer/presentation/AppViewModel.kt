@@ -6,6 +6,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.setValue
+import com.example.gmwrokouttimer.data.Exercise
+import com.example.gmwrokouttimer.data.LocalImage
+import com.example.gmwrokouttimer.data.Preset
+import com.example.gmwrokouttimer.data.exerciseImages
+import com.example.gmwrokouttimer.data.exerciseList
+import com.example.gmwrokouttimer.data.getPresetById
+import com.example.gmwrokouttimer.data.sampleWorkoutPresets
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,7 +23,7 @@ class AppViewModel : ViewModel() {
     private val _workoutList = mutableStateListOf<Preset>()
     private val _exerciseImages = mutableStateListOf<LocalImage>()
     // # Current Selected Workout preset
-     private var _currentPreset: MutableStateFlow<Preset> = MutableStateFlow( getPresetById(7))
+     private var _currentPreset: MutableStateFlow<Preset> = MutableStateFlow(getPresetById(7))
     val  currentPreset: StateFlow<Preset> = _currentPreset.asStateFlow()
 
     // The public, immutable list for the UI to observe
@@ -29,7 +36,7 @@ class AppViewModel : ViewModel() {
 
     init {
         // Initialize with some dummy data
-        _workoutList.addAll( sampleWorkoutPresets)
+        _workoutList.addAll(sampleWorkoutPresets)
         _exerciseImages.addAll(exerciseImages)
         // Add all exercises
         _exercises.addAll(exerciseList)
@@ -37,7 +44,7 @@ class AppViewModel : ViewModel() {
 
     fun setCurrentPreset(presetId:Int){
         Log.d("xx", getPresetById(presetId).toString())
-       _currentPreset.value =  getPresetById(presetId)
+       _currentPreset.value = getPresetById(presetId)
     }
 
     // # SIMPLE COUNTER

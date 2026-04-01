@@ -1,4 +1,4 @@
-package com.example.gmwrokouttimer.components
+package com.example.gmwrokouttimer.presentation
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image

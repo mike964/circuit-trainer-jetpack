@@ -1,4 +1,4 @@
-package com.example.gmwrokouttimer.components
+package com.example.gmwrokouttimer.presentation
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyColumn
@@ -13,7 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import com.example.gmwrokouttimer.presentation.LocalImage
+import com.example.gmwrokouttimer.data.LocalImage
 
 
 @Composable

@@ -1,4 +1,4 @@
-package com.example.gmwrokouttimer.presentation
+package com.example.gmwrokouttimer.data
 
 import com.example.gmwrokouttimer.R
 

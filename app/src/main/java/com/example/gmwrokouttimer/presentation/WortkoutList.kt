@@ -29,7 +29,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.gmwrokouttimer.components.PlayButton
+import com.example.gmwrokouttimer.data.Preset
+import com.example.gmwrokouttimer.data.getExerciseById
 
 
 @Composable
@@ -56,7 +57,7 @@ fun WorkoutsetList(items: List<Preset>, appVm: AppViewModel, countdownVm: Countd
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun WorkoutsetCard(item: Preset,selectedPresetId:Int,   onCardClick: () -> Unit, onPlayClick: () -> Unit) {
+fun WorkoutsetCard(item: Preset, selectedPresetId:Int, onCardClick: () -> Unit, onPlayClick: () -> Unit) {
     // State to track if the row is selected
 //    var isSelected by remember { mutableStateOf(false) }
     val isSelected: Boolean = (selectedPresetId == item.id)

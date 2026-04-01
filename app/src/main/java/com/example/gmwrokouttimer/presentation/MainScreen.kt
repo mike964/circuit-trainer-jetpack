@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -38,10 +37,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.example.gmwrokouttimer.components.CircularProgressBar
-import com.example.gmwrokouttimer.components.CircularTimer
-import com.example.gmwrokouttimer.components.HorizontalNumberPicker
-import com.example.gmwrokouttimer.components.LocalGifExample
+import com.example.gmwrokouttimer.data.getExerciseById
 import com.example.gmwrokouttimer.utils.formatMilliseconds
 import com.example.gmwrokouttimer.utils.formatSeconds
 
@@ -52,7 +48,7 @@ fun MainScreen(viewModel: AppViewModel, navController: NavHostController) {
     val exerciseCounter by countdownVm.exerciseCounter.collectAsState()
     val currentPreset by viewModel.currentPreset.collectAsState()
     val currentExercise =
-        getExerciseById(currentPreset.exerciseIdList[exerciseCounter - 1])
+        getExerciseById(currentPreset.exerciseIdList.getOrElse(exerciseCounter - 1) { currentPreset.exerciseIdList.first() })
     val timeRemaining by countdownVm.timeRemaining.collectAsState()
     val totalTime  by countdownVm.totalTimeSeconds.collectAsState()
     val totalTimeLeft by countdownVm.totalTimeLeft.collectAsState()

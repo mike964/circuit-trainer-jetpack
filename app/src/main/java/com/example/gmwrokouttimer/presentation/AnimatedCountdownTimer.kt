@@ -1,4 +1,4 @@
-package com.example.gmwrokouttimer.components
+package com.example.gmwrokouttimer.presentation
 
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.core.animateFloatAsState
@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 
 // # Great Example
 @Composable
-fun AnimatedCountdownTimer(viewModel: CountdownViewModel = viewModel()) {
+fun AnimatedCountdownTimer(viewModel: AnimatedCountdownViewModel = viewModel()) {
     val currentTime by viewModel.currentTime.collectAsState()
     val isRunning by viewModel.isRunning.collectAsState()
     val progress = 1- viewModel.getProgress()
@@ -71,7 +71,7 @@ fun AnimatedCountdownTimer(viewModel: CountdownViewModel = viewModel()) {
     }
 }
 
-class CountdownViewModel : ViewModel() {
+class AnimatedCountdownViewModel : ViewModel() {
     private val totalTime = 10000L // 10 seconds in milliseconds
     private val _currentTime = MutableStateFlow(totalTime)
     val currentTime: StateFlow<Long> = _currentTime.asStateFlow()
