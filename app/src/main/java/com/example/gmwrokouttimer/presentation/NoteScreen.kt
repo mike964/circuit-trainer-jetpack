@@ -56,6 +56,6 @@ fun ExerciseItem(exercise: Exercise
               //   , onDelete: (Exercise) -> Unit
 ) {
     // Design your individual note item UI here (e.g., Card, Text fields, delete button)
-    Text(text = exercise.name)
+    Text(text =  "${ exercise.id} - ${exercise.name}"   )
     // ...
 }

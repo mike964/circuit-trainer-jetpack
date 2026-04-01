@@ -24,9 +24,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.gmwrokouttimer.navigation.Screen
 import com.example.gmwrokouttimer.navigation.navBarItems
-import com.example.gmwrokouttimer.presentation.screens.ProfileScreen
-import com.example.gmwrokouttimer.presentation.screens.SearchScreen
-import com.example.gmwrokouttimer.ui.theme.GMWrokoutTimerTheme
+import com.example.gmwrokouttimer.presentation.screens.progress.ProgressScreen
+import com.example.gmwrokouttimer.presentation.settings.SettingsScreen
 
 
 // # Bottom Navigation Bar
@@ -97,10 +96,10 @@ fun NavigationBar(
                 NoteScreen(appVm = appViewModel , noteVm = noteViewModel, navController = navController)
             }
             composable(Screen.Progress.route) {
-                SearchScreen(navController = navController)
+                ProgressScreen(navController = navController)
             }
             composable(Screen.Settings.route) {
-                ProfileScreen(navController = navController)
+                SettingsScreen(navController = navController)
             }
         }
     }

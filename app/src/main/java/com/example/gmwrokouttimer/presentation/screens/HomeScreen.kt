@@ -29,37 +29,3 @@ fun HomeScreen(navController: NavController) {
     }
 }
 
-@Composable
-fun SearchScreen(navController: NavController) {
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text("Welcome to the Search Screen!")
-        Spacer(modifier = Modifier.height(24.dp))
-        Button(onClick = {
-            // Go back to the previous screen (Home)
-            navController.popBackStack()
-        }) {
-            Text("Go Back")
-        }
-    }
-}
-@Composable
-fun ProfileScreen(navController: NavController) {
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text("Profile Screen")
-        Spacer(modifier = Modifier.height(24.dp))
-        Button(onClick = {
-            // Go back to the previous screen (Home)
-            navController.popBackStack()
-        }) {
-            Text("Go Back")
-        }
-    }
-}
