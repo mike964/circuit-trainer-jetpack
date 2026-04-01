@@ -16,12 +16,12 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.gmwrokouttimer.R
-import com.example.gmwrokouttimer.components.shared.GifImageLoader
+import com.example.gmwrokouttimer.components.gifImageLoader
 
 @Composable
 fun LocalGifExample(gifResourceId: Int?) {
     val context = LocalContext.current
-    val imageLoader = GifImageLoader() // Custom ImageLoader from Step 2
+    val imageLoader = gifImageLoader() // Custom ImageLoader from Step 2
 
     // Assuming you have a GIF named "my_animation.gif" in your res/drawable folder
 //    val gifResourceId = R.drawable.st_shoulder_press

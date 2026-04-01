@@ -10,7 +10,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import coil.ImageLoader
+import coil.decode.ImageDecoderDecoder
 
 @Composable
 fun DeterminateCircularIndicator(progress: Float) {
@@ -19,11 +22,25 @@ fun DeterminateCircularIndicator(progress: Float) {
     // In a real app, you would update 'progress' based on your operation's status
 
     CircularProgressIndicator(
-        progress =   progress , // Use the progress parameter
+        progress = {
+            progress // Use the progress parameter
+        },
         modifier = Modifier.width(40.dp), // Adjust size
         color = MaterialTheme.colorScheme.secondary,
-        trackColor = MaterialTheme.colorScheme.surfaceVariant,
         strokeWidth = 4.dp,
-        strokeCap = StrokeCap.Round
+        trackColor = MaterialTheme.colorScheme.surfaceVariant,
+        strokeCap = StrokeCap.Round,
     )
+}
+
+@Composable
+fun gifImageLoader(): ImageLoader {
+    val context = LocalContext.current
+    return remember(context) {
+        ImageLoader.Builder(context)
+            .components {
+                add(ImageDecoderDecoder.Factory())
+            }
+            .build()
+    }
 }

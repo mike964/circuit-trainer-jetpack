@@ -1,4 +1,4 @@
-package com.example.gmwrokouttimer.presentation.screens
+package com.example.gmwrokouttimer.presentation.home
 
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text

@@ -24,7 +24,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.gmwrokouttimer.navigation.Screen
 import com.example.gmwrokouttimer.navigation.navBarItems
-import com.example.gmwrokouttimer.presentation.screens.progress.ProgressScreen
+import com.example.gmwrokouttimer.presentation.progress.ProgressScreen
 import com.example.gmwrokouttimer.presentation.settings.SettingsScreen
 
 

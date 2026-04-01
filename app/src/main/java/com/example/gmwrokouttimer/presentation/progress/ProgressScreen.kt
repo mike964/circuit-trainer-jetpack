@@ -1,4 +1,4 @@
-package com.example.gmwrokouttimer.presentation.screens.progress
+package com.example.gmwrokouttimer.presentation.progress
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
