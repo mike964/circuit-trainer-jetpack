@@ -6,12 +6,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.setValue
+import com.example.gmwrokouttimer.data.Activity
 import com.example.gmwrokouttimer.data.Exercise
 import com.example.gmwrokouttimer.data.LocalImage
 import com.example.gmwrokouttimer.data.Preset
 import com.example.gmwrokouttimer.data.exerciseImages
 import com.example.gmwrokouttimer.data.exerciseList
 import com.example.gmwrokouttimer.data.getPresetById
+import com.example.gmwrokouttimer.data.sampleActivityList
 import com.example.gmwrokouttimer.data.sampleWorkoutPresets
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -34,12 +36,19 @@ class AppViewModel : ViewModel() {
     private val _exercises = mutableStateListOf<Exercise>()
     val exercises: List<Exercise> = _exercises
 
+    private val _latestActivity = mutableStateListOf<Activity>()
+    val latestActivity: List<Activity> = _latestActivity
+
+
     init {
         // Initialize with some dummy data
         _workoutList.addAll(sampleWorkoutPresets)
         _exerciseImages.addAll(exerciseImages)
         // Add all exercises
         _exercises.addAll(exerciseList)
+        // latest activity
+        _latestActivity.addAll(sampleActivityList)
+        // active days table
     }
 
     fun setCurrentPreset(presetId:Int){

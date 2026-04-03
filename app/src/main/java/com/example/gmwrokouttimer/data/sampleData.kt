@@ -3,9 +3,27 @@ package com.example.gmwrokouttimer.data
 import com.example.gmwrokouttimer.R
 
 data class Exercise(val id: Int, val name: String, val imageId: Int)
+
 //data class WorkoutSet(val id: Int, val name: String, val exercises: List<Exercise>)
 data class Preset(val id: Int, val name: String, val exerciseIdList: List<Int>)
 data class LocalImage(val id: Int, val contentDescription: String)
+
+data class Activity(
+    val id: Int,
+    val title: String,  // name of the workout preset
+    val type: String, // bodyweight, weights, cardio, mixed
+    val note: String,  // feeling after exercise done
+    val rate: Int,  // 1-5 rate of workout
+    val imageId: Int?, // take selfie after workout
+    val dateTime: String,
+    val duration: Int,
+    val calories: Int,
+    val location: String?,
+    val city: String,
+    val country: String,
+    val workoutPresetId: Int,
+)
+
 val exerciseList = listOf(
     Exercise(1, "Push up", R.drawable.push_up),
     Exercise(2, "Pull up", R.drawable.pullup),
@@ -37,13 +55,13 @@ val exerciseList = listOf(
     Exercise(28, "Shoulder Press", R.drawable.st_shoulder_press),
 )
 val sampleWorkoutPresets = listOf(
-    Preset(7, "Quick Warm Up", listOf(21,16,17,27, 26)),
-    Preset(1, "Morning 10 mins", listOf( 1,2,3)),
-    Preset(2, "Full Body Strength", listOf(4,5,6,28)),
-    Preset(3, "Gym A - Chest & Biceps", listOf(9,7, 8 ,10 ,6)),
-    Preset(4, "Gym B - Back & Triceps", listOf(  10 , 6,11, 19)),
-    Preset(5, "Outdoor Park Training", listOf(3,4,2,13,24)),
-    Preset(6, "Burn Calories at Home", listOf(21,22,27,24,25, 26)),
+    Preset(7, "Quick Warm Up", listOf(21, 16, 17, 27, 26)),
+    Preset(1, "Morning 10 mins", listOf(1, 2, 3)),
+    Preset(2, "Full Body Strength", listOf(4, 5, 6, 28)),
+    Preset(3, "Gym A - Chest & Biceps", listOf(9, 7, 8, 10, 6)),
+    Preset(4, "Gym B - Back & Triceps", listOf(10, 6, 11, 19)),
+    Preset(5, "Outdoor Park Training", listOf(3, 4, 2, 13, 24)),
+    Preset(6, "Burn Calories at Home", listOf(21, 22, 27, 24, 25, 26)),
 )
 
 val exerciseImages = listOf(
@@ -52,10 +70,45 @@ val exerciseImages = listOf(
     LocalImage(id = R.drawable.side_bends, contentDescription = "Description for image three"),
     // Add more images as needed
 )
+
+val sampleActivityList: List<Activity> = listOf(
+    Activity(
+        id = 101,
+        title = "Morning 10 mins",
+        type = "bodyweight",
+        note = "It was great. Better than expected. I did it. I feel great.",
+        rate = 4,
+        imageId = null,
+        dateTime = "2025-03-21T12:27:35.124365453",
+        duration = 900,
+        calories = 152,
+        location = null,
+        city = "London",
+        country = "England",
+        workoutPresetId = 1
+    ), Activity(
+        id = 102,
+        title = "Full Body Strength",
+        type = "hybrid",
+        note = "I didn't feel like to do it. But I did it. It was fukin worth it.",
+        rate = 5,
+        imageId = null,
+        dateTime = "2025-03-22T10:27:35.124365453",
+        duration = 1250,
+        calories = 212,
+        location = null,
+        city = "Paris",
+        country = "France",
+        workoutPresetId = 2
+    )
+)
+
+
 fun getExerciseById(id: Int): Exercise {
     val result = exerciseList.filter { it.id == id }
     return result[0]
 }
+
 fun getPresetById(id: Int): Preset {
     val result = sampleWorkoutPresets.filter { it.id == id }
     return result[0]
