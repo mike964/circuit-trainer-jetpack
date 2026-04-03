@@ -1,18 +1,22 @@
 package com.example.gmwrokouttimer.presentation
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.gmwrokouttimer.data.Exercise
@@ -55,7 +59,24 @@ fun NoteItem(note: Note, onDelete: (Note) -> Unit) {
 fun ExerciseItem(exercise: Exercise
               //   , onDelete: (Exercise) -> Unit
 ) {
-    // Design your individual note item UI here (e.g., Card, Text fields, delete button)
-    Text(text =  "${ exercise.id} - ${exercise.name}"   )
-    // ...
+    Card(
+        modifier = Modifier.fillMaxWidth()
+            .padding(6.dp)
+        ,
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White, // Set background color here
+//        contentColor = Color.Black       // Optional: Set default text/icon color
+        )
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(text = exercise.name)
+            Text(text = exercise.imageId.toString())
+        }
+    }
 }
+/*
+Instead of hardcoding colors like Color.Red, use your
+ theme's color scheme (e.g., MaterialTheme.colorScheme.surface)
+ to ensure support for both Light and Dark modes.
+ */

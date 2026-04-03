@@ -86,7 +86,8 @@ val sampleActivityList: List<Activity> = listOf(
         city = "London",
         country = "England",
         workoutPresetId = 1
-    ), Activity(
+    ),
+    Activity(
         id = 102,
         title = "Full Body Strength",
         type = "hybrid",

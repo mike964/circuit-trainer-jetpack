@@ -32,7 +32,8 @@ Created on 07/16/2025
 * \[x] Add todos.md  2026.03.29
 * \[x] Update Gradle  26.03.29
 * \[x] Show all exercises in list   4.1
-* \[x] Add 
+* \[x] Add sample latest activity data n display in UI  4.3 
+Push to Google play store 
 
 Later
 Now do only essentials. Later polish.
@@ -46,3 +47,18 @@ Select from pre-made workout plans n download them for practice offline - paid t
 
 Simple Gym workout timer. No DB for now. Just show Exercises n timer. 7/16/2025
 Convert Denis Panjuta Workout App to Jetpack. And make it use database to save workouts n feelings And make it use database to save workouts n feelings. after. Adidas Running simple Clone
+Build your own custom workout plans n suggest them to friends by link 
+
+Data structure 
+
+Finished workouts - Recent activities - Training plans - Weekly streak
+{ id - title - exercises,
+total Time : mm:ss (duration)
+calories burned 
+date - time 
+Note : feeling after workout 
+rate : 1-5
+Environment : indoor/outdoor
+Location : Geocoding
+City : London, Paris, ... 
+presetId }
