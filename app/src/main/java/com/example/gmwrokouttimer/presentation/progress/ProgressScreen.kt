@@ -58,12 +58,11 @@ fun ProgressScreen(appVm: AppViewModel, navController: NavController) {
 
 @Composable
 fun ActivityListItem(activity: Activity) {
-    Column() {
+    Column(  modifier = Modifier
+        .fillMaxSize()
+        .padding(8.dp)
+        .border(width = 1.dp, color = Color.Gray)) {
         Row(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(8.dp)
-                .border(width = 1.dp, color = Color.Gray)
         ) {
             Column(modifier = Modifier
                 .weight(1f)
@@ -79,7 +78,7 @@ fun ActivityListItem(activity: Activity) {
                 Text(text = "Rate : ${activity.rate}")
             }
         }
-        Row() {
+        Row(modifier = Modifier.padding(8.dp)) {
             Text("Note : ${activity.note}")
         }
     }
