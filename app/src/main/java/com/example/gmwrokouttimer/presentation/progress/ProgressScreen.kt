@@ -2,8 +2,10 @@ package com.example.gmwrokouttimer.presentation.progress
 
 import kotlin.time.Duration.Companion.seconds
 import android.annotation.SuppressLint
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -11,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
@@ -25,7 +28,9 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.gmwrokouttimer.data.Activity
 import com.example.gmwrokouttimer.presentation.AppViewModel
+import com.example.gmwrokouttimer.presentation.progress.calendar.CalendarView
 import com.example.gmwrokouttimer.utils.formatDateString
+import java.util.Date
 
 @SuppressLint("SuspiciousIndentation")
 @Composable
@@ -37,10 +42,8 @@ fun ProgressScreen(appVm: AppViewModel, navController: NavController) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text("Welcome to the Progress Screen")
-        Text("Latest activity")
-        Text("Active days table")
-        Spacer(modifier = Modifier.height(24.dp))
+        Text("Progress Screen")
+        Spacer(modifier = Modifier.height(12.dp))
         Button(onClick = {
             // Go back to the previous screen (Home)
             navController.popBackStack()
@@ -48,6 +51,27 @@ fun ProgressScreen(appVm: AppViewModel, navController: NavController) {
             Text("Go Back")
         }
 
+        Text("Active days table")
+        Box(
+            modifier = Modifier
+                .background(Color.DarkGray) // Sets a solid red background
+        ){
+            CalendarView(
+                month = Date() ,
+                date = List(30) {
+                    Pair(Date(), false)
+                },
+                displayNext = true,
+                displayPrev = true,
+                onClickNext = { /*TODO*/ },
+                onClickPrev = { /*TODO*/ },
+                onClick = { /*TODO*/ },
+                startFromSunday = true,
+            )
+        }
+
+
+        Text("Latest activity")
         LazyColumn {
             items(activities, key = { it.id }) {
                 ActivityListItem(it)

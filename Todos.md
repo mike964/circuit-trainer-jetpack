@@ -33,7 +33,8 @@ Created on 07/16/2025
 * \[x] Update Gradle  26.03.29
 * \[x] Show all exercises in list   4.1
 * \[x] Add sample latest activity data n display in UI  4.3 
-Push to Google play store 
+- [] Highligt workout days in custom calendar
+  Push to Google play store 
 
 Later
 Now do only essentials. Later polish.
@@ -61,4 +62,5 @@ rate : 1-5
 Environment : indoor/outdoor
 Location : Geocoding
 City : London, Paris, ... 
+Weather [hot, cold, sunny, rainy, partly cloudy, mild, perfect. ]
 presetId }
