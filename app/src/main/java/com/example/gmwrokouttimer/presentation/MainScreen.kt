@@ -37,10 +37,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import com.example.gmwrokouttimer.data.Activity
 import com.example.gmwrokouttimer.data.getExerciseById
 import com.example.gmwrokouttimer.presentation.main.SaveWorkoutPopup
 import com.example.gmwrokouttimer.utils.formatMilliseconds
 import com.example.gmwrokouttimer.utils.formatSeconds
+import kotlin.String
 
 @Composable
 fun MainScreen(viewModel: AppViewModel, navController: NavHostController) {
@@ -51,14 +53,14 @@ fun MainScreen(viewModel: AppViewModel, navController: NavHostController) {
     val currentExercise =
         getExerciseById(currentPreset.exerciseIdList.getOrElse(exerciseCounter - 1) { currentPreset.exerciseIdList.first() })
     val timeRemaining by countdownVm.timeRemaining.collectAsState()
-    val totalTime  by countdownVm.totalTimeSeconds.collectAsState()
+    val totalTime by countdownVm.totalTimeSeconds.collectAsState()
     val totalTimeLeft by countdownVm.totalTimeLeft.collectAsState()
 //    val rounds by countdownVm.rounds.collectAsState()
     val circles by countdownVm.circles.collectAsState()
     val roundsCounter by countdownVm.roundsCounter.collectAsState()
     val isRunning by countdownVm.isRunning.collectAsState()
     val isPaused by countdownVm.isPaused.collectAsState()
-    val isWork =  checkEvenNumber(circles)  //  (if (checkEvenNumber(circles)) "REST" else "WORK")
+    val isWork = checkEvenNumber(circles)  //  (if (checkEvenNumber(circles)) "REST" else "WORK")
 
     val totalCircles = ((timerState.initExercises * timerState.initRounds * 2) - 1)
 
@@ -112,8 +114,10 @@ fun MainScreen(viewModel: AppViewModel, navController: NavHostController) {
                         HorizontalNumberPicker(default = timerState.initRounds, height = 30.dp) {
                             countdownVm.setInitRounds(it)
                         }
-                        Text(  "Total time : "
-                                + formatSeconds((totalTime).toLong()))
+                        Text(
+                            "Total time : "
+                                    + formatSeconds((totalTime).toLong())
+                        )
 
                         Spacer(modifier = Modifier.height(8.dp))
 
@@ -194,7 +198,7 @@ fun MainScreen(viewModel: AppViewModel, navController: NavHostController) {
         Spacer(Modifier.height(8.dp))
 
         // # Remaining time n Rounds circular counters
-        if (isRunning || isPaused || circles == 0 ) {
+        if (isRunning || isPaused || circles == 0) {
             // # circles == 0 means "finished"
             Box(
                 contentAlignment = Alignment.Center,
@@ -223,7 +227,24 @@ fun MainScreen(viewModel: AppViewModel, navController: NavHostController) {
 //        Text(timerState.workTimeSeconds.toString())
 
         Spacer(Modifier.height(8.dp))
-        SaveWorkoutPopup()
+        SaveWorkoutPopup(onClickSave = {
+            viewModel.addActivity(
+                Activity(
+                    id = 10, title = "Morning 10 mins",
+                    type = "bodyweight", //  weights, bodyweight, cardio, strength, hybrid, mixed
+                    note = "Sample Note after workout.",  // feeling after exercise done
+                    rate = 3,  // 1-5 rate of workout
+                    imageId = null, // take selfie after workout
+                    dateTime = "2026-04-04T12:27:35.124365453",
+                    duration = 960,
+                    calories = 125,
+                    location = null,
+                    city = "Dubai",
+                    country = "UAE",
+                    workoutPresetId = System.currentTimeMillis().toInt()
+                )
+            )
+        })
 
         WorkoutsetList(viewModel.workoutList, viewModel, countdownVm)
 //                        ExerciseImageList(appViewModel.exerciseImageList)

@@ -31,7 +31,7 @@ import androidx.compose.ui.unit.dp
 
 
 @Composable
-fun SaveWorkoutPopup() {
+fun SaveWorkoutPopup(onClickSave: () -> Unit) {
     var showPopup by remember { mutableStateOf(false) }
     var userInput by remember { mutableStateOf("") }
 
@@ -77,7 +77,10 @@ fun SaveWorkoutPopup() {
 //                        singleLine = true
                     )
                     Button(
-                        onClick = { showPopup = false },
+                        onClick = {
+                            showPopup = false
+                          onClickSave()
+                                  },
                         modifier = Modifier
                             .padding(16.dp)
                     ) {

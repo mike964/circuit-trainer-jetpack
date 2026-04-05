@@ -6,6 +6,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.viewModelScope
 import com.example.gmwrokouttimer.data.Activity
 import com.example.gmwrokouttimer.data.Exercise
 import com.example.gmwrokouttimer.data.LocalImage
@@ -18,6 +19,7 @@ import com.example.gmwrokouttimer.data.sampleWorkoutPresets
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 
 class AppViewModel : ViewModel() {
     // Workout Plans list
@@ -41,6 +43,7 @@ class AppViewModel : ViewModel() {
 
 
     init {
+//        loadNotes()
         // Initialize with some dummy data
         _workoutList.addAll(sampleWorkoutPresets)
         _exerciseImages.addAll(exerciseImages)
@@ -55,6 +58,31 @@ class AppViewModel : ViewModel() {
         Log.d("xx", getPresetById(presetId).toString())
        _currentPreset.value = getPresetById(presetId)
     }
+
+    /*
+    private fun loadNotes() {
+        viewModelScope.launch {
+            // Fetch notes from repository (Room database)
+            repository.getAllNotes().collect { noteList ->
+                _notes.value = noteList
+            }
+        }
+    }
+      fun addNote(note: Note) {
+        viewModelScope.launch { repository.insertNote(note) }
+    }
+    fun deleteNote(note: Note) {
+        viewModelScope.launch { repository.deleteNote(note) }
+    }
+     */
+
+    fun addActivity(activity: Activity) {
+        viewModelScope.launch {
+            // Fetch notes from repository (Room database)
+            _latestActivity.add(activity)
+            //repository.insertNote(note)
+        }
+}
 
     // # SIMPLE COUNTER
 // The state variable that holds the count value

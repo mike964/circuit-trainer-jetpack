@@ -11,8 +11,8 @@ data class LocalImage(val id: Int, val contentDescription: String)
 data class Activity(
     val id: Int,
     val title: String,  // name of the workout preset
-    val type: String, // bodyweight, weights, cardio, mixed
-    val note: String,  // feeling after exercise done
+    val type: String, //  Weights, Bodyweight, Cardio, Strength, Hybrid, Mixed
+    val note: String,  // Feeling after exercise done
     val rate: Int,  // 1-5 rate of workout
     val imageId: Int?, // take selfie after workout
     val dateTime: String,
