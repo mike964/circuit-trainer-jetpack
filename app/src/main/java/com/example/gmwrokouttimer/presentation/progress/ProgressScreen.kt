@@ -39,7 +39,6 @@ fun ProgressScreen(appVm: AppViewModel, navController: NavController) {
 
     Column(
         modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text("Progress Screen")
@@ -54,20 +53,21 @@ fun ProgressScreen(appVm: AppViewModel, navController: NavController) {
         Text("Active days table")
         Box(
             modifier = Modifier
-                .background(Color.DarkGray) // Sets a solid red background
+                .background(Color.LightGray) // Sets a solid red background
         ){
-            CalendarView(
-                month = Date() ,
-                date = List(30) {
-                    Pair(Date(), false)
-                },
-                displayNext = true,
-                displayPrev = true,
-                onClickNext = { /*TODO*/ },
-                onClickPrev = { /*TODO*/ },
-                onClick = { /*TODO*/ },
-                startFromSunday = true,
-            )
+//            CalendarView(
+//                month = Date() ,
+//                date = List(30) {
+//                    Pair(Date(), false)
+//                },
+//                displayNext = true,
+//                displayPrev = true,
+//                onClickNext = { /*TODO*/ },
+//                onClickPrev = { /*TODO*/ },
+//                onClick = { /*TODO*/ },
+//                startFromSunday = true,
+//            )
+            Text("** Fix later **")
         }
 
 
