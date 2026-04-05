@@ -38,6 +38,7 @@ import androidx.compose.ui.window.Popup
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.gmwrokouttimer.data.getExerciseById
+import com.example.gmwrokouttimer.presentation.main.SaveWorkoutPopup
 import com.example.gmwrokouttimer.utils.formatMilliseconds
 import com.example.gmwrokouttimer.utils.formatSeconds
 
@@ -151,7 +152,7 @@ fun MainScreen(viewModel: AppViewModel, navController: NavHostController) {
 //        Spacer(Modifier.height(10.dp))
 
 
-        // # Current Preset and Exercise)
+        // # Current Preset and Exercise
         Row(verticalAlignment = CenterVertically) {
             Box(Modifier.weight(3f)) {}
             Box(
@@ -221,6 +222,8 @@ fun MainScreen(viewModel: AppViewModel, navController: NavHostController) {
         CountdownScreen(countdownVm)
 //        Text(timerState.workTimeSeconds.toString())
 
+        Spacer(Modifier.height(8.dp))
+        SaveWorkoutPopup()
 
         WorkoutsetList(viewModel.workoutList, viewModel, countdownVm)
 //                        ExerciseImageList(appViewModel.exerciseImageList)

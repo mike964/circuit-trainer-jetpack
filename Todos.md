@@ -36,12 +36,12 @@ Created on 07/16/2025
 - [] Highligt workout days in custom calendar
   Push to Google play store 
 
-Later
+# Later
 Now do only essentials. Later polish.
-Modal pop up after workout to save a note
+Modal pop up after workout finish to save a note about feeling 
 Save workout date n time n feeling in a note after workout finished
 Export/import room backup
-Show the days you did workout in Calendar - track progress
+Show the days you did workout in Calendar - track progress like Github table
 Play sound after each round done
 Show total time countdown in minutes n seconds
 Select from pre-made workout plans n download them for practice offline - paid training routines

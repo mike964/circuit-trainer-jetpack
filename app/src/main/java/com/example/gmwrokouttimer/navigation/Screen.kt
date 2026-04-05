@@ -17,7 +17,7 @@ data class NavItemState(
 
 val navBarItems = listOf(
     NavItemState(
-        "Main",
+        "Timer",
         "main_screen",
         R.drawable.ic_timer, R.drawable.ic_timer
     ),

@@ -71,9 +71,8 @@ fun CountdownScreen(
         } else {
             if (isPaused) Text("PAUSED" )
             if (roundsCounter>  timerState.initRounds ) {
-                Text(
-                    text = ("Finished. Good Job 💪😁")
-                )
+                // ** Workout done - Show modal to save in DB with Note
+                Text(  text = ("Finished. Good Job 💪😁")  )
             } else {
                 if (exerciseCounter == 1 )
                     Text("Select a Plan and click Start")
