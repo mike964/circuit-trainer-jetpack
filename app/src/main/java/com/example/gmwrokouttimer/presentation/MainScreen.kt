@@ -228,6 +228,12 @@ fun MainScreen(viewModel: AppViewModel, navController: NavHostController) {
 //            Text((timeRemaining.toFloat() / (timerState.workTimeSeconds*1000)).toString())
         }
 
+        if(!isRunning && circles == 0 )  {
+            // ** Workout done - Show modal to save in DB with Note
+//            Text(  text = ("Finished. Good Job 💪😁")  )
+            showSaveWorkoutPopup = true
+        }
+
         CountdownScreen(countdownVm)
 //        Text(timerState.workTimeSeconds.toString())
 
@@ -235,6 +241,7 @@ fun MainScreen(viewModel: AppViewModel, navController: NavHostController) {
         Button(onClick = { showSaveWorkoutPopup = true }) {
             Text("Open Popup")
         }
+        Text("$showSaveWorkoutPopup | $isRunning | $isPaused | $exerciseCounter | $circles | $roundsCounter ")
         SaveWorkoutPopup(
             showPopup = showSaveWorkoutPopup,
             onDismiss = { showSaveWorkoutPopup = false },
@@ -259,6 +266,7 @@ fun MainScreen(viewModel: AppViewModel, navController: NavHostController) {
                         workoutPresetId = 1
                     )
                 )
+                showSaveWorkoutPopup = false
             })
 
         WorkoutsetList(viewModel.workoutList, viewModel, countdownVm)

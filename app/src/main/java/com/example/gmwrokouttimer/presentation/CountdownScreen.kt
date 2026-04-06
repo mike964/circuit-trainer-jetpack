@@ -110,9 +110,8 @@ fun CountdownScreen(
             }
         }
         // Hide details below when Workout finishes : roundsCounter > initialRounds
-        Text("Exercise $exerciseCounter / ${timerState.initExercises}")
+        Text("Round $roundsCounter / ${timerState.initRounds}  ---  Exercise $exerciseCounter / ${timerState.initExercises}")
         Text("Circle $circles")
-        Text("Round $roundsCounter / ${timerState.initRounds}")
     }
 
 

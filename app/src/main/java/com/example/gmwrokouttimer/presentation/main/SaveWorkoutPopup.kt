@@ -46,8 +46,7 @@ fun SaveWorkoutPopup(
 //        Text("Open Popup")
 //    }
 
-    val keyboardController = LocalSoftwareKeyboardController.current
-
+//    val keyboardController = LocalSoftwareKeyboardController.current
 
 
     if (showPopup) {
@@ -55,7 +54,7 @@ fun SaveWorkoutPopup(
             alignment = Alignment.Center,
 //            onDismissRequest = { showPopup = false }
             onDismissRequest = onDismiss,
-                    properties = PopupProperties(focusable = true) // CRITICAL for TextField input
+            properties = PopupProperties(focusable = true) // CRITICAL for TextField input
 
         ) {
 //            keyboardController?.show()
@@ -85,7 +84,7 @@ fun SaveWorkoutPopup(
                     Text("How do you feel right now?")
                     Spacer(modifier = Modifier.height(8.dp))
 
-                     OutlinedTextField(
+                    OutlinedTextField(
 //                        value = userInput,
                         value = note,
 //                        onValueChange = { userInput = it },
@@ -97,8 +96,9 @@ fun SaveWorkoutPopup(
                     Button(
                         onClick = {
 //                            showPopup = false
-                            onDismiss()
+
                             onClickSave()
+//                            onDismiss()
                         },
                         modifier = Modifier
                             .padding(16.dp)
