@@ -42,7 +42,6 @@ import com.example.gmwrokouttimer.data.getExerciseById
 import com.example.gmwrokouttimer.presentation.main.SaveWorkoutPopup
 import com.example.gmwrokouttimer.utils.formatMilliseconds
 import com.example.gmwrokouttimer.utils.formatSeconds
-import kotlin.String
 
 @Composable
 fun MainScreen(viewModel: AppViewModel, navController: NavHostController) {
@@ -64,8 +63,14 @@ fun MainScreen(viewModel: AppViewModel, navController: NavHostController) {
 
     val totalCircles = ((timerState.initExercises * timerState.initRounds * 2) - 1)
 
-    // State to control popup visibility
+    // State to control time setting popup visibility
     var showPopup by remember { mutableStateOf(false) }
+    var showSaveWorkoutPopup by remember { mutableStateOf(false) }
+    // # User Note after workout finished
+    var userNote by remember { mutableStateOf("") }
+
+
+
 
     Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         if (showPopup) {
@@ -227,24 +232,34 @@ fun MainScreen(viewModel: AppViewModel, navController: NavHostController) {
 //        Text(timerState.workTimeSeconds.toString())
 
         Spacer(Modifier.height(8.dp))
-        SaveWorkoutPopup(onClickSave = {
-            viewModel.addActivity(
-                Activity(
-                    id = 10, title = "Morning 10 mins",
-                    type = "bodyweight", //  weights, bodyweight, cardio, strength, hybrid, mixed
-                    note = "Sample Note after workout.",  // feeling after exercise done
-                    rate = 3,  // 1-5 rate of workout
-                    imageId = null, // take selfie after workout
-                    dateTime = "2026-04-04T12:27:35.124365453",
-                    duration = 960,
-                    calories = 125,
-                    location = null,
-                    city = "Dubai",
-                    country = "UAE",
-                    workoutPresetId = System.currentTimeMillis().toInt()
+        Button(onClick = { showSaveWorkoutPopup = true }) {
+            Text("Open Popup")
+        }
+        SaveWorkoutPopup(
+            showPopup = showSaveWorkoutPopup,
+            onDismiss = { showSaveWorkoutPopup = false },
+            note = userNote,
+            onNoteChange = { userNote = it },
+            onClickSave = {
+                viewModel.addActivity(
+                    Activity(
+                        id = System.currentTimeMillis().toInt(),
+                        title = "Morning 10 mins",
+                        type = "bodyweight", //  weights, bodyweight, cardio, strength, hybrid, mixed
+//                        note = "Sample Note after workout.",  // feeling after exercise done
+                        note = userNote,  // feeling after exercise done
+                        rate = 4,  // 1-5 rate of workout
+                        imageId = null, // take selfie after workout
+                        dateTime = "2026-04-04T12:27:35.124365453",
+                        duration = 960,
+                        calories = 125,
+                        location = null,
+                        city = "Dubai",
+                        country = "UAE",
+                        workoutPresetId = 1
+                    )
                 )
-            )
-        })
+            })
 
         WorkoutsetList(viewModel.workoutList, viewModel, countdownVm)
 //                        ExerciseImageList(appViewModel.exerciseImageList)
