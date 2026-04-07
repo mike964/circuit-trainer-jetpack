@@ -1,6 +1,5 @@
 package com.example.gmwrokouttimer.presentation.main
 
-import android.R.attr.focusable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,9 +11,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -25,19 +22,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.dropShadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.shadow.Shadow
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.PopupProperties
 
 
 @Composable
 fun SaveWorkoutPopup(
     showPopup: Boolean = false,
-    onClickSave: () -> Unit,
+    onDismiss: () -> Unit,
     note: String,
     onNoteChange: (String) -> Unit,
-    onDismiss: () -> Unit,
+    handleBtnTwoClick: () -> Unit,
+    onClickSave: () -> Unit,
 ) {
 //    var showPopup by remember { mutableStateOf(false) }
     var userInput by remember { mutableStateOf("") }
@@ -54,7 +50,7 @@ fun SaveWorkoutPopup(
             alignment = Alignment.Center,
 //            onDismissRequest = { showPopup = false }
             onDismissRequest = onDismiss,
-            properties = PopupProperties(focusable = true) // CRITICAL for TextField input
+//            properties = PopupProperties(focusable = true) // CRITICAL for TextField input
 
         ) {
 //            keyboardController?.show()
@@ -79,9 +75,9 @@ fun SaveWorkoutPopup(
                 contentAlignment = Alignment.Center
             ) {
                 Column() {
-                    Text("Good job my Man!")
+                    Text("Good job 👏")
                     Text("How was your workout?")
-                    Text("How do you feel right now?")
+                    Text("How do you feel now?")
                     Spacer(modifier = Modifier.height(8.dp))
 
                     OutlinedTextField(
@@ -96,7 +92,6 @@ fun SaveWorkoutPopup(
                     Button(
                         onClick = {
 //                            showPopup = false
-
                             onClickSave()
 //                            onDismiss()
                         },
@@ -104,6 +99,15 @@ fun SaveWorkoutPopup(
                             .padding(16.dp)
                     ) {
                         Text("Save")
+                    }
+                    Button(
+                        onClick = {
+                            handleBtnTwoClick()
+                        },
+                        modifier = Modifier
+                            .padding(16.dp)
+                    ) {
+                        Text("Btn 2")
                     }
                 }
             }

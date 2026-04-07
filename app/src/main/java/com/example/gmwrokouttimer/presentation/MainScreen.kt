@@ -1,5 +1,6 @@
 package com.example.gmwrokouttimer.presentation
 
+import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -20,6 +21,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -42,6 +44,7 @@ import com.example.gmwrokouttimer.data.getExerciseById
 import com.example.gmwrokouttimer.presentation.main.SaveWorkoutPopup
 import com.example.gmwrokouttimer.utils.formatMilliseconds
 import com.example.gmwrokouttimer.utils.formatSeconds
+
 
 @Composable
 fun MainScreen(viewModel: AppViewModel, navController: NavHostController) {
@@ -68,8 +71,8 @@ fun MainScreen(viewModel: AppViewModel, navController: NavHostController) {
     var showSaveWorkoutPopup by remember { mutableStateOf(false) }
     // # User Note after workout finished
     var userNote by remember { mutableStateOf("") }
-
-
+    var btnTwoTest by remember { mutableStateOf(false) }
+    var workoutFinished by remember { mutableStateOf(false) }
 
 
     Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -228,26 +231,40 @@ fun MainScreen(viewModel: AppViewModel, navController: NavHostController) {
 //            Text((timeRemaining.toFloat() / (timerState.workTimeSeconds*1000)).toString())
         }
 
-        if(!isRunning && circles == 0 )  {
+        if (!isRunning && circles == 0 && !isPaused) {
             // ** Workout done - Show modal to save in DB with Note
 //            Text(  text = ("Finished. Good Job 💪😁")  )
+            workoutFinished = true
+        } else {
+            workoutFinished = false
+        }
+
+        // # LaunchedEffect restarts every time 'userId' changes
+        LaunchedEffect(workoutFinished) {
+            // This is a suspend function
+//           userName = fetchUserName(userId)
+           if(workoutFinished)
             showSaveWorkoutPopup = true
         }
 
         CountdownScreen(countdownVm)
 //        Text(timerState.workTimeSeconds.toString())
+        Text("Btn 2 test : $btnTwoTest")
 
         Spacer(Modifier.height(8.dp))
         Button(onClick = { showSaveWorkoutPopup = true }) {
             Text("Open Popup")
         }
-        Text("$showSaveWorkoutPopup | $isRunning | $isPaused | $exerciseCounter | $circles | $roundsCounter ")
+        Text("$showSaveWorkoutPopup | $isRunning | $isPaused | $exerciseCounter | $workoutFinished | $circles | $roundsCounter ")
+
         SaveWorkoutPopup(
             showPopup = showSaveWorkoutPopup,
             onDismiss = { showSaveWorkoutPopup = false },
             note = userNote,
             onNoteChange = { userNote = it },
+            handleBtnTwoClick = { btnTwoTest = !btnTwoTest },
             onClickSave = {
+                /*
                 viewModel.addActivity(
                     Activity(
                         id = System.currentTimeMillis().toInt(),
@@ -266,6 +283,8 @@ fun MainScreen(viewModel: AppViewModel, navController: NavHostController) {
                         workoutPresetId = 1
                     )
                 )
+
+                 */
                 showSaveWorkoutPopup = false
             })
 
