@@ -33,6 +33,7 @@ Created on 07/16/2025
 * \[x] Update Gradle  26.03.29
 * \[x] Show all exercises in list   4.1
 * \[x] Add sample latest activity data n display in UI  4.3 
+- [x] Show pop up modal after workout finishes to input note n save in progress activity list  4.7 done using launched effect 
 - [] Highligt workout days in custom calendar
   Push to Google play store 
 
@@ -47,7 +48,7 @@ Show total time countdown in minutes n seconds
 Select from pre-made workout plans n download them for practice offline - paid training routines
 
 Simple Gym workout timer. No DB for now. Just show Exercises n timer. 7/16/2025
-Convert Denis Panjuta Workout App to Jetpack. And make it use database to save workouts n feelings And make it use database to save workouts n feelings. after. Adidas Running simple Clone
+Convert Denis Panjuta Workout App to Jetpack. And make it use database to save workouts n feelings. Adidas Running simple Clone
 Build your own custom workout plans n suggest them to friends by link 
 
 Data structure 

@@ -264,7 +264,6 @@ fun MainScreen(viewModel: AppViewModel, navController: NavHostController) {
             onNoteChange = { userNote = it },
             handleBtnTwoClick = { btnTwoTest = !btnTwoTest },
             onClickSave = {
-                /*
                 viewModel.addActivity(
                     Activity(
                         id = System.currentTimeMillis().toInt(),
@@ -283,8 +282,6 @@ fun MainScreen(viewModel: AppViewModel, navController: NavHostController) {
                         workoutPresetId = 1
                     )
                 )
-
-                 */
                 showSaveWorkoutPopup = false
             })
 

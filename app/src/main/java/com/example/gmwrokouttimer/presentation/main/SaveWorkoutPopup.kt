@@ -12,10 +12,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,6 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.shadow.Shadow
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.PopupProperties
 
 
 @Composable
@@ -36,21 +33,18 @@ fun SaveWorkoutPopup(
     onClickSave: () -> Unit,
 ) {
 //    var showPopup by remember { mutableStateOf(false) }
-    var userInput by remember { mutableStateOf("") }
+//    var userInput by remember { mutableStateOf("") }
 
 //    Button(onClick = { showPopup = true }) {
 //        Text("Open Popup")
 //    }
-
-//    val keyboardController = LocalSoftwareKeyboardController.current
-
 
     if (showPopup) {
         Popup(
             alignment = Alignment.Center,
 //            onDismissRequest = { showPopup = false }
             onDismissRequest = onDismiss,
-//            properties = PopupProperties(focusable = true) // CRITICAL for TextField input
+            properties = PopupProperties(focusable = true) // CRITICAL for TextField input
 
         ) {
 //            keyboardController?.show()
@@ -90,11 +84,7 @@ fun SaveWorkoutPopup(
                         singleLine = true,
                     )
                     Button(
-                        onClick = {
-//                            showPopup = false
-                            onClickSave()
-//                            onDismiss()
-                        },
+                        onClick = onClickSave,
                         modifier = Modifier
                             .padding(16.dp)
                     ) {
