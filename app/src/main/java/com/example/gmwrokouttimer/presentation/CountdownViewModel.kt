@@ -45,9 +45,9 @@ class CountdownViewModel : ViewModel() {
 
     // # time remaining in a circle (work or rest)
     val timeRemaining: StateFlow<Int> = _timeRemaining.asStateFlow()
-
+    // Total time left in seconds
     private val _totalTimeSeconds =
-        MutableStateFlow(uiState.value.workTimeSeconds * uiState.value.initRounds * circles.value)   // Total time left in seconds
+        MutableStateFlow(uiState.value.workTimeSeconds * uiState.value.initRounds * circles.value)
 
     // # Total time left in milliseconds
     private val _totalTimeLeft = MutableStateFlow(_totalTimeSeconds.value.toLong() * 1000)

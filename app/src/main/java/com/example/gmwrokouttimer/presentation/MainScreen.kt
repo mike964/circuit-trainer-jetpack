@@ -44,6 +44,7 @@ import com.example.gmwrokouttimer.data.getExerciseById
 import com.example.gmwrokouttimer.presentation.main.SaveWorkoutPopup
 import com.example.gmwrokouttimer.utils.formatMilliseconds
 import com.example.gmwrokouttimer.utils.formatSeconds
+import java.time.LocalDateTime
 
 
 @Composable
@@ -267,19 +268,22 @@ fun MainScreen(viewModel: AppViewModel, navController: NavHostController) {
                 viewModel.addActivity(
                     Activity(
                         id = System.currentTimeMillis().toInt(),
-                        title = "Morning 10 mins",
-                        type = "bodyweight", //  weights, bodyweight, cardio, strength, hybrid, mixed
+//                        workoutPresetId = 1,
+                        workoutPresetId = currentPreset.id,
+//                        title = "Morning 10 mins",
+                        title = currentPreset.name,
+                        type = "hybrid", //  weights, bodyweight, cardio, strength, hybrid
 //                        note = "Sample Note after workout.",  // feeling after exercise done
                         note = userNote,  // feeling after exercise done
-                        rate = 4,  // 1-5 rate of workout
+                        rate = 5,  // 1-5 rate of workout
                         imageId = null, // take selfie after workout
-                        dateTime = "2026-04-04T12:27:35.124365453",
-                        duration = 960,
-                        calories = 125,
+//                        dateTime = "2026-04-04T12:27:35.124365453",
+                        dateTime = LocalDateTime.now().toString(),
+                        duration = totalTime,   // 960 seconds
+                        calories = (totalTime/60)*13,
                         location = null,
-                        city = "Dubai",
-                        country = "UAE",
-                        workoutPresetId = 1
+                        city = "Iraq",
+                        country = "Baghdad",
                     )
                 )
                 showSaveWorkoutPopup = false
