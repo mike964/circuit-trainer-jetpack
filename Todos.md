@@ -46,6 +46,7 @@ Show the days you did workout in Calendar - track progress like Github table
 Play sound after each round done
 Show total time countdown in minutes n seconds
 Select from pre-made workout plans n download them for practice offline - paid training routines
+Set default circut time 25.30/35 in settings page
 
 Simple Gym workout timer. No DB for now. Just show Exercises n timer. 7/16/2025
 Convert Denis Panjuta Workout App to Jetpack. And make it use database to save workouts n feelings. Adidas Running simple Clone

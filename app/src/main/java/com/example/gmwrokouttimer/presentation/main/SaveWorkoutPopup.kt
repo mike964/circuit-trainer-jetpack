@@ -71,7 +71,6 @@ fun SaveWorkoutPopup(
                 Column() {
                     Text("Good job 👏")
                     Text("How was your workout?")
-                    Text("How do you feel now?")
                     Spacer(modifier = Modifier.height(8.dp))
 
                     OutlinedTextField(
@@ -89,15 +88,6 @@ fun SaveWorkoutPopup(
                             .padding(16.dp)
                     ) {
                         Text("Save")
-                    }
-                    Button(
-                        onClick = {
-                            handleBtnTwoClick()
-                        },
-                        modifier = Modifier
-                            .padding(16.dp)
-                    ) {
-                        Text("Btn 2")
                     }
                 }
             }

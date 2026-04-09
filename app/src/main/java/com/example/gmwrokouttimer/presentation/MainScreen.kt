@@ -250,7 +250,6 @@ fun MainScreen(viewModel: AppViewModel, navController: NavHostController) {
 
         CountdownScreen(countdownVm)
 //        Text(timerState.workTimeSeconds.toString())
-        Text("Btn 2 test : $btnTwoTest")
 
         Spacer(Modifier.height(8.dp))
         Button(onClick = { showSaveWorkoutPopup = true }) {

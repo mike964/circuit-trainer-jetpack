@@ -69,12 +69,12 @@ fun CountdownScreen(
                 text = (if (checkEvenNumber(circles)) "REST" else "WORK")
             )
         } else {
-            if (isPaused) Text("PAUSED" )
-            if (roundsCounter>  timerState.initRounds ) {
+            if (isPaused) Text("PAUSED")
+            if (roundsCounter > timerState.initRounds) {
                 // ** Workout done - Show modal to save in DB with Note
-                Text(  text = ("Finished. Good Job 💪😁")  )
+                Text(text = ("Finished. Good Job 💪😁"))
             } else {
-                if (exerciseCounter == 1 )
+                if (exerciseCounter == 1)
                     Text("Select a Plan and click Start")
             }
         }
@@ -110,8 +110,11 @@ fun CountdownScreen(
             }
         }
         // Hide details below when Workout finishes : roundsCounter > initialRounds
-        Text("Round $roundsCounter / ${timerState.initRounds}  -|-  Exercise $exerciseCounter / ${timerState.initExercises}")
-        Text("Circle $circles")
+        Text(
+            "Round $roundsCounter / ${timerState.initRounds} "
+                    + " ** Exercise $exerciseCounter / ${timerState.initExercises} "
+                    + " ** Circles $circles"
+        )
     }
 
 

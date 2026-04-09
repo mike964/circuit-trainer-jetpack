@@ -20,10 +20,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.gmwrokouttimer.data.Exercise
+import com.example.gmwrokouttimer.data.Preset
 import com.example.gmwrokouttimer.database.model.Note
 
 @Composable
-fun NoteScreen(appVm: AppViewModel, noteVm: NoteViewModel,  navController: NavHostController) {
+fun NoteScreen(appVm: AppViewModel, noteVm: NoteViewModel, navController: NavHostController) {
 //    val notes by vm.notes.collectAsStateWithLifecycle()
 //    var title by remember { mutableStateOf("") }
     val exercises = appVm.exercises
@@ -41,11 +42,23 @@ fun NoteScreen(appVm: AppViewModel, noteVm: NoteViewModel,  navController: NavHo
 //            }
 //        }
 
+        // # Display list of all exercises
+//        LazyColumn {
+//            items(exercises, key = { it.id }) { itm ->
+//                ExerciseItem(itm )
+//            }
+//        }
+
+        // # Display list of all workout presets
         LazyColumn {
-            items(exercises, key = { it.id }) { itm ->
-                ExerciseItem(itm )
+//            items(exercises, key = { it.id }) { itm ->
+//                ExerciseItem(itm )
+//            }
+            items(appVm.workoutList, key = { it.id }) { itm ->
+                WorkoutPresetItem(itm)
             }
         }
+
     }
 }
 
@@ -55,14 +68,16 @@ fun NoteItem(note: Note, onDelete: (Note) -> Unit) {
     Text(text = note.title)
     // ...
 }
+
 @Composable
-fun ExerciseItem(exercise: Exercise
-              //   , onDelete: (Exercise) -> Unit
+fun ExerciseItem(
+    exercise: Exercise,
+    //   , onDelete: (Exercise) -> Unit
 ) {
     Card(
-        modifier = Modifier.fillMaxWidth()
-            .padding(6.dp)
-        ,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(6.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         colors = CardDefaults.cardColors(
             containerColor = Color.White, // Set background color here
@@ -75,6 +90,29 @@ fun ExerciseItem(exercise: Exercise
         }
     }
 }
+
+@Composable
+fun WorkoutPresetItem(
+    preset: Preset,
+    //       , onDelete: (WorkoutPreset) -> Unit
+) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(6.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White, // Set background color here
+//        contentColor = Color.Black       // Optional: Set default text/icon color
+        )
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(text = preset.name)
+        }
+    }
+}
+
+
 /*
 Instead of hardcoding colors like Color.Red, use your
  theme's color scheme (e.g., MaterialTheme.colorScheme.surface)
