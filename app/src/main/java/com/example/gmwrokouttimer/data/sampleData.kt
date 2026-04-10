@@ -5,7 +5,7 @@ import com.example.gmwrokouttimer.R
 data class Exercise(val id: Int, val name: String, val imageId: Int)
 
 //data class WorkoutSet(val id: Int, val name: String, val exercises: List<Exercise>)
-data class Preset(val id: Int, val name: String, val exerciseIdList: List<Int>)
+data class Preset(val id: Int, val name: String, val description:String ="",  val exerciseIdList: List<Int>)
 data class LocalImage(val id: Int, val contentDescription: String)
 
 data class Activity(
@@ -55,13 +55,13 @@ val exerciseList = listOf(
     Exercise(28, "Shoulder Press", R.drawable.st_shoulder_press),
 )
 val sampleWorkoutPresets = listOf(
-    Preset(7, "Quick Warm Up", listOf(21, 16, 17, 27, 26)),
-    Preset(1, "Morning 10 mins", listOf(1, 2, 3)),
-    Preset(2, "Full Body Strength", listOf(4, 5, 6, 28)),
-    Preset(3, "Gym A - Chest & Biceps", listOf(9, 7, 8, 10, 6)),
-    Preset(4, "Gym B - Back & Triceps", listOf(10, 6, 11, 19)),
-    Preset(5, "Outdoor Park Training", listOf(3, 4, 2, 13, 24)),
-    Preset(6, "Burn Calories at Home", listOf(21, 22, 27, 24, 25, 26)),
+    Preset(7, "Quick Warm Up", exerciseIdList=listOf(21, 16, 17, 27, 26)),
+    Preset(1, "Morning 10 mins", exerciseIdList=listOf(1, 2, 3)),
+    Preset(2, "Full Body Strength", exerciseIdList=listOf(4, 5, 6, 28)),
+    Preset(3, "Gym A - Chest & Biceps", exerciseIdList=listOf(9, 7, 8, 10, 6)),
+    Preset(4, "Gym B - Back & Triceps", exerciseIdList=listOf(10, 6, 11, 19)),
+    Preset(5, "Outdoor Park Training", exerciseIdList=listOf(3, 4, 2, 13, 24)),
+    Preset(6, "Burn Calories at Home", exerciseIdList=listOf(21, 22, 27, 24, 25, 26)),
 )
 
 val exerciseImages = listOf(

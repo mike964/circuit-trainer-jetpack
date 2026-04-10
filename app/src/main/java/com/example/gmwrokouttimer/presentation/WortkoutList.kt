@@ -42,7 +42,7 @@ fun WorkoutsetList(items: List<Preset>, appVm: AppViewModel, countdownVm: Countd
 
     LazyColumn(modifier = Modifier.padding(4.dp)) {
         items(items, key = { item -> item.id }) { item ->
-            WorkoutsetCard(item , selectedPresetId,  {
+            WorkoutPresetCard(item , selectedPresetId,  {
                 setSelectedPresetId(item.id)
                 appVm.setCurrentPreset(item.id)
                 countdownVm.setTotalExercises(item.exerciseIdList.size)
@@ -57,7 +57,7 @@ fun WorkoutsetList(items: List<Preset>, appVm: AppViewModel, countdownVm: Countd
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun WorkoutsetCard(item: Preset, selectedPresetId:Int, onCardClick: () -> Unit, onPlayClick: () -> Unit) {
+fun WorkoutPresetCard(item: Preset, selectedPresetId:Int, onCardClick: () -> Unit, onPlayClick: () -> Unit) {
     // State to track if the row is selected
 //    var isSelected by remember { mutableStateOf(false) }
     val isSelected: Boolean = (selectedPresetId == item.id)
