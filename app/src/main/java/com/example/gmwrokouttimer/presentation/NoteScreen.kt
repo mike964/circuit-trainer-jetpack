@@ -37,6 +37,7 @@ fun NoteScreen(appVm: AppViewModel, noteVm: NoteViewModel, navController: NavHos
     val exercises = appVm.exercises
     var title by remember { mutableStateOf("") }
     var showPopup by remember { mutableStateOf(false) }
+    var selectedPreset by remember { mutableStateOf(appVm.workoutList[0]) }
 
     Column(modifier = Modifier.padding(16.dp)) {
 
@@ -49,7 +50,7 @@ fun NoteScreen(appVm: AppViewModel, noteVm: NoteViewModel, navController: NavHos
             Text("Save Note")
         }
 
-        PresetPopup(showPopup) {
+        PresetPopup(selectedPreset, showPopup) {
             showPopup = false
             println("Button was clicked!")
         }
@@ -73,7 +74,12 @@ fun NoteScreen(appVm: AppViewModel, noteVm: NoteViewModel, navController: NavHos
 //                ExerciseItem(itm )
 //            }
             items(appVm.workoutList, key = { it.id }) { itm ->
-                WorkoutPresetItem(itm)
+                WorkoutPresetItem(itm){
+//                    appVm.setCurrentPreset(itm.id)
+//                    navController.navigate("main")
+                    selectedPreset = itm
+                    showPopup = true
+                }
             }
         }
 
@@ -113,6 +119,7 @@ fun ExerciseItem(
 fun WorkoutPresetItem(
     preset: Preset,
     //       , onDelete: (WorkoutPreset) -> Unit
+    onClick: () -> Unit
 ) {
     Card(
         modifier = Modifier
@@ -122,7 +129,8 @@ fun WorkoutPresetItem(
         colors = CardDefaults.cardColors(
             containerColor = Color.White, // Set background color here
 //        contentColor = Color.Black       // Optional: Set default text/icon color
-        )
+        ) ,
+        onClick = onClick
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(text = preset.name + " - id: ${preset.id}")

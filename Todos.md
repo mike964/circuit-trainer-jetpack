@@ -35,7 +35,8 @@ Created on 07/16/2025
 * \[x] Add sample latest activity data n display in UI  4.3 
 - [x] Show pop up modal after workout finishes to input note n save in progress activity list  4.7 done using launched effect 
 - [] Highligt workout days in custom calendar
--[] on Click workout preset item, show pop up of all exercies with gif images. 
+- [x] on click workout preset item show pop up of all exercies.   4/11/2026
+- [] Add gif images for exercises
 
 
   Push to Google play store 
