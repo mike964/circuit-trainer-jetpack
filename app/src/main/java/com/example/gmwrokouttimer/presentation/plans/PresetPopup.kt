@@ -68,16 +68,15 @@ fun PresetPopup(preset: Preset, showPopup: Boolean, onDismiss: () -> Unit) {
                                     .fillMaxWidth()
                                     .padding(8.dp)){
 
-                                    Column(Modifier.weight(3f)) {
+                                    Column(Modifier.weight(2f)) {
                                         Text(  "${index + 1}. ${getExerciseById(exercise).name}",
                                             color = Color(0xFF29292C)  )
                                     }
                                     Column(Modifier.weight(1f)) {
                                         Box(
                                             modifier = Modifier
-//                                                .height(120.dp)
-                                                .width(120.dp)
-//                                                .fillMaxHeight()
+                                                .height(100.dp)
+                                                .width(100.dp)
                                                 .clip(RoundedCornerShape(8.dp))
                                                 .background(color = Color.LightGray)
                                             ,

@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
@@ -25,6 +26,7 @@ fun GifImageLocal(gifResourceId: Int?) {
                 .build(),
             imageLoader = imageLoader,
             contentDescription = "Local Animated GIF",
-            modifier = Modifier.fillMaxSize().fillMaxHeight()
+            modifier = Modifier.fillMaxHeight(),
+            contentScale = ContentScale.Crop
         )
     }
