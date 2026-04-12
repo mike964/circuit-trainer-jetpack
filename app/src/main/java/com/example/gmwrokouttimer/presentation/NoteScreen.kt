@@ -3,6 +3,7 @@ package com.example.gmwrokouttimer.presentation
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -132,20 +133,26 @@ fun WorkoutPresetItem(
         ) ,
         onClick = onClick
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Text(text = preset.name + " - id: ${preset.id}")
-            Text(text = preset.exerciseIdList.toString())
-            FlowRow(
+        Row(modifier = Modifier.padding(16.dp)) {
+            Column(Modifier.weight(3f)) {
+                Text(text = preset.name + " - id: ${preset.id}")
+//                Text(text = preset.exerciseIdList.toString())
+                FlowRow(
 //                        Modifier.background(Color.Cyan),
-            ) {
-                for (exercise in preset.exerciseIdList) {
-                    Text(
-                        "${getExerciseById(exercise).name}, ",
-                        color = Color(0xFF787C85)
-                    )
+                ) {
+                    for (exercise in preset.exerciseIdList) {
+                        Text(
+                            "${getExerciseById(exercise).name}, ",
+                            color = Color(0xFF787C85)
+                        )
+                    }
+                    Text(preset.exerciseIdList.size.toString())
                 }
-                Text(preset.exerciseIdList.size.toString())
             }
+            Column(Modifier.weight(1f)) {
+                GifImageLocal(getExerciseById(preset.exerciseIdList[0]).imageId)
+            }
+
         }
 
     }

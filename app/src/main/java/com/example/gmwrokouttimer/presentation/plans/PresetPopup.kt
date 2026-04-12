@@ -75,8 +75,8 @@ fun PresetPopup(preset: Preset, showPopup: Boolean, onDismiss: () -> Unit) {
                                     Column(Modifier.weight(1f)) {
                                         Box(
                                             modifier = Modifier
-                                                .height(100.dp)
-                                                .width(100.dp)
+                                                .height(90.dp)
+//                                                .width(100.dp)
                                                 .clip(RoundedCornerShape(8.dp))
                                                 .background(color = Color.LightGray)
                                             ,
