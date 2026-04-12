@@ -23,7 +23,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
 import com.example.gmwrokouttimer.data.Preset
 import com.example.gmwrokouttimer.data.getExerciseById
@@ -42,15 +44,18 @@ fun PresetPopup(preset: Preset, showPopup: Boolean, onDismiss: () -> Unit) {
             ) {
                 // Content of the popup
                 Surface(
-                    modifier = Modifier.size(340.dp, 480.dp),
+                    modifier = Modifier.size(340.dp, 540.dp),
                     color = Color.White,
                     shape = RoundedCornerShape(8.dp),
                     shadowElevation = 8.dp
                 ) {
-                    Column( Modifier.padding(16.dp)) {
+                    Column( Modifier.padding(16.dp).fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally) {
 
-                        Text(preset.name + " - id: ${preset.id}" ,  fontWeight = FontWeight.Bold)
+                        Text(preset.name  ,  fontWeight = FontWeight.Bold , fontSize = 20.sp,   textAlign = TextAlign.Center,
+                            modifier = Modifier.fillMaxWidth())
                         Text( "Exercises ${preset.exerciseIdList.size} ")
+//                        Text( "id: ${preset.id} ")
 
                         Spacer(modifier = Modifier.height(8.dp))
 
@@ -63,7 +68,6 @@ fun PresetPopup(preset: Preset, showPopup: Boolean, onDismiss: () -> Unit) {
                                     .fillMaxWidth()
                                     .padding(8.dp)){
 
-
                                     Column(Modifier.weight(3f)) {
                                         Text(  "${index + 1}. ${getExerciseById(exercise).name}",
                                             color = Color(0xFF29292C)  )
@@ -71,10 +75,10 @@ fun PresetPopup(preset: Preset, showPopup: Boolean, onDismiss: () -> Unit) {
                                     Column(Modifier.weight(1f)) {
                                         Box(
                                             modifier = Modifier
-//                                                .height(80.dp)
+//                                                .height(120.dp)
                                                 .width(120.dp)
-                                                .fillMaxHeight()
-//                                                .clip(RoundedCornerShape(8.dp))
+//                                                .fillMaxHeight()
+                                                .clip(RoundedCornerShape(8.dp))
                                                 .background(color = Color.LightGray)
                                             ,
                                             contentAlignment = Alignment.Center
