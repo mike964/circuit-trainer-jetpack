@@ -1,6 +1,5 @@
 package com.example.gmwrokouttimer.presentation
 
-import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -48,7 +47,7 @@ import java.time.LocalDateTime
 
 
 @Composable
-fun MainScreen(viewModel: AppViewModel, navController: NavHostController) {
+fun MainScreen(viewModel: AppViewModel, navController: NavHostController, noteVm: NoteViewModel) {
     val countdownVm = viewModel<CountdownViewModel>()
     val timerState by countdownVm.uiState.collectAsState()
     val exerciseCounter by countdownVm.exerciseCounter.collectAsState()
@@ -264,14 +263,14 @@ fun MainScreen(viewModel: AppViewModel, navController: NavHostController) {
             onNoteChange = { userNote = it },
             handleBtnTwoClick = { btnTwoTest = !btnTwoTest },
             onClickSave = {
-                viewModel.addActivity(
-                    Activity(
+                noteVm.addActivity(
+                    com.example.gmwrokouttimer.database.model.Activity(
                         id = System.currentTimeMillis().toInt(),
 //                        workoutPresetId = 1,
                         workoutPresetId = currentPreset.id,
 //                        title = "Morning 10 mins",
                         title = currentPreset.name,
-                        type = "hybrid", //  weights, bodyweight, cardio, strength, hybrid
+//                        type = "hybrid", //  weights, bodyweight, cardio, strength, hybrid
 //                        note = "Sample Note after workout.",  // feeling after exercise done
                         note = userNote,  // feeling after exercise done
                         rate = 5,  // 1-5 rate of workout

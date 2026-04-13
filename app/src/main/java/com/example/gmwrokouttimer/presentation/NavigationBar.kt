@@ -89,6 +89,7 @@ fun NavigationBar(
             composable(Screen.Main.route) {
                 MainScreen(
                     viewModel = appViewModel,
+                      noteVm = noteViewModel,
                     navController = navController
                 )
             }

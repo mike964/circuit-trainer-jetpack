@@ -51,7 +51,9 @@ fun NoteScreen(appVm: AppViewModel, noteVm: NoteViewModel, navController: NavHos
         }
 
         TextField(value = title, onValueChange = { title = it }, label = { Text("Title") })
-        Button(onClick = { noteVm.addNote(title, "Note content..."); title = "" }) {
+        Button(onClick = {
+//            noteVm.addNote(title, "Note content..."); title = ""
+        }) {
             Text("Save Note")
         }
 

@@ -9,12 +9,13 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.gmwrokouttimer.database.NoteDatabase
+import com.example.gmwrokouttimer.database.AppDatabase
 import com.example.gmwrokouttimer.presentation.AppViewModel
 import com.example.gmwrokouttimer.presentation.NoteScreen
 import com.example.gmwrokouttimer.presentation.NoteViewModel
 import com.example.gmwrokouttimer.presentation.NoteViewModelFactory
 import com.example.gmwrokouttimer.presentation.NavigationBar
+import com.example.gmwrokouttimer.repository.ActivityRepository
 import com.example.gmwrokouttimer.repository.NoteRepository
 import com.example.gmwrokouttimer.ui.theme.GMWrokoutTimerTheme
 
@@ -22,8 +23,9 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //
-        val database = NoteDatabase.Companion.getDatabase(applicationContext)
-        val repository = NoteRepository(database.noteDao())
+        val database = AppDatabase.Companion.getDatabase(applicationContext)
+//        val repository = NoteRepository(database.noteDao())
+        val repository = ActivityRepository(database.activityDao())
         val noteViewModelFactory = NoteViewModelFactory(repository)
 
         enableEdgeToEdge()
