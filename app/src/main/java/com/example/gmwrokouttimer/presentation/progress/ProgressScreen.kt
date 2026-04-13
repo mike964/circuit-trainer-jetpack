@@ -54,7 +54,7 @@ fun ProgressScreen(appVm: AppViewModel, navController: NavController) {
         Box(
             modifier = Modifier
                 .background(Color.LightGray) // Sets a solid red background
-        ){
+        ) {
 //            CalendarView(
 //                month = Date() ,
 //                date = List(30) {
@@ -82,27 +82,40 @@ fun ProgressScreen(appVm: AppViewModel, navController: NavController) {
 
 @Composable
 fun ActivityListItem(activity: Activity) {
-    Column(  modifier = Modifier
-        .fillMaxSize()
-        .padding(8.dp)
-        .border(width = 1.dp, color = Color.Gray)) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White, // Set background color here
+//        contentColor = Color.Black       // Optional: Set default text/icon color
+        ),
+//        onClick = onClick
+    ) {
         Row(
+            Modifier.padding(12.dp)
         ) {
-            Column(modifier = Modifier
-                .weight(1f)
-                .padding(8.dp)) {
+            Column(
+                modifier = Modifier
+                    .weight(3f)
+            ) {
 //            Text(text = activity.id.toString())
                 Text(text = activity.title)
-                Text(text = formatDateString(activity.dateTime))
+
             }
-            Column(modifier = Modifier
-                .weight(1f)
-                .padding(8.dp)) {
+            Column(
+                modifier = Modifier
+                    .weight(2f)
+            ) {
                 Text(text = formatSeconds(activity.duration.toLong()))
-                Text(text = "Rate : ${activity.rate}")
+//                Text(text = "Rate : ${activity.rate}")
+            }
+            Column(Modifier.weight(2f)) {
+                Text(text = formatDateString(activity.dateTime, "MM/DD/YYYY"))
             }
         }
-        Row(modifier = Modifier.padding(8.dp)) {
+        Row(modifier = Modifier.padding(12.dp, 8.dp)) {
             Text("Note : ${activity.note}")
         }
     }

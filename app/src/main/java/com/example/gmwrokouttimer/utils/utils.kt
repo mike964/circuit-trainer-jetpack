@@ -31,7 +31,7 @@ fun formatDateTime(millis: Long): String {
     }
 }
 
-fun formatDateString(inputDate: String): String {
+fun formatDateString(inputDate: String, outputFormat: String = "MMM dd, yyyy"): String {
     // 1. Parse the input string. 
     // LocalDateTime.parse() handles ISO-8601 (e.g., 2025-03-21T12:27:35...)
     val date = try {
@@ -47,7 +47,7 @@ fun formatDateString(inputDate: String): String {
     }
 
     // 2. Define the output format and format the date object
-    val outputFormatter = DateTimeFormatter.ofPattern("MMM dd, yyyy", Locale.ENGLISH)
+    val outputFormatter = DateTimeFormatter.ofPattern(outputFormat, Locale.ENGLISH)
     return date.format(outputFormatter)
 }
 

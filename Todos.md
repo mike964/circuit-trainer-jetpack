@@ -4,43 +4,44 @@ Created on 07/16/2025
 
 - [x] Render list of workout plans            - 2025.11.27
 - [x] Display one gif image with coidl     - 11.27
-* \[x] Add simple counter with view model
-* \[x] Load local gif - 11.28
-* \[x] Push to Github - 12.3
-* \[x] Add Play Button to each item on exercise list
-* \[x] Make countdown timer re-run when workout ends | 11/19
-* \[ ] Make the timer start by clicking start btn in workout list items | 11/30
-* \[ ] Show Rest n Work when timer runs
-* \[x] Change timer color when Work/Rest
-* \[x] Load workout presets from viewmodel
-* \[x] Show current exercise right
-* \[x] Change Exercise name when circuit increase
-* \[x] Select workout Preset in view model | 12/1
-* \[x] Button Click effect for Preset card
-* \[x] Show 'Finished' when workout ends | 12/2
-* \[x] Circular indicator for timer
-* \[x] Reverse circular timer
-* \[x] Fix : Loading list of exercise images 12/14
-* \[x] Make timer animation smooth.
+- [x] Add simple counter with view model
+- [x] Load local gif - 11.28
+- [x] Push to Github - 12.3
+- [x] Add Play Button to each item on exercise list
+- [x] Make countdown timer re-run when workout ends | 11/19
+- [x] Make the timer start by clicking start btn in workout list items | 11/30
+- [ ] Show Rest n Work when timer runs
+- [x] Change timer color when Work/Rest
+- [x] Load workout presets from viewmodel
+- [x] Show current exercise right
+- [x] Change Exercise name when circuit increase
+- [x] Select workout Preset in view model | 12/1
+- [x] Button Click effect for Preset card
+- [x] Show 'Finished' when workout ends | 12/2
+- [x] Circular indicator for timer
+- [x] Reverse circular timer
+- [x] Fix : Loading list of exercise images 12/14
+- [x] Make timer animation smooth.
 * \[x] Export .apk
 * \[x] Add room database - note after workout | 2026.01.03
 * \[x] Simple Navigation Bar | 26.01.03
-* \[x] Modal pop up to set initial circuit time | 26.01.09
+- [x] Modal pop up to set initial circuit time | 26.01.09
 * \[ ] Workout names crud in room
 * \[ ] Export/import room backup
 * \[ ] Hide extra bs when in workout mode
-* \[x] Add todos.md  2026.03.29
-* \[x] Update Gradle  26.03.29
-* \[x] Show all exercises in list   4.1
-* \[x] Add sample latest activity data n display in UI  4.3 
+- [x] Add todos.md  2026.03.29
+- [x] Update Gradle  26.03.29
+- [x] Show all exercises in list   4.1
+- [x] Add sample latest activity data n display in UI  4.3 
 - [x] Show pop up modal after workout finishes to input note n save in progress activity list  4.7 done using launched effect 
 - [] Highligt workout days in custom calendar
 - [x] on click workout preset item show pop up of all exercies.   4/11/2026
 - [x] Add gif images for exercises                      4/11/2026
 
 Show exercises with gif image
+Make acticity items expandable
 Active days in a month table 
-  Push to Google play store 
+Push to Google play store 
 
 # Later
 Now do only essentials. Later polish.
