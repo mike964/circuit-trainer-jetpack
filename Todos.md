@@ -39,7 +39,7 @@ Created on 07/16/2025
 - [x] Add gif images for exercises                      4/11/2026
 
 Show exercises with gif image
-save note after workout to db. 
+Save note after workout to db. 
 Make acticity items expandable
 Active days in a month table 
 Push to Google play store 

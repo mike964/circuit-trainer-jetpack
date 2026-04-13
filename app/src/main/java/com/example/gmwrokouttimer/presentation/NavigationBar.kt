@@ -97,7 +97,7 @@ fun NavigationBar(
                 NoteScreen(appVm = appViewModel , noteVm = noteViewModel, navController = navController)
             }
             composable(Screen.Progress.route) {
-                ProgressScreen( appVm = appViewModel, navController = navController)
+                ProgressScreen( appVm = appViewModel,noteVm = noteViewModel,  navController = navController)
             }
             composable(Screen.Settings.route) {
                 SettingsScreen(navController = navController)
