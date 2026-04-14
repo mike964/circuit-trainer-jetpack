@@ -39,16 +39,22 @@ fun ProgressScreen(appVm: AppViewModel, navController: NavController, noteVm: No
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text("Progress Screen")
-        Spacer(modifier = Modifier.height(12.dp))
-        Button(onClick = {
-            // Go back to the previous screen (Home)
-            navController.popBackStack()
-        }) {
-            Text("Go Back")
+        Row() {
+            Text("Progress Screen")
+            Button(onClick = {
+                // Go back to the previous screen (Home)
+                navController.popBackStack()
+            }) {
+                Text("Go Back")
+            }
         }
 
         Text("Active days table")
+
+        Calendar2( modifier = Modifier
+            .fillMaxWidth()
+            .height(300.dp).background(Color.LightGray))
+
         Box(
             modifier = Modifier
                 .background(Color.LightGray) // Sets a solid red background
