@@ -51,9 +51,11 @@ fun ProgressScreen(appVm: AppViewModel, navController: NavController, noteVm: No
 
         Text("Active days table")
 
-        Calendar2( modifier = Modifier
-            .fillMaxWidth()
-            .height(300.dp).background(Color.LightGray))
+//        Calendar2( modifier = Modifier
+//            .fillMaxWidth()
+//            .height(300.dp).background(Color.LightGray))
+
+        CalendarBox()
 
         Box(
             modifier = Modifier
