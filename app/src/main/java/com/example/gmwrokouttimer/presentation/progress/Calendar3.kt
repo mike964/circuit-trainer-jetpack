@@ -1,7 +1,5 @@
 package com.example.gmwrokouttimer.presentation.progress
 
-import android.R.attr.textSize
-import android.R.color.white
 import android.graphics.Paint
 import androidx.compose.animation.core.animate
 import androidx.compose.animation.core.tween
@@ -37,8 +35,8 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.clipPath
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.pointer.pointerInput
+import com.example.gmwrokouttimer.ui.theme.LightGrey
 import com.example.gmwrokouttimer.ui.theme.orange
 import kotlinx.coroutines.launch
 
@@ -53,7 +51,7 @@ fun Calendar3(
 //    startFromSunday: Boolean = true,
     calendarInput: List<CalendarInput>,
     onDayClick: (Int) -> Unit,
-    strokeWidth: Float = 15f,
+    strokeWidth: Float = 8f,
     month: String = "",
 ) {
     var canvasSize by remember {
@@ -64,7 +62,7 @@ fun Calendar3(
     }
 
     var animationRadius by remember {
-        mutableStateOf(0f)
+        mutableFloatStateOf(0f)
     }
 
     val scope = rememberCoroutineScope()
@@ -75,7 +73,8 @@ fun Calendar3(
     ) {
         Text(text = month, fontWeight = FontWeight.SemiBold, fontSize = 40.sp)
         Canvas(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxSize()
                 .pointerInput(true) {
                     detectTapGestures(
                         onTap = { offset ->
@@ -92,14 +91,13 @@ fun Calendar3(
                                     }
                                 }
                             }
-
                         }
                     )
                 }
         ) {
             val canvasHeight = size.height
             val canvasWidth = size.width
-            canvasSize = Size(canvasWidth,canvasHeight)
+            canvasSize = Size(canvasWidth, canvasHeight)
             val ySteps = canvasHeight / CALENDAR_ROWS
             val xSteps = canvasWidth / CALENDAR_COLS
 
@@ -107,14 +105,14 @@ fun Calendar3(
             val row = (clickAnimationOffset.y / canvasSize.height * CALENDAR_ROWS).toInt() + 1
 
             val path = Path().apply {
-                moveTo((column-1)*xSteps,(row-1)*ySteps)
-                lineTo(column*xSteps,(row-1)*ySteps)
-                lineTo(column*xSteps,row*ySteps)
-                lineTo((column-1)*xSteps,row*ySteps)
+                moveTo((column - 1) * xSteps, (row - 1) * ySteps)
+                lineTo(column * xSteps, (row - 1) * ySteps)
+                lineTo(column * xSteps, row * ySteps)
+                lineTo((column - 1) * xSteps, row * ySteps)
                 close()
             }
 
-            clipPath(path){
+            clipPath(path) {
                 drawCircle(
                     brush = Brush.radialGradient(
                         listOf(orange.copy(0.8f), orange.copy(0.2f)),
@@ -128,35 +126,35 @@ fun Calendar3(
 
             drawRoundRect(
                 orange,
-                cornerRadius = CornerRadius(25f,25f),
+                cornerRadius = CornerRadius(25f, 25f),
                 style = Stroke(
                     width = strokeWidth
                 )
             )
 
-            for(i in 1 until CALENDAR_ROWS){
+            for (i in 1 until CALENDAR_ROWS) {
                 drawLine(
                     color = orange,
-                    start = Offset(0f,ySteps*i),
-                    end = Offset(canvasWidth, ySteps*i),
+                    start = Offset(0f, ySteps * i),
+                    end = Offset(canvasWidth, ySteps * i),
                     strokeWidth = strokeWidth
                 )
             }
-            for(i in 1 until CALENDAR_COLS){
+            for (i in 1 until CALENDAR_COLS) {
                 drawLine(
                     color = orange,
-                    start = Offset(xSteps*i,0f),
-                    end = Offset(xSteps*i, canvasHeight),
+                    start = Offset(xSteps * i, 0f),
+                    end = Offset(xSteps * i, canvasHeight),
                     strokeWidth = strokeWidth
                 )
             }
             val textHeight = 17.dp.toPx()
-            for(i in calendarInput.indices){
-                val textPositionX = xSteps * (i% CALENDAR_COLS) + strokeWidth
-                val textPositionY = (i / CALENDAR_COLS) * ySteps + textHeight + strokeWidth/2
+            for (i in calendarInput.indices) {
+                val textPositionX = xSteps * (i % CALENDAR_COLS) + strokeWidth
+                val textPositionY = (i / CALENDAR_COLS) * ySteps + textHeight + strokeWidth / 2
                 drawContext.canvas.nativeCanvas.apply {
                     drawText(
-                        "${i+1}",
+                        "${i + 1}",
                         textPositionX,
                         textPositionY,
                         Paint().apply {
@@ -179,11 +177,11 @@ fun CalendarBox() {
         mutableStateOf<CalendarInput?>(null)
     }
 
-    Box(
+    Column(
         modifier = Modifier
-            .fillMaxSize()
-            .background(Gray),
-        contentAlignment = Alignment.TopCenter
+            .fillMaxWidth()
+            .background(LightGrey),
+//        contentAlignment = Alignment.TopCenter
     ) {
         Calendar3(
             modifier = Modifier
@@ -191,18 +189,20 @@ fun CalendarBox() {
                 .fillMaxWidth()
                 .aspectRatio(1.3f),
             calendarInput = calendarInputList,
-            onDayClick = {},
+            onDayClick = { day ->
+                clickedCalendarElem = calendarInputList.first { it.day == day }
+            },
             month = "September"
         )
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(10.dp)
-                .align(Alignment.Center)
-        ){
+//                .align(Alignment.Center)
+        ) {
             clickedCalendarElem?.toDos?.forEach {
                 Text(
-                    if(it.contains("Day")) it else "- $it",
+                    if (it.contains("Day")) it else "- $it",
 //                    color = white,
                     fontWeight = FontWeight.SemiBold,
 //                    fontSize = if(it.contains("Day")) 25.sp else 18.sp

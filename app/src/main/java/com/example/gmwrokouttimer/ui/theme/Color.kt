@@ -26,7 +26,7 @@ val darkGray = Color(0xFF1a1717)
 val darkBlue = Color(0xFF18192b)
 val white = Color(0xFFF3F3F3)
 val gray = Color(0xFF3F3F3F)
-val orange = Color(0xFFdb660d)
+val orange = Color(0xFFC2621A)
 val blueGray = Color(0xFF404352)
 val nightDark = Color(0xFF403757)
 
