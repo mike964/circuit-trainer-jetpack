@@ -38,6 +38,7 @@ Created on 07/16/2025
 - [x] on click workout preset item show pop up of all exercies.   4/11/2026
 - [x] Add gif images for exercises                      4/11/2026
 - [x] Switch to prev/next month with arrow button click  4/18/2026
+- [] on click calendar item show date 
 
 Show exercises with gif image
 Save note after workout to db. 

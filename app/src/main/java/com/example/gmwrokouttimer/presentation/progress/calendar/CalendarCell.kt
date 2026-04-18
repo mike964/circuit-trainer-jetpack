@@ -174,14 +174,14 @@ fun CalendarView(
                 CustomIconButton(
                     onClick = onClickPrev,
                     modifier = Modifier.align(Alignment.CenterStart),
-                    icon = Icons.Filled.KeyboardArrowLeft,
+                    icon = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
                     contentDescription = "navigate to previous month"
                 )
             if (displayNext)
                 CustomIconButton(
                     onClick = onClickNext,
                     modifier = Modifier.align(Alignment.CenterEnd),
-                    icon = Icons.Filled.KeyboardArrowRight,
+                    icon = Icons.AutoMirrored.Filled.KeyboardArrowRight,
                     contentDescription = "navigate to next month"
                 )
             Text(

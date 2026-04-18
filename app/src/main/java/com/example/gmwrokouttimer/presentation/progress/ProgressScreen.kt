@@ -36,8 +36,10 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.gmwrokouttimer.presentation.AppViewModel
 import com.example.gmwrokouttimer.presentation.NoteViewModel
+import com.example.gmwrokouttimer.presentation.progress.calendar.CalendarView
 import com.example.gmwrokouttimer.utils.formatDateString
 import java.time.LocalDate
+import java.util.Date
 
 @SuppressLint("SuspiciousIndentation")
 @Composable
@@ -55,14 +57,15 @@ fun ProgressScreen(appVm: AppViewModel, navController: NavController, noteVm: No
         java.time.format.TextStyle.FULL,
         java.util.Locale.getDefault()
     )
-    fun monthNameString (ld :  LocalDate ) : String {
+
+    fun monthNameString(ld: LocalDate): String {
         return ld.month.getDisplayName(
             java.time.format.TextStyle.FULL,
             java.util.Locale.getDefault()
         )
     }
 
-    var selectedMonth  by remember { mutableStateOf(localDate.withDayOfMonth(1)) }
+    var selectedMonth by remember { mutableStateOf(localDate.withDayOfMonth(1)) }
 
 
     Column(
@@ -84,7 +87,7 @@ fun ProgressScreen(appVm: AppViewModel, navController: NavController, noteVm: No
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceAround, // Spacing behavior
             verticalAlignment = Alignment.CenterVertically    // Vertical position
-            ) {
+        ) {
             IconButton(onClick = {
                 selectedMonth = selectedMonth.minusMonths(1)
             }) {
@@ -105,19 +108,19 @@ fun ProgressScreen(appVm: AppViewModel, navController: NavController, noteVm: No
         }
 
         Text("Previous month : ${previousMonthDate.month}")
-        Text("Selected month : ${monthNameString( selectedMonth)}")
+        Text("Selected month : ${monthNameString(selectedMonth)}")
 
         Calendar2(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(300.dp)
-                .background(Color.LightGray)
+                .background(Color.LightGray), ld = selectedMonth
         )
 
-        Box(
-            modifier = Modifier
-                .background(Color.LightGray) // Sets a solid red background
-        ) {
+//        Box(
+//            modifier = Modifier
+//                .background(Color.LightGray) // Sets a solid red background
+//        ) {
 //            CalendarView(
 //                month = Date() ,
 //                date = List(30) {
@@ -130,9 +133,9 @@ fun ProgressScreen(appVm: AppViewModel, navController: NavController, noteVm: No
 //                onClick = { /*TODO*/ },
 //                startFromSunday = true,
 //            )
-            Text("** Fix later **")
-        }
+//        }
 
+        Spacer(modifier = Modifier.height(16.dp))
         Text("Latest activity")
         LazyColumn {
             items(activities, key = { it.id }) {
