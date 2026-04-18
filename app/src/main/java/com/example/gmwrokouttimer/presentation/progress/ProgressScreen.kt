@@ -16,6 +16,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -28,12 +30,24 @@ import androidx.navigation.NavController
 import com.example.gmwrokouttimer.presentation.AppViewModel
 import com.example.gmwrokouttimer.presentation.NoteViewModel
 import com.example.gmwrokouttimer.utils.formatDateString
+import java.time.LocalDate
+import java.time.YearMonth
 
 @SuppressLint("SuspiciousIndentation")
 @Composable
 fun ProgressScreen(appVm: AppViewModel, navController: NavController, noteVm: NoteViewModel) {
 //    val activities = appVm.latestActivity
     val activities by noteVm.activities.collectAsStateWithLifecycle()
+
+    val localDate = LocalDate.now()
+
+    val currentYear = localDate.year   // 2026 :Int
+    val currentMonth = localDate.month   // "April" :String
+
+    val currentMonthName = currentMonth.getDisplayName(
+        java.time.format.TextStyle.FULL,
+        java.util.Locale.getDefault()
+    )
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -50,12 +64,14 @@ fun ProgressScreen(appVm: AppViewModel, navController: NavController, noteVm: No
         }
 
         Text("Active days table")
+//        IconButton() {
+//            Icon()
+//        }
+        Text("$currentYear - $currentMonthName")
 
-//        Calendar2( modifier = Modifier
-//            .fillMaxWidth()
-//            .height(300.dp).background(Color.LightGray))
-
-        CalendarBox()
+        Calendar2( modifier = Modifier
+            .fillMaxWidth()
+            .height(300.dp).background(Color.LightGray))
 
         Box(
             modifier = Modifier
@@ -75,7 +91,6 @@ fun ProgressScreen(appVm: AppViewModel, navController: NavController, noteVm: No
 //            )
             Text("** Fix later **")
         }
-
 
         Text("Latest activity")
         LazyColumn {
