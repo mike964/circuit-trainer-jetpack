@@ -3,6 +3,7 @@ package com.example.gmwrokouttimer.presentation.progress
 import kotlin.time.Duration.Companion.seconds
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,6 +14,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -21,6 +25,9 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -31,7 +38,6 @@ import com.example.gmwrokouttimer.presentation.AppViewModel
 import com.example.gmwrokouttimer.presentation.NoteViewModel
 import com.example.gmwrokouttimer.utils.formatDateString
 import java.time.LocalDate
-import java.time.YearMonth
 
 @SuppressLint("SuspiciousIndentation")
 @Composable
@@ -43,11 +49,21 @@ fun ProgressScreen(appVm: AppViewModel, navController: NavController, noteVm: No
 
     val currentYear = localDate.year   // 2026 :Int
     val currentMonth = localDate.month   // "April" :String
+    val previousMonthDate = localDate.minusMonths(1)
 
     val currentMonthName = currentMonth.getDisplayName(
         java.time.format.TextStyle.FULL,
         java.util.Locale.getDefault()
     )
+    fun monthNameString (ld :  LocalDate ) : String {
+        return ld.month.getDisplayName(
+            java.time.format.TextStyle.FULL,
+            java.util.Locale.getDefault()
+        )
+    }
+
+    var selectedMonth  by remember { mutableStateOf(localDate.withDayOfMonth(1)) }
+
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -64,14 +80,39 @@ fun ProgressScreen(appVm: AppViewModel, navController: NavController, noteVm: No
         }
 
         Text("Active days table")
-//        IconButton() {
-//            Icon()
-//        }
-        Text("$currentYear - $currentMonthName")
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceAround, // Spacing behavior
+            verticalAlignment = Alignment.CenterVertically    // Vertical position
+            ) {
+            IconButton(onClick = {
+                selectedMonth = selectedMonth.minusMonths(1)
+            }) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
+                    contentDescription = "Prev month"
+                )
+            }
+            Text("$selectedMonth")
+            IconButton(onClick = {
+                selectedMonth = selectedMonth.plusMonths(1)
+            }) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                    contentDescription = "Next month"
+                )
+            }
+        }
 
-        Calendar2( modifier = Modifier
-            .fillMaxWidth()
-            .height(300.dp).background(Color.LightGray))
+        Text("Previous month : ${previousMonthDate.month}")
+        Text("Selected month : ${monthNameString( selectedMonth)}")
+
+        Calendar2(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(300.dp)
+                .background(Color.LightGray)
+        )
 
         Box(
             modifier = Modifier
