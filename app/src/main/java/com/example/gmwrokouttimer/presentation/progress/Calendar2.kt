@@ -1,16 +1,24 @@
 package com.example.gmwrokouttimer.presentation.progress
 
+import android.R.attr.onClick
 import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.TextMeasurer
 import androidx.compose.ui.text.drawText
 import androidx.compose.ui.text.rememberTextMeasurer
@@ -28,11 +36,30 @@ fun Calendar2(modifier: Modifier = Modifier, ld: LocalDate = LocalDate.now()) {
     Log.d("xx", totalDays.toString())  // 30
 
     val textMeasurer = rememberTextMeasurer()
+    // 1. Define the rectangle's position and size
+    val rectSize = Size(300f, 200f)
+    val rectTopLeft = Offset(100f, 100f)
+    val rect = Rect(rectTopLeft, rectSize)
+
+    var rectColor by remember { mutableStateOf(Color.Blue) }
+
+    val highlightedDays = listOf(1, 5, 10, 20, 25)
+
 
     Canvas(
         modifier = modifier
             .fillMaxWidth()
             .height(300.dp)
+            .pointerInput(Unit) {
+                detectTapGestures(
+                    onTap = { tapOffset ->
+                        // 2. Check if tap is inside the rectangle
+                        if (rect.contains(tapOffset)) {
+                            rectColor = if (rectColor == Color.Blue) Color.Red else Color.Blue
+                        }
+                    }
+                )
+            }
     ) {
         val width = size.width
         val height = size.height
@@ -53,14 +80,13 @@ fun Calendar2(modifier: Modifier = Modifier, ld: LocalDate = LocalDate.now()) {
             val y = row * boxHeight
 
             drawRect(
-                color = Color.Yellow, // Customize the color as needed
+                color = if (days in highlightedDays) Color.Green else Color.White , // Customize the color as needed
                 topLeft = Offset(x, y),
                 size = Size(boxWidth, boxHeight),
-                style = Stroke(width = 2f) // Outline instead of fill
+//                style = Stroke(width = 4f), // Outline instead of fill
 //                topLeft = Offset(50f, 50f), // Start drawing 50 pixels from left and top
 //                size = Size(width = 300f, height = 200f) // Dimensions in pixels
             )
-
             drawText(
                 textMeasurer = textMeasurer, text = "$days",
                 topLeft = Offset(x + boxWidth / 3 + 10, y + boxHeight / 2.5f)
