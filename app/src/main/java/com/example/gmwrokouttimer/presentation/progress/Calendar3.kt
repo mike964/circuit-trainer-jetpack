@@ -18,11 +18,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.text.font.FontWeight
@@ -39,6 +37,8 @@ import androidx.compose.ui.input.pointer.pointerInput
 import com.example.gmwrokouttimer.ui.theme.LightGrey
 import com.example.gmwrokouttimer.ui.theme.orange
 import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.time.YearMonth
 
 private const val CALENDAR_ROWS = 5
 private const val CALENDAR_COLS = 7
@@ -172,10 +172,22 @@ fun Calendar3(
 
 @Composable
 fun CalendarBox() {
-    val calendarInputList by remember { mutableStateOf(createCalendarList()) }
+    // 1. Get the current YearMonth
+    val currentMonth = YearMonth.now()
+    // 2. Get the number of days in that specific month
+    val daysInMonth = currentMonth.lengthOfMonth()
+    // 3. Generate a list of days (1 to 28/30/31)
+    val daysList = (1..daysInMonth).toList()
+
+    val calendarInputList by remember { mutableStateOf(createCalendarList(daysInMonth)) }
     var clickedCalendarElem by remember {
         mutableStateOf<CalendarInput?>(null)
     }
+
+    val currentMonthName = currentMonth.month.getDisplayName(
+        java.time.format.TextStyle.FULL,
+        java.util.Locale.getDefault()
+    )
 
     Column(
         modifier = Modifier
@@ -192,7 +204,7 @@ fun CalendarBox() {
             onDayClick = { day ->
                 clickedCalendarElem = calendarInputList.first { it.day == day }
             },
-            month = "September"
+            month = currentMonthName
         )
         Column(
             modifier = Modifier
@@ -213,16 +225,15 @@ fun CalendarBox() {
 }
 
 
-private fun createCalendarList(): List<CalendarInput> {
+private fun createCalendarList(totalDays: Int = 30): List<CalendarInput> {
     val calendarInputs = mutableListOf<CalendarInput>()
-    for (i in 1..30) {
+    for (i in 1..totalDays) {
         calendarInputs.add(
             CalendarInput(
                 i, toDos = listOf(
                     "Day $i: ",
                     "2:00 pm Buying groceries",
                     "4:00 pm Meeting with Larissa"
-
                 )
             )
         )
