@@ -1,9 +1,7 @@
 package com.example.gmwrokouttimer.presentation.progress
 
-import android.R.attr.onClick
 import android.util.Log
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,14 +16,16 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.text.TextMeasurer
 import androidx.compose.ui.text.drawText
 import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import java.time.Instant
 import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+
 
 @Composable
 fun Calendar2(modifier: Modifier = Modifier, ld: LocalDate = LocalDate.now()) {
@@ -44,14 +44,27 @@ fun Calendar2(modifier: Modifier = Modifier, ld: LocalDate = LocalDate.now()) {
 
     var rectColor by remember { mutableStateOf(Color.Blue) }
 
-    val highlightedDays = listOf(1, 5, 10, 20, 25)
+//    val highlightedDays = listOf(1, 5, 10, 20, 25)
+
+    val activityDates = listOf(
+        "2026-04-03T10:27:35.12Z",
+        "2026-04-13T10:27:35.12Z",
+        "2026-04-16T10:27:35.12Z"
+    )
+    val highlightedDays = activityDates.map {
+        val instant = Instant.parse(it)
+        val date = instant.atZone(java.time.ZoneId.systemDefault()).toLocalDate()
+        date.dayOfMonth
+    }
+    Log.d("progress", highlightedDays.toString())
+    // output : [3, 13, 16]
 
 
     Canvas(
         modifier = modifier
             .fillMaxWidth()
             .height(300.dp)
-            .border( 1.dp, Color.DarkGray)
+            .border(1.dp, Color.DarkGray)
             .pointerInput(Unit) {
                 detectTapGestures(
                     onTap = { tapOffset ->
@@ -84,8 +97,8 @@ fun Calendar2(modifier: Modifier = Modifier, ld: LocalDate = LocalDate.now()) {
             val y = row * boxHeight
 
             drawRect(
-                color = if (days in highlightedDays) Color.Green else Color.LightGray , // Customize the color as needed
-                topLeft = Offset(x+1, y),
+                color = if (days in highlightedDays) Color.Green else Color.LightGray, // Customize the color as needed
+                topLeft = Offset(x + 1, y),
                 size = Size(boxWidth - 2, boxHeight - 1),
 //                style = Stroke(width = 4f), // Outline instead of fill
 //                topLeft = Offset(50f, 50f), // Start drawing 50 pixels from left and top

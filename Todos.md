@@ -39,7 +39,7 @@ Created on 07/16/2025
 - [x] Add gif images for exercises                      4/11/2026
 - [x] Switch to prev/next month with arrow button click  4/18/2026
 - [] on click calendar item show date 
-- [] Highlight day
+- [x] Highlight day of activity
 
 Show exercises with gif image
 Save note after workout to db. 
