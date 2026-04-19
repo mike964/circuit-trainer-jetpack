@@ -1,5 +1,6 @@
 package com.example.gmwrokouttimer.presentation.progress
 
+import android.R
 import kotlin.time.Duration.Companion.seconds
 import android.annotation.SuppressLint
 import android.util.Log
@@ -20,8 +21,10 @@ import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -31,7 +34,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.gmwrokouttimer.database.model.Activity
@@ -82,25 +87,30 @@ fun ProgressScreen(appVm: AppViewModel, navController: NavController, noteVm: No
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
-//            horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
-                text = "< Back",
-                color = Color.Blue,
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(16.dp)
-                    .clickable {
-                        // Go back to the previous screen (Home)
-                        navController.popBackStack()
-                    }
-            )
-            Text("Active days table" ,modifier = Modifier
-                .weight(2f) )
-            Text("..." ,modifier = Modifier
-                    .weight(1f) )
+            Column(
+                Modifier.weight(1f)
+            ) {
+                Text(
+                    text = "< Back",
+                    color = Color.Blue,
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .fillMaxWidth()
+                        .clickable {
+                            // Go back to the previous screen (Home)
+                            navController.popBackStack()
+                        }
+                )
+            }
+            Column(Modifier.weight(3f) ,   horizontalAlignment = Alignment.CenterHorizontally) {
+                Text("Active days table" ,  fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Color.Gray)
+            }
+            Column(Modifier.weight(1f)) { }
         }
+        HorizontalDivider(thickness = 0.5.dp, color = Color.Gray)
+        Spacer(modifier = Modifier.height(16.dp))
 
         Row(
             modifier = Modifier.fillMaxWidth(),
