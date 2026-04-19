@@ -105,7 +105,7 @@ fun ProgressScreen(appVm: AppViewModel, navController: NavController, noteVm: No
                 )
             }
             Column(Modifier.weight(3f) ,   horizontalAlignment = Alignment.CenterHorizontally) {
-                Text("Active days" ,  fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Color.Gray)
+                Text("Active Days" ,  fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Color.Gray)
             }
             Column(Modifier.weight(1f)) { }
         }

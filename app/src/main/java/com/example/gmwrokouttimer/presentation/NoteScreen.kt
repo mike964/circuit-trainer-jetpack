@@ -1,10 +1,12 @@
 package com.example.gmwrokouttimer.presentation
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -18,6 +20,7 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.getValue
@@ -27,9 +30,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.example.gmwrokouttimer.data.Exercise
 import com.example.gmwrokouttimer.data.Preset
 import com.example.gmwrokouttimer.data.getExerciseById
 import com.example.gmwrokouttimer.database.model.Note
@@ -39,23 +43,56 @@ import com.example.gmwrokouttimer.presentation.plans.PresetPopup
 fun NoteScreen(appVm: AppViewModel, noteVm: NoteViewModel, navController: NavHostController) {
 //    val notes by vm.notes.collectAsStateWithLifecycle()
 //    var title by remember { mutableStateOf("") }
-    val exercises = appVm.exercises
-    var title by remember { mutableStateOf("") }
+//    val exercises = appVm.exercises
+//    var title by remember { mutableStateOf("") }
     var showPopup by remember { mutableStateOf(false) }
     var selectedPreset by remember { mutableStateOf(appVm.workoutList[0]) }
 
-    Column(modifier = Modifier.padding(16.dp)) {
-
-        Button(onClick = { showPopup = true }) {
-            Text("Show Popup")
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column(
+                Modifier.weight(1f)
+            ) {
+                Text(
+                    text = "< Back",
+                    color = Color.Blue,
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .fillMaxWidth()
+                        .clickable {
+                            // Go back to the previous screen (Home)
+                            navController.popBackStack()
+                        }
+                )
+            }
+            Column(Modifier.weight(3f), horizontalAlignment = Alignment.CenterHorizontally) {
+                Text("Workout Plans", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Color.Gray)
+            }
+            Column(Modifier.weight(1f)) { }
         }
+        HorizontalDivider(thickness = 0.5.dp, color = Color.Gray)
+        Spacer(modifier = Modifier.height(16.dp))
 
+        // Test workout details popup window
+//        Button(onClick = { showPopup = true }) {
+//            Text("Show Popup")
+//        }
+
+        /*
+        // Room DB Test
         TextField(value = title, onValueChange = { title = it }, label = { Text("Title") })
         Button(onClick = {
-//            noteVm.addNote(title, "Note content..."); title = ""
+          noteVm.addNote(title, "Note content..."); title = ""
         }) {
             Text("Save Note")
         }
+         */
 
         PresetPopup(selectedPreset, showPopup) {
             showPopup = false
@@ -68,20 +105,10 @@ fun NoteScreen(appVm: AppViewModel, noteVm: NoteViewModel, navController: NavHos
 //            }
 //        }
 
-        // # Display list of all exercises
-//        LazyColumn {
-//            items(exercises, key = { it.id }) { itm ->
-//                ExerciseItem(itm )
-//            }
-//        }
-
         // # Display list of all workout presets
         LazyColumn {
-//            items(exercises, key = { it.id }) { itm ->
-//                ExerciseItem(itm )
-//            }
             items(appVm.workoutList, key = { it.id }) { itm ->
-                WorkoutPresetItem(itm){
+                WorkoutPresetItem(itm) {
 //                    appVm.setCurrentPreset(itm.id)
 //                    navController.navigate("main")
                     selectedPreset = itm
@@ -101,32 +128,10 @@ fun NoteItem(note: Note, onDelete: (Note) -> Unit) {
 }
 
 @Composable
-fun ExerciseItem(
-    exercise: Exercise,
-    //   , onDelete: (Exercise) -> Unit
-) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(6.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = Color.White, // Set background color here
-//        contentColor = Color.Black       // Optional: Set default text/icon color
-        )
-    ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Text(text = exercise.name)
-            Text(text = exercise.imageId.toString())
-        }
-    }
-}
-
-@Composable
 fun WorkoutPresetItem(
     preset: Preset,
     //       , onDelete: (WorkoutPreset) -> Unit
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     Card(
         modifier = Modifier
@@ -136,12 +141,12 @@ fun WorkoutPresetItem(
         colors = CardDefaults.cardColors(
             containerColor = Color.White, // Set background color here
 //        contentColor = Color.Black       // Optional: Set default text/icon color
-        ) ,
+        ),
         onClick = onClick
     ) {
         Row(modifier = Modifier.padding(16.dp)) {
             Column(Modifier.weight(3f)) {
-                Text(text = preset.name + " - id: ${preset.id}")
+                Text(text = "  ${preset.name}" )
 //                Text(text = preset.exerciseIdList.toString())
                 FlowRow(
 //                        Modifier.background(Color.Cyan),
