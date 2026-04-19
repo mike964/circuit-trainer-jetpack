@@ -4,6 +4,7 @@ import android.R.attr.onClick
 import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -50,6 +51,7 @@ fun Calendar2(modifier: Modifier = Modifier, ld: LocalDate = LocalDate.now()) {
         modifier = modifier
             .fillMaxWidth()
             .height(300.dp)
+            .border( 1.dp, Color.Blue)
             .pointerInput(Unit) {
                 detectTapGestures(
                     onTap = { tapOffset ->
@@ -63,6 +65,8 @@ fun Calendar2(modifier: Modifier = Modifier, ld: LocalDate = LocalDate.now()) {
     ) {
         val width = size.width
         val height = size.height
+        val cellWidth = size.width / 7
+        val cellHeight = size.height / 5 // Common for months spanning 6 weeks
 
         val daysInMonth = 7
         val totalRow = (totalDays + daysInMonth) / 7
@@ -80,9 +84,9 @@ fun Calendar2(modifier: Modifier = Modifier, ld: LocalDate = LocalDate.now()) {
             val y = row * boxHeight
 
             drawRect(
-                color = if (days in highlightedDays) Color.Green else Color.White , // Customize the color as needed
-                topLeft = Offset(x, y),
-                size = Size(boxWidth, boxHeight),
+                color = if (days in highlightedDays) Color.Green else Color.DarkGray , // Customize the color as needed
+                topLeft = Offset(x+1, y),
+                size = Size(boxWidth - 2, boxHeight - 1),
 //                style = Stroke(width = 4f), // Outline instead of fill
 //                topLeft = Offset(50f, 50f), // Start drawing 50 pixels from left and top
 //                size = Size(width = 300f, height = 200f) // Dimensions in pixels
@@ -90,6 +94,15 @@ fun Calendar2(modifier: Modifier = Modifier, ld: LocalDate = LocalDate.now()) {
             drawText(
                 textMeasurer = textMeasurer, text = "$days",
                 topLeft = Offset(x + boxWidth / 3 + 10, y + boxHeight / 2.5f)
+            )
+        }
+        // Horizontal lines
+        for (i in 0..5) {
+            drawLine(
+                color = Color.Black,
+                start = Offset(0f, i * cellHeight),
+                end = Offset(size.width, i * cellHeight),
+                strokeWidth = 1.dp.toPx()
             )
         }
     }

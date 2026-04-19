@@ -113,8 +113,10 @@ fun ProgressScreen(appVm: AppViewModel, navController: NavController, noteVm: No
         Calendar2(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(300.dp)
-                .background(Color.LightGray), ld = selectedMonth
+                .height(240.dp)
+                .padding(32.dp, 8.dp )
+                .background(Color.LightGray),
+            ld = selectedMonth
         )
 
 //        Box(
