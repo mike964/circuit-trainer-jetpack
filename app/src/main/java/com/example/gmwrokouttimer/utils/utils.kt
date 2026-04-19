@@ -1,5 +1,6 @@
 package com.example.gmwrokouttimer.utils
 
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Locale
@@ -49,6 +50,11 @@ fun formatDateString(inputDate: String, outputFormat: String = "MMM dd, yyyy"): 
     // 2. Define the output format and format the date object
     val outputFormatter = DateTimeFormatter.ofPattern(outputFormat, Locale.ENGLISH)
     return date.format(outputFormatter)
+}
+
+fun formatDate(inputDate : LocalDate , outputFormat: String = "MMM dd, yyyy"): String {
+    val outputFormatter = DateTimeFormatter.ofPattern( outputFormat, Locale.ENGLISH)
+    return inputDate.format(outputFormatter)
 }
 
 

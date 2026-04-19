@@ -37,6 +37,7 @@ import androidx.navigation.NavController
 import com.example.gmwrokouttimer.database.model.Activity
 import com.example.gmwrokouttimer.presentation.AppViewModel
 import com.example.gmwrokouttimer.presentation.NoteViewModel
+import com.example.gmwrokouttimer.utils.formatDate
 import com.example.gmwrokouttimer.utils.formatDateString
 import java.time.LocalDate
 import java.time.format.TextStyle
@@ -51,7 +52,6 @@ fun ProgressScreen(appVm: AppViewModel, navController: NavController, noteVm: No
     val activitiesInTimePeriod by noteVm.getNotesByDate(0, 0).collectAsStateWithLifecycle()
 
 
-
     val localDate = LocalDate.now()
 
     val currentYear = localDate.year   // 2026 :Int
@@ -64,7 +64,7 @@ fun ProgressScreen(appVm: AppViewModel, navController: NavController, noteVm: No
     )
 
     fun monthNameString(ld: LocalDate): String {
-        return ld.month.getDisplayName(
+        return ld.month.getDisplayName(  // March
             TextStyle.FULL,
             Locale.getDefault()
         )
@@ -80,20 +80,27 @@ fun ProgressScreen(appVm: AppViewModel, navController: NavController, noteVm: No
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Row(horizontalArrangement = Arrangement.Start) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+//            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             Text(
                 text = "< Back",
                 color = Color.Blue,
                 modifier = Modifier
+                    .weight(1f)
                     .padding(16.dp)
                     .clickable {
                         // Go back to the previous screen (Home)
                         navController.popBackStack()
                     }
             )
+            Text("Active days table" ,modifier = Modifier
+                .weight(2f) )
+            Text("..." ,modifier = Modifier
+                    .weight(1f) )
         }
-
-        Text("Active days table")
 
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -108,7 +115,7 @@ fun ProgressScreen(appVm: AppViewModel, navController: NavController, noteVm: No
                     contentDescription = "Prev month"
                 )
             }
-            Text("$selectedMonth")
+            Text(formatDate(selectedMonth, "MMMM yyyy"))
             IconButton(onClick = {
                 selectedMonth = selectedMonth.plusMonths(1)
             }) {
@@ -120,7 +127,6 @@ fun ProgressScreen(appVm: AppViewModel, navController: NavController, noteVm: No
         }
 //        Text("Previous month : ${previousMonthDate.month}")  // MARCH
 //        Text("Selected month : ${monthNameString(selectedMonth)}")
-        Text(" ${monthNameString(selectedMonth)}")
 
         Calendar2(
             modifier = Modifier
