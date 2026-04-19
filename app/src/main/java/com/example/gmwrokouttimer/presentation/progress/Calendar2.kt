@@ -51,7 +51,7 @@ fun Calendar2(modifier: Modifier = Modifier, ld: LocalDate = LocalDate.now()) {
         modifier = modifier
             .fillMaxWidth()
             .height(300.dp)
-            .border( 1.dp, Color.Blue)
+            .border( 1.dp, Color.DarkGray)
             .pointerInput(Unit) {
                 detectTapGestures(
                     onTap = { tapOffset ->
@@ -84,7 +84,7 @@ fun Calendar2(modifier: Modifier = Modifier, ld: LocalDate = LocalDate.now()) {
             val y = row * boxHeight
 
             drawRect(
-                color = if (days in highlightedDays) Color.Green else Color.DarkGray , // Customize the color as needed
+                color = if (days in highlightedDays) Color.Green else Color.LightGray , // Customize the color as needed
                 topLeft = Offset(x+1, y),
                 size = Size(boxWidth - 2, boxHeight - 1),
 //                style = Stroke(width = 4f), // Outline instead of fill

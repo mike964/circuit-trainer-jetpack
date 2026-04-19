@@ -115,7 +115,7 @@ fun ProgressScreen(appVm: AppViewModel, navController: NavController, noteVm: No
                 .fillMaxWidth()
                 .height(240.dp)
                 .padding(32.dp, 8.dp )
-                .background(Color.LightGray),
+                .background(Color.DarkGray),
             ld = selectedMonth
         )
 
