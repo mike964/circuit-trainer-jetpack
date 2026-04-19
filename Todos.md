@@ -40,6 +40,7 @@ Created on 07/16/2025
 - [x] Switch to prev/next month with arrow button click  4/18/2026
 - [] on click calendar item show date 
 - [x] Highlight day of activity
+- [x] Load highlighted activity days from db 
 
 Show exercises with gif image
 Save note after workout to db. 

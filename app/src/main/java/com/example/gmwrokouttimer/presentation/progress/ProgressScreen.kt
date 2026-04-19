@@ -2,9 +2,10 @@ package com.example.gmwrokouttimer.presentation.progress
 
 import kotlin.time.Duration.Companion.seconds
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -17,7 +18,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -34,18 +34,23 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import com.example.gmwrokouttimer.database.model.Activity
 import com.example.gmwrokouttimer.presentation.AppViewModel
 import com.example.gmwrokouttimer.presentation.NoteViewModel
-import com.example.gmwrokouttimer.presentation.progress.calendar.CalendarView
 import com.example.gmwrokouttimer.utils.formatDateString
 import java.time.LocalDate
-import java.util.Date
+import java.time.format.TextStyle
+import java.util.Locale
 
 @SuppressLint("SuspiciousIndentation")
 @Composable
 fun ProgressScreen(appVm: AppViewModel, navController: NavController, noteVm: NoteViewModel) {
 //    val activities = appVm.latestActivity
     val activities by noteVm.activities.collectAsStateWithLifecycle()
+    // # Get activities from db in date period
+    val activitiesInTimePeriod by noteVm.getNotesByDate(0, 0).collectAsStateWithLifecycle()
+
+
 
     val localDate = LocalDate.now()
 
@@ -54,35 +59,42 @@ fun ProgressScreen(appVm: AppViewModel, navController: NavController, noteVm: No
     val previousMonthDate = localDate.minusMonths(1)
 
     val currentMonthName = currentMonth.getDisplayName(
-        java.time.format.TextStyle.FULL,
-        java.util.Locale.getDefault()
+        TextStyle.FULL,
+        Locale.getDefault()
     )
 
     fun monthNameString(ld: LocalDate): String {
         return ld.month.getDisplayName(
-            java.time.format.TextStyle.FULL,
-            java.util.Locale.getDefault()
+            TextStyle.FULL,
+            Locale.getDefault()
         )
     }
 
     var selectedMonth by remember { mutableStateOf(localDate.withDayOfMonth(1)) }
+
+    val highlightedDaysForSelectedMonth = listOf(1, 5, 10, 20, 25)
+    Log.d("Progress", activitiesInTimePeriod.toString())
 
 
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Row() {
-            Text("Progress Screen")
-            Button(onClick = {
-                // Go back to the previous screen (Home)
-                navController.popBackStack()
-            }) {
-                Text("Go Back")
-            }
+        Row(horizontalArrangement = Arrangement.Start) {
+            Text(
+                text = "< Back",
+                color = Color.Blue,
+                modifier = Modifier
+                    .padding(16.dp)
+                    .clickable {
+                        // Go back to the previous screen (Home)
+                        navController.popBackStack()
+                    }
+            )
         }
 
         Text("Active days table")
+
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceAround, // Spacing behavior
@@ -106,17 +118,18 @@ fun ProgressScreen(appVm: AppViewModel, navController: NavController, noteVm: No
                 )
             }
         }
-
-        Text("Previous month : ${previousMonthDate.month}")
-        Text("Selected month : ${monthNameString(selectedMonth)}")
+//        Text("Previous month : ${previousMonthDate.month}")  // MARCH
+//        Text("Selected month : ${monthNameString(selectedMonth)}")
+        Text(" ${monthNameString(selectedMonth)}")
 
         Calendar2(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(240.dp)
-                .padding(32.dp, 8.dp )
+                .padding(32.dp, 8.dp)
                 .background(Color.DarkGray),
-            ld = selectedMonth
+            ld = selectedMonth,
+            highlightedDays = listOf(1, 5, 10, 20, 25)
         )
 
 //        Box(
@@ -148,7 +161,7 @@ fun ProgressScreen(appVm: AppViewModel, navController: NavController, noteVm: No
 }
 
 @Composable
-fun ActivityListItem(activity: com.example.gmwrokouttimer.database.model.Activity) {
+fun ActivityListItem(activity: Activity) {
     Card(
         modifier = Modifier
             .fillMaxWidth()

@@ -23,12 +23,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import java.time.Instant
 import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 
 @Composable
-fun Calendar2(modifier: Modifier = Modifier, ld: LocalDate = LocalDate.now()) {
+fun Calendar2(
+    modifier: Modifier = Modifier,
+    ld: LocalDate = LocalDate.now(),  // selected month
+    highlightedDays: List<Int>   // List of days to highlight listOf(1, 5, 10, 20, 25)
+) {
 
     Log.d("xx", ld.toString())
 //    val currentMonth = LocalDate.now().month
@@ -51,12 +53,12 @@ fun Calendar2(modifier: Modifier = Modifier, ld: LocalDate = LocalDate.now()) {
         "2026-04-13T10:27:35.12Z",
         "2026-04-16T10:27:35.12Z"
     )
-    val highlightedDays = activityDates.map {
-        val instant = Instant.parse(it)
-        val date = instant.atZone(java.time.ZoneId.systemDefault()).toLocalDate()
-        date.dayOfMonth
-    }
-    Log.d("progress", highlightedDays.toString())
+//    val highlightedDays = activityDates.map {
+//        val instant = Instant.parse(it)
+//        val date = instant.atZone(java.time.ZoneId.systemDefault()).toLocalDate()
+//        date.dayOfMonth
+//    }
+//    Log.d("progress", highlightedDays.toString())
     // output : [3, 13, 16]
 
 
@@ -121,8 +123,8 @@ fun Calendar2(modifier: Modifier = Modifier, ld: LocalDate = LocalDate.now()) {
     }
 }
 
-@Preview
-@Composable
-private fun Calendar2Preview() {
-    Calendar2()
-}
+//@Preview
+//@Composable
+//private fun Calendar2Preview() {
+//    Calendar2()
+//}
