@@ -80,9 +80,9 @@ fun ProgressScreen(appVm: AppViewModel, navController: NavController, noteVm: No
     val firstDayofSelectedMonth = selectedMonth.withDayOfMonth(1)
     val lastDayofSelectedMonth = selectedMonth.withDayOfMonth(selectedMonth.lengthOfMonth())
 
-    Log.d("Progress", "Selected month : ${selectedMonth.month}")
-    Log.d("Progress", "First day of selected month : ${firstDayofSelectedMonth.dayOfMonth}")
-    Log.d("Progress", "Last day of selected month : ${lastDayofSelectedMonth.dayOfMonth}")
+    Log.d("Progress84", "Selected month : ${selectedMonth.month}")
+    Log.d("Progress84", "First day of selected month : $firstDayofSelectedMonth") // 2026-04-01
+    Log.d("Progress84", "Last day of selected month : $lastDayofSelectedMonth")   // 2026-04-30
 
     val highlightedDaysForSelectedMonth = listOf(1, 5, 10, 20, 25)
     Log.d("Progress", activitiesInTimePeriod.toString())

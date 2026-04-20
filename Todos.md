@@ -43,7 +43,7 @@ Created on 07/16/2025
 - [x] Highlight days of activity in Calendar     4/19/2026
 - [x] Load highlighted activity days from db 
 - [x] Get activites by date range from db       4/19/2026
-- [ ] Log first day n last day of selected month 
+- [x] Log first day n last day of selected month 
 
 Show exercises with gif image
 Save note after workout to db. 
