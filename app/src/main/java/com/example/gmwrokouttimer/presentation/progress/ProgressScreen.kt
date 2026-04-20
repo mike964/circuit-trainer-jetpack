@@ -44,20 +44,30 @@ import com.example.gmwrokouttimer.presentation.AppViewModel
 import com.example.gmwrokouttimer.presentation.NoteViewModel
 import com.example.gmwrokouttimer.utils.formatDate
 import com.example.gmwrokouttimer.utils.formatDateString
+import java.time.Instant
 import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.ZoneId
 import java.time.format.TextStyle
 import java.util.Locale
 
 @SuppressLint("SuspiciousIndentation")
 @Composable
 fun ProgressScreen(appVm: AppViewModel, navController: NavController, noteVm: NoteViewModel) {
+
+    val localDate = LocalDate.now()
+    var selectedMonth by remember { mutableStateOf(localDate.withDayOfMonth(1)) }
+
+    val selectedMonthFirstDay = selectedMonth.withDayOfMonth(1)
+    val selectedMonthLastDay = selectedMonth.withDayOfMonth(selectedMonth.lengthOfMonth())
 //    val activities = appVm.latestActivity
     val activities by noteVm.activities.collectAsStateWithLifecycle()
     // # Get activities from db in date period
-    val activitiesInTimePeriod by noteVm.getNotesByDate(0, 0).collectAsStateWithLifecycle()
+    val activitiesInTimePeriod by noteVm.getNotesByDate(
+        selectedMonthFirstDay.toString(),
+        selectedMonthLastDay.toString()
+    ).collectAsStateWithLifecycle()
 
-
-    val localDate = LocalDate.now()
 
     val currentYear = localDate.year   // 2026 :Int
     val currentMonth = localDate.month   // "April" :String
@@ -75,21 +85,24 @@ fun ProgressScreen(appVm: AppViewModel, navController: NavController, noteVm: No
         )
     }
 
-    var selectedMonth by remember { mutableStateOf(localDate.withDayOfMonth(1)) }
-
-    val firstDayofSelectedMonth = selectedMonth.withDayOfMonth(1)
-    val lastDayofSelectedMonth = selectedMonth.withDayOfMonth(selectedMonth.lengthOfMonth())
 
     Log.d("Progress84", "Selected month : ${selectedMonth.month}")
-    Log.d("Progress84", "First day of selected month : $firstDayofSelectedMonth") // 2026-04-01
-    Log.d("Progress84", "Last day of selected month : $lastDayofSelectedMonth")   // 2026-04-30
+    Log.d("Progress84", "First day of selected month : $selectedMonthFirstDay") // 2026-04-01
+    Log.d("Progress84", "Last day of selected month : $selectedMonthLastDay")   // 2026-04-30
 
-    val highlightedDaysForSelectedMonth = listOf(1, 5, 10, 20, 25)
-    Log.d("Progress", activitiesInTimePeriod.toString())
+
+    Log.d("Progress", activitiesInTimePeriod.size.toString())
+
+    val selectedMonthActivityDays = activitiesInTimePeriod.map { activity ->
+        val date = Instant.parse("${activity.dateTime.slice(0..19)}Z").atZone(ZoneId.systemDefault()).toLocalDate()
+
+        date.dayOfMonth
+    }
 
     val greenA = Color(0xFF77E780)  // for days with single activity session
     val greenB = Color(0xFF0BBB1D)  // for days with more than one activity
 
+    Log.d("Progress102", selectedMonthActivityDays.toString())  //  [19, 14, 14, 13]
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -114,8 +127,13 @@ fun ProgressScreen(appVm: AppViewModel, navController: NavController, noteVm: No
                         }
                 )
             }
-            Column(Modifier.weight(3f) ,   horizontalAlignment = Alignment.CenterHorizontally) {
-                Text("Active Days" ,  fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Color.Gray)
+            Column(Modifier.weight(3f), horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(
+                    "Active Days",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.Gray
+                )
             }
             Column(Modifier.weight(1f)) { }
         }
@@ -155,7 +173,8 @@ fun ProgressScreen(appVm: AppViewModel, navController: NavController, noteVm: No
                 .padding(32.dp, 8.dp)
                 .background(Color.DarkGray),
             ld = selectedMonth,
-            highlightedDays = listOf(1, 5, 10, 20, 25)
+//            highlightedDays = listOf(1, 5, 10, 20, 25)
+            highlightedDays = selectedMonthActivityDays
         )
 
 //        Box(

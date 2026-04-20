@@ -23,14 +23,14 @@ class NoteViewModel(private val repository: ActivityRepository) : ViewModel() {
     // Get activities in time range
     // Get this month all activities by default
 //    val startDateTime = "2025-03-21T12:27:35.124365453"
-    val startDateTime = "2026-04-13T12:27:35.124365453"
-    val endDateTime = "2026-04-27T12:27:35.124365453"
+    val startDateTime = "2026-04-12T12:27:35.124365453"
+    val endDateTime = "2026-04-15T12:27:35.124365453"
 //    val activitiesInTimePeriod: Flow<List<Activity>> =
 //        repository.getActivitiesInPeriod( startDateTime , endDateTime) as StateFlow<List<Activity>>
 
     // Function to get filtered notes
-    fun getNotesByDate(start: Long, end: Long) =
-        repository.getActivitiesInPeriod(startDateTime, endDateTime)
+    fun getNotesByDate(start: String, end: String) =
+        repository.getActivitiesInPeriod(start, end)
             .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
 
