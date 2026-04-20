@@ -145,24 +145,12 @@ fun MainScreen(viewModel: AppViewModel, navController: NavHostController, noteVm
 
     Column(
         modifier = Modifier
-            .background(Color(0xFFE8E8E8))
+            .background(Color(0xFFE0ECF6))
             .fillMaxSize(), // Make the column occupy the whole screen
         verticalArrangement = Arrangement.SpaceAround,
         horizontalAlignment = Alignment.CenterHorizontally,
 
         ) {
-//        Row(
-//            Modifier
-//                .fillMaxWidth()
-//                .height(60.dp)
-//                .background(color = Color(0xFF28336B)),
-//            verticalAlignment = CenterVertically,
-//            horizontalArrangement = Arrangement.SpaceEvenly,
-//        ) {
-//            Text("GM TRAINER 🥇", color = Color.White)
-//        }
-//        Spacer(Modifier.height(10.dp))
-
 
         // # Current Preset and Exercise
         Row(verticalAlignment = CenterVertically) {

@@ -36,11 +36,14 @@ Created on 07/16/2025
 - [x] Show pop up modal after workout finishes to input note n save in progress activity list  4.7 done using launched effect 
 - [] Highligt workout days in custom calendar
 - [x] on click workout preset item show pop up of all exercies.   4/11/2026
-- [x] Add gif images for exercises                      4/11/2026
+- [x] Add gif images for exercises                  4/11/2026
+- [] Load first activity from room db              4/13/2026
 - [x] Switch to prev/next month with arrow button click  4/18/2026
 - [] on click calendar item show date 
-- [x] Highlight day of activity
+- [x] Highlight days of activity in Calendar     4/19/2026
 - [x] Load highlighted activity days from db 
+- [x] Get activites by date range from db       4/19/2026
+- [ ] Log first day n last day of selected month 
 
 Show exercises with gif image
 Save note after workout to db. 
@@ -77,3 +80,10 @@ Location : Geocoding
 City : London, Paris, ... 
 Weather [hot, cold, sunny, rainy, partly cloudy, mild, perfect. ]
 presetId }
+
+@ 
+Change to previous/next month with click  
+If more than one workout in a day, make it darker color in calendar
+Add new activity with describtion and type in progress screen. 
+For example, Cycling, Jump rope, Running 2 miles or whatever. 
+With duration n date 

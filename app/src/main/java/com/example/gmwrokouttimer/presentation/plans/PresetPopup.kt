@@ -1,5 +1,6 @@
 package com.example.gmwrokouttimer.presentation.plans
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -31,6 +32,7 @@ import com.example.gmwrokouttimer.data.Preset
 import com.example.gmwrokouttimer.data.getExerciseById
 import com.example.gmwrokouttimer.presentation.GifImageLocal
 
+@SuppressLint("SuspiciousIndentation")
 @Composable
 fun PresetPopup(preset: Preset, showPopup: Boolean, onDismiss: () -> Unit) {
 
@@ -54,7 +56,7 @@ fun PresetPopup(preset: Preset, showPopup: Boolean, onDismiss: () -> Unit) {
 
                         Text(preset.name  ,  fontWeight = FontWeight.Bold , fontSize = 20.sp,   textAlign = TextAlign.Center,
                             modifier = Modifier.fillMaxWidth())
-                        Text( "Exercises ${preset.exerciseIdList.size} ")
+                        Text( "Exercises : ${preset.exerciseIdList.size} ")
 //                        Text( "id: ${preset.id} ")
 
                         Spacer(modifier = Modifier.height(8.dp))

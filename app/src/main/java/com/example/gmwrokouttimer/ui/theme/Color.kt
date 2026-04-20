@@ -34,5 +34,8 @@ val purple = Color(0xFF9b11ba)
 
 val redOrange = Color(0xFFe84a23)
 val green = Color(0xFF0ddb25)
+val greenA = Color(0xFF87EF90)
+val greenB = Color(0xFF2BE83D)
+val greenC = Color(0xFF0BA61B)
 val blue = Color(0xFF140ddb)
 val brightBlue = Color(0xFF027cf5)

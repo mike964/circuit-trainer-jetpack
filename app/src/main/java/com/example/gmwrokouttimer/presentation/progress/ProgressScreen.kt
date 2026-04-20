@@ -77,8 +77,18 @@ fun ProgressScreen(appVm: AppViewModel, navController: NavController, noteVm: No
 
     var selectedMonth by remember { mutableStateOf(localDate.withDayOfMonth(1)) }
 
+    val firstDayofSelectedMonth = selectedMonth.withDayOfMonth(1)
+    val lastDayofSelectedMonth = selectedMonth.withDayOfMonth(selectedMonth.lengthOfMonth())
+
+    Log.d("Progress", "Selected month : ${selectedMonth.month}")
+    Log.d("Progress", "First day of selected month : ${firstDayofSelectedMonth.dayOfMonth}")
+    Log.d("Progress", "Last day of selected month : ${lastDayofSelectedMonth.dayOfMonth}")
+
     val highlightedDaysForSelectedMonth = listOf(1, 5, 10, 20, 25)
     Log.d("Progress", activitiesInTimePeriod.toString())
+
+    val greenA = Color(0xFF77E780)  // for days with single activity session
+    val greenB = Color(0xFF0BBB1D)  // for days with more than one activity
 
 
     Column(
