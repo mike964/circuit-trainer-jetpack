@@ -19,9 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.drawText
 import androidx.compose.ui.text.rememberTextMeasurer
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import java.time.Instant
 import java.time.LocalDate
 
 
@@ -92,14 +90,19 @@ fun Calendar2(
         Log.d("xx", boxHeight.toString())
         Log.d("xx", boxWidth.toString())
 
-        for (days in 1..totalDays) {
-            val row = (days - 1) / daysInMonth
-            val col = (days - 1) % daysInMonth
+        for (day in 1..totalDays) {
+            val row = (day - 1) / daysInMonth
+            val col = (day - 1) % daysInMonth
             val x = col * boxWidth
             val y = row * boxHeight
+            val greenA = Color(0xFF8DEC92)  // for days with single activity session
+            val greenB = Color(0xFF00FF21)  // for days with more than one activity
+            val repetition = highlightedDays.count { it == day }  // 2
 
             drawRect(
-                color = if (days in highlightedDays) Color.Green else Color.LightGray, // Customize the color as needed
+                color = if (day in highlightedDays) {
+                    if (repetition == 1) greenA else greenB
+                }else Color.LightGray, // Customize the color as needed
                 topLeft = Offset(x + 1, y),
                 size = Size(boxWidth - 2, boxHeight - 1),
 //                style = Stroke(width = 4f), // Outline instead of fill
@@ -107,7 +110,7 @@ fun Calendar2(
 //                size = Size(width = 300f, height = 200f) // Dimensions in pixels
             )
             drawText(
-                textMeasurer = textMeasurer, text = "$days",
+                textMeasurer = textMeasurer, text = "$day",
                 topLeft = Offset(x + boxWidth / 3 + 10, y + boxHeight / 2.5f)
             )
         }

@@ -23,7 +23,6 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -46,10 +45,7 @@ import com.example.gmwrokouttimer.utils.formatDate
 import com.example.gmwrokouttimer.utils.formatDateString
 import java.time.Instant
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.time.ZoneId
-import java.time.format.TextStyle
-import java.util.Locale
 
 @SuppressLint("SuspiciousIndentation")
 @Composable
@@ -67,7 +63,10 @@ fun ProgressScreen(appVm: AppViewModel, navController: NavController, noteVm: No
 
     // Restarts every time key changes - Filter activities by date in UI
     LaunchedEffect(activities) {
-        activitiesInTimePeriod = activities
+        activitiesInTimePeriod = activities.filter {
+            val date = Instant.parse("${it.dateTime.slice(0..19)}Z").atZone(ZoneId.systemDefault()).toLocalDate()
+            date in selectedMonthFirstDay..selectedMonthLastDay
+        }
     }
     LaunchedEffect(selectedMonth) {
          activitiesInTimePeriod = activities.filter {
@@ -88,22 +87,22 @@ fun ProgressScreen(appVm: AppViewModel, navController: NavController, noteVm: No
 //    val currentMonth = localDate.month   // "April" :String
 
     Log.d("Progress84", "Selected month : ${selectedMonth.month}")
-    Log.d("Progress84", "First day of selected month : $selectedMonthFirstDay") // 2026-04-01
-    Log.d("Progress84", "Last day of selected month : $selectedMonthLastDay")   // 2026-04-30
-
+//    Log.d("Progress84", "First day of selected month : $selectedMonthFirstDay") // 2026-04-01
+//    Log.d("Progress84", "Last day of selected month : $selectedMonthLastDay")   // 2026-04-30
 
     Log.d("Progress", activitiesInTimePeriod.size.toString())
 
     val selectedMonthActivityDays = activitiesInTimePeriod.map { activity ->
         val date = Instant.parse("${activity.dateTime.slice(0..19)}Z").atZone(ZoneId.systemDefault()).toLocalDate()
-
         date.dayOfMonth
     }
+//    data class DayWithActivity(val day: Int, val hasActivity: Boolean, val color: Color)
 
-    val greenA = Color(0xFF77E780)  // for days with single activity session
-    val greenB = Color(0xFF0BBB1D)  // for days with more than one activity
+    val activeDaysCounts = selectedMonthActivityDays.groupingBy {it    }.eachCount()
+    Log.d("Progress102", selectedMonthActivityDays.toString())
+    Log.d("Progress102", activeDaysCounts.toString())
 
-    Log.d("Progress102", selectedMonthActivityDays.toString())  //  [19, 14, 14, 13]
+//    Log.d("Progress102", selectedMonthActivityDays.toString())  //  [19, 14, 14, 13]
 
     Column(
         modifier = Modifier.fillMaxSize(),

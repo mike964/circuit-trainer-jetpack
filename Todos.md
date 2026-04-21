@@ -44,12 +44,19 @@ Created on 07/16/2025
 - [x] Load highlighted activity days from db 
 - [x] Get activites by date range from db       4/19/2026
 - [x] Log first day n last day of selected month 
+- [x] Highligh active days in Calendar by repetition  4/21/2026
+
 
 Show exercises with gif image
 Save note after workout to db. 
 Make acticity items expandable
 Active days in a month table 
 Push to Google play store 
+Change to previous/next month with click  
+If more than one workout in a day, make it darker color in calendar
+Add new activity with describtion and type in progress screen. 
+For example, Cycling, Jump rope, Running 2 miles or whatever. 
+With duration n date 
 
 # Later
 Now do only essentials. Later polish.
@@ -80,10 +87,4 @@ Location : Geocoding
 City : London, Paris, ... 
 Weather [hot, cold, sunny, rainy, partly cloudy, mild, perfect. ]
 presetId }
-
-@ 
-Change to previous/next month with click  
-If more than one workout in a day, make it darker color in calendar
-Add new activity with describtion and type in progress screen. 
-For example, Cycling, Jump rope, Running 2 miles or whatever. 
-With duration n date 
+ 
