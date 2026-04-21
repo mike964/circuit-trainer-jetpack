@@ -1,6 +1,5 @@
 package com.example.gmwrokouttimer.presentation.progress
 
-import android.R
 import kotlin.time.Duration.Companion.seconds
 import android.annotation.SuppressLint
 import android.util.Log
@@ -27,6 +26,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -63,28 +63,29 @@ fun ProgressScreen(appVm: AppViewModel, navController: NavController, noteVm: No
 //    val activities = appVm.latestActivity
     val activities by noteVm.activities.collectAsStateWithLifecycle()
     // # Get activities from db in date period
-    val activitiesInTimePeriod by noteVm.getNotesByDate(
-        selectedMonthFirstDay.toString(),
-        selectedMonthLastDay.toString()
-    ).collectAsStateWithLifecycle()
+    var activitiesInTimePeriod by remember { mutableStateOf(emptyList<Activity>()) }
 
-
-    val currentYear = localDate.year   // 2026 :Int
-    val currentMonth = localDate.month   // "April" :String
-    val previousMonthDate = localDate.minusMonths(1)
-
-    val currentMonthName = currentMonth.getDisplayName(
-        TextStyle.FULL,
-        Locale.getDefault()
-    )
-
-    fun monthNameString(ld: LocalDate): String {
-        return ld.month.getDisplayName(  // March
-            TextStyle.FULL,
-            Locale.getDefault()
-        )
+    // Restarts every time key changes - Filter activities by date in UI
+    LaunchedEffect(activities) {
+        activitiesInTimePeriod = activities
+    }
+    LaunchedEffect(selectedMonth) {
+         activitiesInTimePeriod = activities.filter {
+             val date = Instant.parse("${it.dateTime.slice(0..19)}Z").atZone(ZoneId.systemDefault()).toLocalDate()
+             date in selectedMonthFirstDay..selectedMonthLastDay
+         }
     }
 
+//    val activitiesInTimePeriod by noteVm.getNotesByDate(
+//        selectedMonthFirstDay.toString(),
+//        selectedMonthLastDay.toString())
+//            .collectAsStateWithLifecycle()
+//
+//    LaunchedEffect(Unit, selectedMonth) {
+//    }
+
+//    val currentYear = localDate.year   // 2026 :Int
+//    val currentMonth = localDate.month   // "April" :String
 
     Log.d("Progress84", "Selected month : ${selectedMonth.month}")
     Log.d("Progress84", "First day of selected month : $selectedMonthFirstDay") // 2026-04-01
@@ -163,8 +164,6 @@ fun ProgressScreen(appVm: AppViewModel, navController: NavController, noteVm: No
                 )
             }
         }
-//        Text("Previous month : ${previousMonthDate.month}")  // MARCH
-//        Text("Selected month : ${monthNameString(selectedMonth)}")
 
         Calendar2(
             modifier = Modifier
@@ -172,28 +171,10 @@ fun ProgressScreen(appVm: AppViewModel, navController: NavController, noteVm: No
                 .height(240.dp)
                 .padding(32.dp, 8.dp)
                 .background(Color.DarkGray),
-            ld = selectedMonth,
+//            ld = selectedMonth,
 //            highlightedDays = listOf(1, 5, 10, 20, 25)
             highlightedDays = selectedMonthActivityDays
         )
-
-//        Box(
-//            modifier = Modifier
-//                .background(Color.LightGray) // Sets a solid red background
-//        ) {
-//            CalendarView(
-//                month = Date() ,
-//                date = List(30) {
-//                    Pair(Date(), false)
-//                },
-//                displayNext = true,
-//                displayPrev = true,
-//                onClickNext = { /*TODO*/ },
-//                onClickPrev = { /*TODO*/ },
-//                onClick = { /*TODO*/ },
-//                startFromSunday = true,
-//            )
-//        }
 
         Spacer(modifier = Modifier.height(16.dp))
         Text("Latest activity")
@@ -210,7 +191,7 @@ fun ActivityListItem(activity: Activity) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(8.dp),
+            .padding(6.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         colors = CardDefaults.cardColors(
             containerColor = Color.White, // Set background color here
