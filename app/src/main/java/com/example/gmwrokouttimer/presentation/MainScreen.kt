@@ -75,68 +75,65 @@ fun MainScreen(viewModel: AppViewModel, navController: NavHostController, noteVm
     var workoutFinished by remember { mutableStateOf(false) }
 
 
-    Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        if (showPopup) {
-            Popup(
-                onDismissRequest = { showPopup = false }, // Dismisses when tapping outside
-                alignment = Alignment.Center // Centers the popup on the screen
+    if (showPopup) {
+        Popup(
+            onDismissRequest = { showPopup = false }, // Dismisses when tapping outside
+            alignment = Alignment.Center // Centers the popup on the screen
+        ) {
+            // Content of the popup window
+            Box(
+                modifier = Modifier
+                    .width(380.dp)
+                    .height(540.dp)
+                    .dropShadow(
+                        shape = RoundedCornerShape(12.dp),
+                        shadow = Shadow(
+                            radius = 8.dp,
+                            spread = 3.dp,
+                            color = Color(0x40000000),
+                            offset = DpOffset(x = 1.dp, 1.dp)
+                        )
+                    )
+                    .background(
+                        color = Color.White,
+                        shape = RoundedCornerShape(12.dp)
+                    ),
+                contentAlignment = Alignment.Center
             ) {
-                // Content of the popup window
-                Box(
-                    modifier = Modifier
-                        .width(400.dp)
-                        .height(540.dp)
-                        .dropShadow(
-                            shape = RoundedCornerShape(16.dp),
-                            shadow = Shadow(
-                                radius = 9.dp,
-                                spread = 3.dp,
-                                color = Color(0x40000000),
-                                offset = DpOffset(x = 1.dp, 1.dp)
-                            )
-                        )
-                        .align(Alignment.Center)
-                        .background(
-                            color = Color.White,
-                            shape = RoundedCornerShape(16.dp)
-                        ),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Column {
-                        Text("This is a Popup Window!")
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Text("Work (Seconds)")
-                        HorizontalNumberPicker(
-                            default = 1,
-                            displayNumber = timerState.workTimeSeconds,
-                            min = 2, max = 20,
-                            height = 30.dp
-                        ) {
-                            countdownVm.setWorkTime(it)
-                        }
-                        Text("Rest (Seconds)")
-                        HorizontalNumberPicker(height = 30.dp) {
+                Column {
+                    Text("This is a Popup Window!")
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text("Work (Seconds)")
+                    HorizontalNumberPicker(
+                        default = 1,
+                        displayNumber = timerState.workTimeSeconds,
+                        min = 2, max = 20,
+                        height = 30.dp
+                    ) {
+                        countdownVm.setWorkTime(it)
+                    }
+                    Text("Rest (Seconds)")
+                    HorizontalNumberPicker(height = 30.dp) {
 
-                        }
-                        Text("Rounds")
-                        HorizontalNumberPicker(default = timerState.initRounds, height = 30.dp) {
-                            countdownVm.setInitRounds(it)
-                        }
-                        Text(
-                            "Total time : "
-                                    + formatSeconds((totalTime).toLong())
-                        )
+                    }
+                    Text("Rounds")
+                    HorizontalNumberPicker(default = timerState.initRounds, height = 30.dp) {
+                        countdownVm.setInitRounds(it)
+                    }
+                    Text(
+                        "Total time : "
+                                + formatSeconds((totalTime).toLong())
+                    )
 
-                        Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(8.dp))
 
-                        Button(onClick = {
-                            showPopup = false
-                            Log.d("xx", "TimerState:")
-                            Log.d("xx", timerState.toString())
-                            Log.d("xx", "totalTime $totalTime")
-                        }) {
-                            Text("Save")
-                        }
+                    Button(onClick = {
+                        showPopup = false
+                        Log.d("xx", "TimerState:")
+                        Log.d("xx", timerState.toString())
+                        Log.d("xx", "totalTime $totalTime")
+                    }) {
+                        Text("Save")
                     }
                 }
             }
@@ -231,8 +228,8 @@ fun MainScreen(viewModel: AppViewModel, navController: NavHostController, noteVm
         LaunchedEffect(workoutFinished) {
             // This is a suspend function
 //           userName = fetchUserName(userId)
-           if(workoutFinished)
-            showSaveWorkoutPopup = true
+            if (workoutFinished)
+                showSaveWorkoutPopup = true
         }
 
         CountdownScreen(countdownVm)
@@ -266,7 +263,7 @@ fun MainScreen(viewModel: AppViewModel, navController: NavHostController, noteVm
 //                        dateTime = "2026-04-04T12:27:35.124365453",
                         dateTime = LocalDateTime.now().toString(),
                         duration = totalTime,   // 960 seconds
-                        calories = (totalTime/60)*13,
+                        calories = (totalTime / 60) * 13,
                         location = null,
                         city = "Iraq",
                         country = "Baghdad",

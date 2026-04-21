@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -13,8 +14,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
@@ -34,10 +38,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.dropShadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.shadow.Shadow
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Popup
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.gmwrokouttimer.database.model.Activity
@@ -62,28 +70,23 @@ fun ProgressScreen(appVm: AppViewModel, navController: NavController, noteVm: No
     val activities by noteVm.activities.collectAsStateWithLifecycle()
     // # Get activities from db in date period
     var activitiesInTimePeriod by remember { mutableStateOf(emptyList<Activity>()) }
+    var showPopup by remember { mutableStateOf(false) }  // Add new activity to db
 
     // Restarts every time key changes - Filter activities by date in UI
     LaunchedEffect(activities) {
         activitiesInTimePeriod = activities.filter {
-            val date = Instant.parse("${it.dateTime.slice(0..19)}Z").atZone(ZoneId.systemDefault()).toLocalDate()
+            val date = Instant.parse("${it.dateTime.slice(0..19)}Z").atZone(ZoneId.systemDefault())
+                .toLocalDate()
             date in selectedMonthFirstDay..selectedMonthLastDay
         }
     }
     LaunchedEffect(selectedMonth) {
-         activitiesInTimePeriod = activities.filter {
-             val date = Instant.parse("${it.dateTime.slice(0..19)}Z").atZone(ZoneId.systemDefault()).toLocalDate()
-             date in selectedMonthFirstDay..selectedMonthLastDay
-         }
+        activitiesInTimePeriod = activities.filter {
+            val date = Instant.parse("${it.dateTime.slice(0..19)}Z").atZone(ZoneId.systemDefault())
+                .toLocalDate()
+            date in selectedMonthFirstDay..selectedMonthLastDay
+        }
     }
-
-//    val activitiesInTimePeriod by noteVm.getNotesByDate(
-//        selectedMonthFirstDay.toString(),
-//        selectedMonthLastDay.toString())
-//            .collectAsStateWithLifecycle()
-//
-//    LaunchedEffect(Unit, selectedMonth) {
-//    }
 
 //    val currentYear = localDate.year   // 2026 :Int
 //    val currentMonth = localDate.month   // "April" :String
@@ -95,16 +98,48 @@ fun ProgressScreen(appVm: AppViewModel, navController: NavController, noteVm: No
     Log.d("Progress", activitiesInTimePeriod.size.toString())
 
     val selectedMonthActivityDays = activitiesInTimePeriod.map { activity ->
-        val date = Instant.parse("${activity.dateTime.slice(0..19)}Z").atZone(ZoneId.systemDefault()).toLocalDate()
+        val date =
+            Instant.parse("${activity.dateTime.slice(0..19)}Z").atZone(ZoneId.systemDefault())
+                .toLocalDate()
         date.dayOfMonth
     }
 //    data class DayWithActivity(val day: Int, val hasActivity: Boolean, val color: Color)
 
-    val activeDaysCounts = selectedMonthActivityDays.groupingBy {it    }.eachCount()
+    val activeDaysCounts = selectedMonthActivityDays.groupingBy { it }.eachCount()
     Log.d("Progress102", selectedMonthActivityDays.toString())
     Log.d("Progress102", activeDaysCounts.toString())
 
 //    Log.d("Progress102", selectedMonthActivityDays.toString())  //  [19, 14, 14, 13]
+
+    if (showPopup) {
+        Popup(
+            alignment = Alignment.Center,
+            onDismissRequest = { showPopup = false }
+        ) {
+            // Content of the popup
+            Box(
+                modifier = Modifier
+                    .width(380.dp)
+                    .height(540.dp)
+                    .dropShadow(
+                        shape = RoundedCornerShape(12.dp),
+                        shadow = Shadow(
+                            radius = 8.dp,
+                            spread = 3.dp,
+                            color = Color(0x40000000),
+                            offset = DpOffset(x = 1.dp, 1.dp)
+                        )
+                    )
+                    .background(
+                        color = Color.White,
+                        shape = RoundedCornerShape(12.dp)
+                    ),
+                contentAlignment = Alignment.Center
+            ) {
+                Text("This is a basic popup", Modifier.align(Alignment.Center))
+            }
+        }
+    }
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -137,11 +172,14 @@ fun ProgressScreen(appVm: AppViewModel, navController: NavController, noteVm: No
                     color = Color.Gray
                 )
             }
-            Column(Modifier.weight(1f)
+            Column(
+                Modifier.weight(1f)
 //                .background(Color.Yellow)
                 , horizontalAlignment = Alignment.End
-                     ) {
-                IconButton(onClick = { /* Handle click */ }) {
+            ) {
+                IconButton(onClick = {
+                    showPopup = true
+                }) {
                     Icon(
                         imageVector = Icons.Filled.Add,
                         tint = Color.Blue,

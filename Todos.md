@@ -54,6 +54,7 @@ For example, Cycling, Jump rope, Running 2 miles or whatever.
 With duration n date 
 - Fix Plan screen
 - Make acticity items expandable
+- Export room data to file 
 - Push to Google play store 
 
 
