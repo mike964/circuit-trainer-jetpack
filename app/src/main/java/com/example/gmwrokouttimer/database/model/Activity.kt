@@ -15,7 +15,7 @@ data class Activity (
     val location: String?,
     val city: String,
     val country: String,
-    val workoutPresetId: Int,
+    val workoutPresetId: Int?,
     val note: String,
     val imageId: Int?
 )

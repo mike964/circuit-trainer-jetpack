@@ -26,9 +26,6 @@ Created on 07/16/2025
 * \[x] Add room database - note after workout | 2026.01.03
 * \[x] Simple Navigation Bar | 26.01.03
 - [x] Modal pop up to set initial circuit time | 26.01.09
-* \[ ] Workout names crud in room
-* \[ ] Export/import room backup
-* \[ ] Hide extra bs when in workout mode
 - [x] Add todos.md  2026.03.29
 - [x] Update Gradle  26.03.29
 - [x] Show all exercises in list   4.1
@@ -47,16 +44,18 @@ Created on 07/16/2025
 - [x] Highligh active days in Calendar by repetition  4/21/2026
 
 
-Show exercises with gif image
-Save note after workout to db. 
-Make acticity items expandable
-Active days in a month table 
-Push to Google play store 
-Change to previous/next month with click  
-If more than one workout in a day, make it darker color in calendar
+✅ Show exercises with gif image   
+✅ Save note after workout to db   
+✅ Active days in a month table 
+✅ Change to previous/next month with click  
+✅ If more than one workout in a day, make it darker color in calendar
 Add new activity with describtion and type in progress screen. 
 For example, Cycling, Jump rope, Running 2 miles or whatever. 
 With duration n date 
+- Fix Plan screen
+- Make acticity items expandable
+- Push to Google play store 
+
 
 # Later
 Now do only essentials. Later polish.
@@ -68,13 +67,15 @@ Play sound after each round done
 Show total time countdown in minutes n seconds
 Select from pre-made workout plans n download them for practice offline - paid training routines
 Set default circut time 25.30/35 in settings page
+Workout names crud in room
+Export/import room backup 
 
 Simple Gym workout timer. No DB for now. Just show Exercises n timer. 7/16/2025
 Convert Denis Panjuta Workout App to Jetpack. And make it use database to save workouts n feelings. Adidas Running simple Clone
 Build your own custom workout plans n suggest them to friends by link 
 
-Data structure 
-
+# Data structure 
+----------------------
 Finished workouts - Recent activities - Training plans - Weekly streak
 { id - title - exercises,
 total Time : mm:ss (duration)

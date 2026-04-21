@@ -18,6 +18,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
@@ -135,7 +137,18 @@ fun ProgressScreen(appVm: AppViewModel, navController: NavController, noteVm: No
                     color = Color.Gray
                 )
             }
-            Column(Modifier.weight(1f)) { }
+            Column(Modifier.weight(1f)
+//                .background(Color.Yellow)
+                , horizontalAlignment = Alignment.End
+                     ) {
+                IconButton(onClick = { /* Handle click */ }) {
+                    Icon(
+                        imageVector = Icons.Filled.Add,
+                        tint = Color.Blue,
+                        contentDescription = "Add new item"
+                    )
+                }
+            }
         }
         HorizontalDivider(thickness = 0.5.dp, color = Color.Gray)
         Spacer(modifier = Modifier.height(16.dp))

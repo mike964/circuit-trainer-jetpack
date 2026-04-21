@@ -95,8 +95,8 @@ fun Calendar2(
             val col = (day - 1) % daysInMonth
             val x = col * boxWidth
             val y = row * boxHeight
-            val greenA = Color(0xFF8DEC92)  // for days with single activity session
-            val greenB = Color(0xFF00FF21)  // for days with more than one activity
+            val greenA = Color(0xFF81F588)  // for days with single activity session
+            val greenB = Color(0xFF15EE2B)  // for days with more than one activity
             val repetition = highlightedDays.count { it == day }  // 2
 
             drawRect(

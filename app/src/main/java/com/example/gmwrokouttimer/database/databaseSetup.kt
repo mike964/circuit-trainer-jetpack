@@ -8,7 +8,7 @@ import com.example.gmwrokouttimer.database.model.Note
 import com.example.gmwrokouttimer.database.model.Activity
 
 // 3. Room Database
-@Database(entities = [Note::class, Activity::class], version = 1)
+@Database(entities = [Note::class, Activity::class], version = 2)
 abstract class AppDatabase  : RoomDatabase() {
     abstract fun noteDao(): NoteDao
     abstract fun activityDao(): ActivityDao
@@ -23,7 +23,9 @@ abstract class AppDatabase  : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase ::class.java,
                     "note_database"
-                ).build()
+                )
+                    .fallbackToDestructiveMigration(dropAllTables = true)
+                    .build()
                 INSTANCE = instance
                 instance
             }
