@@ -59,8 +59,8 @@ fun NewActivityPopup(showPopup: Boolean = false, onDismiss: () -> Unit, onClickS
     val localDate = LocalDate.now()
     var title by remember { mutableStateOf("") }
     var dateTime by remember { mutableStateOf("$localDate") }
-    var duration by remember { mutableIntStateOf(0) }
-    var calories by remember { mutableIntStateOf(100) }
+    var duration by remember { mutableStateOf("600") }  // 10 minutes
+    var calories by remember { mutableStateOf("100") }
     var city by remember { mutableStateOf("") }
     var country by remember { mutableStateOf("Iraq") }
     var note by remember { mutableStateOf("") }
@@ -160,32 +160,53 @@ fun NewActivityPopup(showPopup: Boolean = false, onDismiss: () -> Unit, onClickS
                     }
 
 
-                    Row() {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
                         Column(
                             Modifier
                                 .width(120.dp)
-                                .padding(8.dp, 2.dp)
+                                .padding(4.dp, 2.dp)
                         ) {
                             OutlinedTextField(
-                                value = duration.toString(),
-                                onValueChange = { duration = it.toInt() },
+                                value = duration,
+//                                onValueChange = { duration = it.toInt() },
                                 label = { Text("Duration (seconds)") },
+                                onValueChange = { newValue ->
+                                    // Only update state if the new string contains only digits
+                                    if (  newValue.all { it.isDigit() }) {
+                                        duration = newValue
+                                        if ( newValue != "") calories = (newValue.toInt() / 60 * 13).toString()
+                                    }
+                                },
                                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
                             )
                         }
+                        Column(Modifier.padding(4.dp)) {
+                            val formattedTime = if (duration != "") {
+                                "%02d:%02d".format(  duration.toInt() / 60, duration.toInt() % 60)
+                            } else {
+                                "00:00"
+                            }
+                            Text(formattedTime)  // // Output: 01:05
+                        }
                         Column(
                             Modifier
-                                .width(120.dp)
+                                .width(100.dp)
                                 .padding(8.dp, 2.dp)
                         ) {
                             OutlinedTextField(
-                                value = calories.toString(),
-                                onValueChange = { calories = it.toInt() },
+                                value = calories,
+                                onValueChange = { newValue ->
+                                    // Only update state if the new string contains only digits
+                                    if (newValue.all { it.isDigit() }) {
+                                        calories = newValue
+                                    }
+                                },
                                 label = { Text("Calories") },
 //                        placeholder = { Text("Minimum 8 characters") },
                                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                             )
                         }
+
                     }
                     Spacer(modifier = Modifier.height(8.dp))
 
