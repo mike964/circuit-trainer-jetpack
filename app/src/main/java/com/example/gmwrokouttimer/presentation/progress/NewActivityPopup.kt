@@ -66,7 +66,6 @@ fun NewActivityPopup(showPopup: Boolean = false, onDismiss: () -> Unit, onClickS
     var note by remember { mutableStateOf("") }
     var workoutPresetId by remember { mutableStateOf("0") }
     var datePickerSelectedDateEpoch by remember { mutableLongStateOf(System.currentTimeMillis()) }
-    var showTimePicker by remember { mutableStateOf(false) }
     var showDatePickerModal by remember { mutableStateOf(false) }
 
     val tps = rememberTimePickerState(
@@ -108,7 +107,7 @@ fun NewActivityPopup(showPopup: Boolean = false, onDismiss: () -> Unit, onClickS
 //                    Text("Now : ${System.currentTimeMillis()}")  // output : 1776862680000
                     Text("Now : ${convertEpochMillisToLocalDate(System.currentTimeMillis())}")
 //                    val selectedDateTimeEpochMillis = convertDateTimeToEpochMillis2("2025-04-21", "12:27")
-                    val selectedDateTimeEpochMillis = convertDateTimeToEpochMillis2(dateTime, "${tps.hour}:${tps.minute}")
+                    val selectedDateTimeEpochMillis = convertDateTimeToEpochMillis2(dateTime, "${tps.hour}","${tps.minute}")
 //                    Text(selectedDateTimeEpochMillis.toString())
                     Text(convertEpochMillisToLocalDate(selectedDateTimeEpochMillis))
 //                    Text(convertEpochMillisToLocalDate( dateTime.toLong() ))  // Error
