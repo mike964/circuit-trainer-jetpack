@@ -13,10 +13,19 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material3.Button
+import androidx.compose.material3.DatePicker
+import androidx.compose.material3.DatePickerDialog
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
+import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -34,6 +43,7 @@ import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
+import com.example.gmwrokouttimer.utils.convertEpochMillisToLocalDate
 import java.time.LocalDate
 
 @Composable
@@ -47,6 +57,9 @@ fun NewActivityPopup(showPopup: Boolean = false, onDismiss: () -> Unit, onClickS
     var country by remember { mutableStateOf("Iraq") }
     var note by remember { mutableStateOf("") }
     var workoutPresetId by remember { mutableStateOf("0") }
+    var showTimePicker by remember { mutableStateOf(false) }
+    var  showDatePickerModal by remember { mutableStateOf(true) }
+
 
 
     if (showPopup) {
@@ -74,8 +87,11 @@ fun NewActivityPopup(showPopup: Boolean = false, onDismiss: () -> Unit, onClickS
                     ),
                 contentAlignment = Alignment.Center
             ) {
-                Column(Modifier.padding(16.dp).verticalScroll(rememberScrollState())) {
-                    Text("Add new workout")
+                Column(Modifier
+                    .padding(16.dp)
+                    .verticalScroll(rememberScrollState())) {
+                    Text("${System.currentTimeMillis()}")
+                    Text(convertEpochMillisToLocalDate( System.currentTimeMillis() ))
                     Spacer(modifier = Modifier.height(8.dp))
 
                     OutlinedTextField(
@@ -94,6 +110,25 @@ fun NewActivityPopup(showPopup: Boolean = false, onDismiss: () -> Unit, onClickS
                     )
                     Spacer(modifier = Modifier.height(8.dp))
 
+                    IconButton(onClick = {  showDatePickerModal = true }) {
+                        Icon(
+                            imageVector = Icons.Default.DateRange,
+                            contentDescription = "Add to favorites"
+                        )
+                    }
+
+                    if (showDatePickerModal) {
+                        DatePickerModal(onDateSelected = { selectedDate ->
+                            if (selectedDate != null) {
+                                dateTime = selectedDate.toString()
+                                showDatePickerModal = false
+                            }
+                        }) {  // onDismiss
+                            showDatePickerModal = false
+                        }
+                    }
+
+
                     Row() {
                         Column(Modifier
                             .width(120.dp)
@@ -105,7 +140,9 @@ fun NewActivityPopup(showPopup: Boolean = false, onDismiss: () -> Unit, onClickS
                                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
                             )
                         }
-                        Column(Modifier.width(120.dp).padding(8.dp, 2.dp)) {
+                        Column(Modifier
+                            .width(120.dp)
+                            .padding(8.dp, 2.dp)) {
                             OutlinedTextField(
                                 value = calories.toString(),
                                 onValueChange = { calories = it.toInt() },
@@ -126,6 +163,7 @@ fun NewActivityPopup(showPopup: Boolean = false, onDismiss: () -> Unit, onClickS
                     )
                     Spacer(modifier = Modifier.height(8.dp))
 
+                    /*
                     OutlinedTextField(
                         value = country,
                         onValueChange = { country = it },
@@ -142,6 +180,8 @@ fun NewActivityPopup(showPopup: Boolean = false, onDismiss: () -> Unit, onClickS
                         singleLine = true,
                     )
                     Spacer(modifier = Modifier.height(8.dp))
+
+                     */
 
                     OutlinedTextField(
                         value = workoutPresetId,
@@ -169,3 +209,4 @@ fun NewActivityPopup(showPopup: Boolean = false, onDismiss: () -> Unit, onClickS
         }
     }
 }
+

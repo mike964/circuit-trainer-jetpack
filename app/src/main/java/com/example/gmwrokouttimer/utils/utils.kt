@@ -1,11 +1,14 @@
 package com.example.gmwrokouttimer.utils
 
+import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
+
 
 fun formatSeconds(totalSeconds: Long): String {
     val duration = totalSeconds.seconds
@@ -52,11 +55,22 @@ fun formatDateString(inputDate: String, outputFormat: String = "MMM dd, yyyy"): 
     return date.format(outputFormatter)
 }
 
-fun formatDate(inputDate : LocalDate , outputFormat: String = "MMM dd, yyyy"): String {
-    val outputFormatter = DateTimeFormatter.ofPattern( outputFormat, Locale.ENGLISH)
+fun formatDate(inputDate: LocalDate, outputFormat: String = "MMM dd, yyyy"): String {
+    val outputFormatter = DateTimeFormatter.ofPattern(outputFormat, Locale.ENGLISH)
     return inputDate.format(outputFormatter)
 }
 
+// # Convert Epoch millis to local date
+fun convertEpochMillisToLocalDate(epochMillis: Long): String {
+    val instant = Instant.ofEpochMilli(epochMillis)
+    // 2. Apply a Time Zone (e.g., UTC or System Default)
+    val dateTime = instant.atZone(ZoneId.of("UTC"))
+    // 3. Format to Human Readable String
+    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm", Locale.getDefault())
+        .withZone(ZoneId.systemDefault())
+    formatter.format(instant)
+    return dateTime.format(formatter)
+}
 
 /*
 fun main() {
