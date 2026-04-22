@@ -1,5 +1,6 @@
 package com.example.gmwrokouttimer
 
+
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -13,6 +14,7 @@ import com.example.gmwrokouttimer.presentation.NavigationBar
 import com.example.gmwrokouttimer.repository.ActivityRepository
 import com.example.gmwrokouttimer.ui.theme.GMWrokoutTimerTheme
 
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,10 +24,14 @@ class MainActivity : ComponentActivity() {
         val repository = ActivityRepository(database.activityDao(),)
         val noteViewModelFactory = NoteViewModelFactory(repository)
 
+ // # Delete all database tables
+//        applicationContext.deleteDatabase("note_database")
+
         enableEdgeToEdge()
         setContent {
             val appViewModel = viewModel<AppViewModel>()
             val noteViewModel = viewModel<NoteViewModel>(factory = noteViewModelFactory)
+
 
             GMWrokoutTimerTheme {
 //                    MainScreen(viewModel = appViewModel)

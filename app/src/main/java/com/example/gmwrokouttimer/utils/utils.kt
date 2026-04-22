@@ -72,6 +72,7 @@ fun convertEpochMillisToLocalDate(epochMillis: Long, outputFormat: String = "yyy
     return dateTime.format(formatter)
 }
 
+
 fun convertDateTimeToEpochMillis(dateTime: String): Long {
     val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm", Locale.getDefault())
     val localDateTime = LocalDateTime.parse(dateTime, formatter)
@@ -101,6 +102,8 @@ fun convertDateTimeToEpochMillis2(date: String, hour: String, minute: String): L
     val instant = localDateTime.atZone(ZoneId.systemDefault()).toInstant()
     return instant.toEpochMilli()
 }
+
+
 
 /*
 fun main() {

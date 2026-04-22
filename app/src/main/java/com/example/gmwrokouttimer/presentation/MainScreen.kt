@@ -38,7 +38,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.example.gmwrokouttimer.data.Activity
+import com.example.gmwrokouttimer.database.model.Activity
+//import com.example.gmwrokouttimer.data.Activity
 import com.example.gmwrokouttimer.data.getExerciseById
 import com.example.gmwrokouttimer.presentation.main.SaveWorkoutPopup
 import com.example.gmwrokouttimer.utils.formatMilliseconds
@@ -249,7 +250,7 @@ fun MainScreen(viewModel: AppViewModel, navController: NavHostController, noteVm
             handleBtnTwoClick = { btnTwoTest = !btnTwoTest },
             onClickSave = {
                 noteVm.addActivity(
-                    com.example.gmwrokouttimer.database.model.Activity(
+                    Activity(
                         id = System.currentTimeMillis().toInt(),
 //                        workoutPresetId = 1,
                         workoutPresetId = currentPreset.id,

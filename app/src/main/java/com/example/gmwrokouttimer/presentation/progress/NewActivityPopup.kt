@@ -1,6 +1,7 @@
 package com.example.gmwrokouttimer.presentation.progress
 
 import android.R.attr.text
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,23 +17,15 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material3.Button
-import androidx.compose.material3.DatePicker
-import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.material3.TextField
 import androidx.compose.material3.TimeInput
-import androidx.compose.material3.TimePicker
-import androidx.compose.material3.isPm
-import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -41,20 +34,25 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.dropShadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Outline
 import androidx.compose.ui.graphics.shadow.Shadow
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
+import com.example.gmwrokouttimer.database.model.Activity
+import com.example.gmwrokouttimer.presentation.NoteViewModel
 import com.example.gmwrokouttimer.utils.convertDateTimeToEpochMillis2
 import com.example.gmwrokouttimer.utils.convertEpochMillisToLocalDate
 import java.time.LocalDate
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NewActivityPopup(showPopup: Boolean = false, onDismiss: () -> Unit, onClickSave: () -> Unit) {
+fun NewActivityPopup(
+    showPopup: Boolean = false, onDismiss: () -> Unit,
+//                     onClickSave: () -> Unit
+    noteVm: NoteViewModel,
+) {
 
     val localDate = LocalDate.now()
     var title by remember { mutableStateOf("") }
@@ -107,7 +105,8 @@ fun NewActivityPopup(showPopup: Boolean = false, onDismiss: () -> Unit, onClickS
 //                    Text("Now : ${System.currentTimeMillis()}")  // output : 1776862680000
                     Text("Now : ${convertEpochMillisToLocalDate(System.currentTimeMillis())}")
 //                    val selectedDateTimeEpochMillis = convertDateTimeToEpochMillis2("2025-04-21", "12:27")
-                    val selectedDateTimeEpochMillis = convertDateTimeToEpochMillis2(dateTime, "${tps.hour}","${tps.minute}")
+                    val selectedDateTimeEpochMillis =
+                        convertDateTimeToEpochMillis2(dateTime, "${tps.hour}", "${tps.minute}")
 //                    Text(selectedDateTimeEpochMillis.toString())
                     Text(convertEpochMillisToLocalDate(selectedDateTimeEpochMillis))
 //                    Text(convertEpochMillisToLocalDate( dateTime.toLong() ))  // Error
@@ -171,9 +170,10 @@ fun NewActivityPopup(showPopup: Boolean = false, onDismiss: () -> Unit, onClickS
                                 label = { Text("Duration (seconds)") },
                                 onValueChange = { newValue ->
                                     // Only update state if the new string contains only digits
-                                    if (  newValue.all { it.isDigit() }) {
+                                    if (newValue.all { it.isDigit() }) {
                                         duration = newValue
-                                        if ( newValue != "") calories = (newValue.toInt() / 60 * 13).toString()
+                                        if (newValue != "") calories =
+                                            (newValue.toInt() / 60 * 13).toString()
                                     }
                                 },
                                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
@@ -181,7 +181,7 @@ fun NewActivityPopup(showPopup: Boolean = false, onDismiss: () -> Unit, onClickS
                         }
                         Column(Modifier.padding(4.dp)) {
                             val formattedTime = if (duration != "") {
-                                "%02d:%02d".format(  duration.toInt() / 60, duration.toInt() % 60)
+                                "%02d:%02d".format(duration.toInt() / 60, duration.toInt() % 60)
                             } else {
                                 "00:00"
                             }
@@ -253,7 +253,30 @@ fun NewActivityPopup(showPopup: Boolean = false, onDismiss: () -> Unit, onClickS
                     )
 
                     Button(
-                        onClick = onClickSave,
+                        onClick = {
+                            val newActivity = Activity(
+                                id = System.currentTimeMillis().toInt(),
+//                                  workoutPresetId = 1,
+                                workoutPresetId = workoutPresetId.toInt(),
+//                                  title = "Morning 10 mins",
+                                title = title,
+//                                  type = "hybrid", //  weights, bodyweight, cardio, strength, hybrid
+//                                  note = "Sample Note after workout.",  // feeling after exercise done
+                                note = note,  // feeling after exercise done
+                                rate = 5,  // 1-5 rate of workout
+                                imageId = null, // take selfie after workout
+//                                  dateTime = "2026-04-04T12:27:35.124365453",
+                                dateTime = convertEpochMillisToLocalDate(selectedDateTimeEpochMillis, "yyyy-MM-dd'T'HH:mm:ss.SSS"),
+                                duration = duration.toInt(),   // 960 seconds
+                                calories = calories.toInt(),
+                                location = null,
+                                city = city,
+                                country = country,
+                            )
+                            noteVm.addActivity(newActivity )
+//                            Log.d( "NewActivityPopup", newActivity.toString() )
+                            onDismiss()
+                        },
                         modifier = Modifier
                             .padding(16.dp)
                     ) {

@@ -58,6 +58,7 @@ import com.example.gmwrokouttimer.utils.formatDateString
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
+import java.time.ZoneOffset.UTC
 
 @SuppressLint("SuspiciousIndentation")
 @Composable
@@ -101,8 +102,7 @@ fun ProgressScreen(appVm: AppViewModel, navController: NavController, noteVm: No
 
     val selectedMonthActivityDays = activitiesInTimePeriod.map { activity ->
         val date =
-            Instant.parse("${activity.dateTime.slice(0..19)}Z").atZone(ZoneId.systemDefault())
-                .toLocalDate()
+            Instant.parse("${activity.dateTime.slice(0..19)}Z").atZone( UTC).toLocalDate()
         date.dayOfMonth
     }
 //    data class DayWithActivity(val day: Int, val hasActivity: Boolean, val color: Color)
@@ -113,9 +113,7 @@ fun ProgressScreen(appVm: AppViewModel, navController: NavController, noteVm: No
 
 //    Log.d("Progress102", selectedMonthActivityDays.toString())  //  [19, 14, 14, 13]
 
-
-    NewActivityPopup(showPopup = showPopup, onDismiss = { showPopup = false }, onClickSave = {})
-
+    NewActivityPopup(showPopup = showPopup, onDismiss = { showPopup = false }, noteVm)
 
     Column(
         modifier = Modifier.fillMaxSize(),
