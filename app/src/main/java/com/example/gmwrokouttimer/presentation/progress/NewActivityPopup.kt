@@ -33,6 +33,7 @@ import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -64,10 +65,11 @@ fun NewActivityPopup(showPopup: Boolean = false, onDismiss: () -> Unit, onClickS
     var country by remember { mutableStateOf("Iraq") }
     var note by remember { mutableStateOf("") }
     var workoutPresetId by remember { mutableStateOf("0") }
+    var datePickerSelectedDateEpoch by remember { mutableLongStateOf(System.currentTimeMillis()) }
     var showTimePicker by remember { mutableStateOf(false) }
     var showDatePickerModal by remember { mutableStateOf(false) }
 
-    val timePickerState = rememberTimePickerState(
+    val tps = rememberTimePickerState(
         initialHour = 17,
         initialMinute = 30,
         is24Hour = false // Set to true for 24-hour format
@@ -103,13 +105,14 @@ fun NewActivityPopup(showPopup: Boolean = false, onDismiss: () -> Unit, onClickS
                         .padding(16.dp)
                         .verticalScroll(rememberScrollState())
                 ) {
-                    Text("Now : ${System.currentTimeMillis()}")
-                    Text(convertEpochMillisToLocalDate(System.currentTimeMillis()))
-                    val selectedDateTimeEpochMillis = convertDateTimeToEpochMillis2("2025-04-21", "12:27")
-                    Text(selectedDateTimeEpochMillis.toString())
+//                    Text("Now : ${System.currentTimeMillis()}")  // output : 1776862680000
+                    Text("Now : ${convertEpochMillisToLocalDate(System.currentTimeMillis())}")
+//                    val selectedDateTimeEpochMillis = convertDateTimeToEpochMillis2("2025-04-21", "12:27")
+                    val selectedDateTimeEpochMillis = convertDateTimeToEpochMillis2(dateTime, "${tps.hour}:${tps.minute}")
+//                    Text(selectedDateTimeEpochMillis.toString())
                     Text(convertEpochMillisToLocalDate(selectedDateTimeEpochMillis))
 //                    Text(convertEpochMillisToLocalDate( dateTime.toLong() ))  // Error
-                    Text(dateTime)
+//                    Text(dateTime)  // 2026-04-07
                     Spacer(modifier = Modifier.height(8.dp))
 
                     OutlinedTextField(
@@ -139,7 +142,9 @@ fun NewActivityPopup(showPopup: Boolean = false, onDismiss: () -> Unit, onClickS
                     if (showDatePickerModal) {
                         DatePickerModal(onDateSelected = { selectedDate ->
                             if (selectedDate != null) {
-                                dateTime = selectedDate.toString()
+//                                dateTime = selectedDate.toString()
+                                datePickerSelectedDateEpoch = selectedDate
+                                dateTime = convertEpochMillisToLocalDate(selectedDate, "yyyy-MM-dd")
                                 showDatePickerModal = false
                             }
                         }) {  // onDismiss
@@ -149,9 +154,9 @@ fun NewActivityPopup(showPopup: Boolean = false, onDismiss: () -> Unit, onClickS
 
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
 //                        TimePicker(state = timePickerState)
-                        Text("Selected Time: ${timePickerState.hour}:${timePickerState.minute} ${if (timePickerState.isPm) "PM" else "AM"} ,${timePickerState.is24hour}")
-                        TimeInput(state = timePickerState)
-                        Text(timePickerState.toString())  // output : ref obj
+//                        Text("Selected Time: ${tps.hour}:${tps.minute} ${if (tps.isPm) "PM" else "AM"} ,${tps.is24hour}")
+                        TimeInput(state = tps)
+//                        Text(tps.toString())  // output : ref obj
                     }
 
 

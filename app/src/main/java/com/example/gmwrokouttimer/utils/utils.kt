@@ -61,12 +61,12 @@ fun formatDate(inputDate: LocalDate, outputFormat: String = "MMM dd, yyyy"): Str
 }
 
 // # Convert Epoch millis to local date
-fun convertEpochMillisToLocalDate(epochMillis: Long): String {
+fun convertEpochMillisToLocalDate(epochMillis: Long, outputFormat: String = "yyyy-MM-dd HH:mm"): String {
     val instant = Instant.ofEpochMilli(epochMillis)
     // 2. Apply a Time Zone (e.g., UTC or System Default)
     val dateTime = instant.atZone(ZoneId.of("UTC"))
     // 3. Format to Human Readable String
-    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm", Locale.getDefault())
+    val formatter = DateTimeFormatter.ofPattern(outputFormat, Locale.getDefault())
         .withZone(ZoneId.systemDefault())
     formatter.format(instant)
     return dateTime.format(formatter)
@@ -80,9 +80,14 @@ fun convertDateTimeToEpochMillis(dateTime: String): Long {
 }
 
 fun convertDateTimeToEpochMillis2(date: String, time: String): Long {
+    val time_ = if (time.length ==4 ) {
+        "0$time"  // Fix for 3:30 -> 03:00
+    } else {
+        time
+    }
     // "2025-04-21", "12:27"
     val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm", Locale.getDefault())
-    val localDateTime = LocalDateTime.parse("$date $time", formatter)
+    val localDateTime = LocalDateTime.parse("$date $time_", formatter)
     val instant = localDateTime.atZone(ZoneId.systemDefault()).toInstant()
     return instant.toEpochMilli()
 }
