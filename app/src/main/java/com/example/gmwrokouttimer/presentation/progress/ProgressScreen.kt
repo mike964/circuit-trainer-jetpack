@@ -24,11 +24,13 @@ import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.AddCircle
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -111,35 +113,9 @@ fun ProgressScreen(appVm: AppViewModel, navController: NavController, noteVm: No
 
 //    Log.d("Progress102", selectedMonthActivityDays.toString())  //  [19, 14, 14, 13]
 
-    if (showPopup) {
-        Popup(
-            alignment = Alignment.Center,
-            onDismissRequest = { showPopup = false }
-        ) {
-            // Content of the popup
-            Box(
-                modifier = Modifier
-                    .width(380.dp)
-                    .height(540.dp)
-                    .dropShadow(
-                        shape = RoundedCornerShape(12.dp),
-                        shadow = Shadow(
-                            radius = 8.dp,
-                            spread = 3.dp,
-                            color = Color(0x40000000),
-                            offset = DpOffset(x = 1.dp, 1.dp)
-                        )
-                    )
-                    .background(
-                        color = Color.White,
-                        shape = RoundedCornerShape(12.dp)
-                    ),
-                contentAlignment = Alignment.Center
-            ) {
-                Text("This is a basic popup", Modifier.align(Alignment.Center))
-            }
-        }
-    }
+
+    NewActivityPopup(showPopup = showPopup, onDismiss = { showPopup = false }, onClickSave = {})
+
 
     Column(
         modifier = Modifier.fillMaxSize(),
