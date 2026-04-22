@@ -25,7 +25,11 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TimeInput
+import androidx.compose.material3.TimePicker
+import androidx.compose.material3.isPm
 import androidx.compose.material3.rememberDatePickerState
+import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -43,14 +47,17 @@ import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
+import com.example.gmwrokouttimer.utils.convertDateTimeToEpochMillis2
 import com.example.gmwrokouttimer.utils.convertEpochMillisToLocalDate
 import java.time.LocalDate
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewActivityPopup(showPopup: Boolean = false, onDismiss: () -> Unit, onClickSave: () -> Unit) {
 
+    val localDate = LocalDate.now()
     var title by remember { mutableStateOf("") }
-    var dateTime by remember { mutableStateOf("${LocalDate.now()}") }
+    var dateTime by remember { mutableStateOf("$localDate") }
     var duration by remember { mutableIntStateOf(0) }
     var calories by remember { mutableIntStateOf(100) }
     var city by remember { mutableStateOf("") }
@@ -58,9 +65,13 @@ fun NewActivityPopup(showPopup: Boolean = false, onDismiss: () -> Unit, onClickS
     var note by remember { mutableStateOf("") }
     var workoutPresetId by remember { mutableStateOf("0") }
     var showTimePicker by remember { mutableStateOf(false) }
-    var  showDatePickerModal by remember { mutableStateOf(true) }
+    var showDatePickerModal by remember { mutableStateOf(false) }
 
-
+    val timePickerState = rememberTimePickerState(
+        initialHour = 17,
+        initialMinute = 30,
+        is24Hour = false // Set to true for 24-hour format
+    )
 
     if (showPopup) {
         Popup(
@@ -87,11 +98,18 @@ fun NewActivityPopup(showPopup: Boolean = false, onDismiss: () -> Unit, onClickS
                     ),
                 contentAlignment = Alignment.Center
             ) {
-                Column(Modifier
-                    .padding(16.dp)
-                    .verticalScroll(rememberScrollState())) {
-                    Text("${System.currentTimeMillis()}")
-                    Text(convertEpochMillisToLocalDate( System.currentTimeMillis() ))
+                Column(
+                    Modifier
+                        .padding(16.dp)
+                        .verticalScroll(rememberScrollState())
+                ) {
+                    Text("Now : ${System.currentTimeMillis()}")
+                    Text(convertEpochMillisToLocalDate(System.currentTimeMillis()))
+                    val selectedDateTimeEpochMillis = convertDateTimeToEpochMillis2("2025-04-21", "12:27")
+                    Text(selectedDateTimeEpochMillis.toString())
+                    Text(convertEpochMillisToLocalDate(selectedDateTimeEpochMillis))
+//                    Text(convertEpochMillisToLocalDate( dateTime.toLong() ))  // Error
+                    Text(dateTime)
                     Spacer(modifier = Modifier.height(8.dp))
 
                     OutlinedTextField(
@@ -103,19 +121,20 @@ fun NewActivityPopup(showPopup: Boolean = false, onDismiss: () -> Unit, onClickS
                     )
                     Spacer(modifier = Modifier.height(8.dp))
 
-                    OutlinedTextField(
-                        value = dateTime,
-                        onValueChange = { newText -> dateTime = newText },
-                        label = { Text("Date & Time") },
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    IconButton(onClick = {  showDatePickerModal = true }) {
-                        Icon(
-                            imageVector = Icons.Default.DateRange,
-                            contentDescription = "Add to favorites"
+                    Row() {
+                        OutlinedTextField(
+                            value = dateTime,
+                            onValueChange = { newText -> dateTime = newText },
+                            label = { Text("Date") },
                         )
+                        IconButton(onClick = { showDatePickerModal = true }) {
+                            Icon(
+                                imageVector = Icons.Default.DateRange,
+                                contentDescription = "Add to favorites"
+                            )
+                        }
                     }
+                    Spacer(modifier = Modifier.height(8.dp))
 
                     if (showDatePickerModal) {
                         DatePickerModal(onDateSelected = { selectedDate ->
@@ -128,11 +147,20 @@ fun NewActivityPopup(showPopup: Boolean = false, onDismiss: () -> Unit, onClickS
                         }
                     }
 
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+//                        TimePicker(state = timePickerState)
+                        Text("Selected Time: ${timePickerState.hour}:${timePickerState.minute} ${if (timePickerState.isPm) "PM" else "AM"} ,${timePickerState.is24hour}")
+                        TimeInput(state = timePickerState)
+                        Text(timePickerState.toString())  // output : ref obj
+                    }
+
 
                     Row() {
-                        Column(Modifier
-                            .width(120.dp)
-                            .padding(8.dp, 2.dp)) {
+                        Column(
+                            Modifier
+                                .width(120.dp)
+                                .padding(8.dp, 2.dp)
+                        ) {
                             OutlinedTextField(
                                 value = duration.toString(),
                                 onValueChange = { duration = it.toInt() },
@@ -140,9 +168,11 @@ fun NewActivityPopup(showPopup: Boolean = false, onDismiss: () -> Unit, onClickS
                                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
                             )
                         }
-                        Column(Modifier
-                            .width(120.dp)
-                            .padding(8.dp, 2.dp)) {
+                        Column(
+                            Modifier
+                                .width(120.dp)
+                                .padding(8.dp, 2.dp)
+                        ) {
                             OutlinedTextField(
                                 value = calories.toString(),
                                 onValueChange = { calories = it.toInt() },

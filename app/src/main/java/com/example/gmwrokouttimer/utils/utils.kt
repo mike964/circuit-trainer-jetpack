@@ -72,6 +72,21 @@ fun convertEpochMillisToLocalDate(epochMillis: Long): String {
     return dateTime.format(formatter)
 }
 
+fun convertDateTimeToEpochMillis(dateTime: String): Long {
+    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm", Locale.getDefault())
+    val localDateTime = LocalDateTime.parse(dateTime, formatter)
+    val instant = localDateTime.atZone(ZoneId.systemDefault()).toInstant()
+    return instant.toEpochMilli()
+}
+
+fun convertDateTimeToEpochMillis2(date: String, time: String): Long {
+    // "2025-04-21", "12:27"
+    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm", Locale.getDefault())
+    val localDateTime = LocalDateTime.parse("$date $time", formatter)
+    val instant = localDateTime.atZone(ZoneId.systemDefault()).toInstant()
+    return instant.toEpochMilli()
+}
+
 /*
 fun main() {
     println(formatSeconds(130)) // Output: 02:10
