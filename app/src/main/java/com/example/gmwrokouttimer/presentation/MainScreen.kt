@@ -207,7 +207,7 @@ fun MainScreen(
                 CircularProgressBar(
                     percentage = 1 - (circles.toFloat() / totalCircles.toFloat()),
                     number = null,
-                    radius = 130.dp,
+                    radius = 140.dp,
                     color = Color(0xFF1F3C94),
                 )
                 CircularTimer(
@@ -216,7 +216,7 @@ fun MainScreen(
                     timerState.workTimeSeconds,
                     finished = circles == 0,
                     color = if (isWork) Color(0xFFD58812) else Color(0xFF4ABE1A),
-                    size   = 110.dp
+                    size = 120.dp
                 )
             }
 //            Text(timeRemaining.toString())
@@ -242,11 +242,18 @@ fun MainScreen(
         CountdownScreen(countdownVm)
 //        Text(timerState.workTimeSeconds.toString())
 
+        // ============================
+        // # ONLY FOR DEVELOPER TESTING
+        // ============================
+        /*
         Spacer(Modifier.height(8.dp))
         Button(onClick = { showSaveWorkoutPopup = true }) {
             Text("Open Popup")
         }
-        Text("$showSaveWorkoutPopup | $isRunning | $isPaused | $exerciseCounter | $workoutFinished | $circles | $roundsCounter ")
+//      Text("showSaveWorkoutPopup | $showSaveWorkoutPopup")
+        Text("isRunning: $isRunning | isPaused: $isPaused | workoutFinished: $workoutFinished")
+        Text("exerciseCounter: $exerciseCounter | circles: $circles | roundsCounter: $roundsCounter ")
+         */
 
         SaveWorkoutPopup(
             showPopup = showSaveWorkoutPopup,
@@ -279,7 +286,8 @@ fun MainScreen(
                 showSaveWorkoutPopup = false
             })
 
-        WorkoutsetList(viewModel.workoutList, viewModel, countdownVm)
+        if (!isRunning && !isPaused)
+            WorkoutsetList(viewModel.workoutList, viewModel, countdownVm)
 //                        ExerciseImageList(appViewModel.exerciseImageList)
 //                        ImageCard(LocalImage(id =  R.drawable.lat_raise , contentDescription = "Description for image one"))
     }

@@ -84,7 +84,7 @@ fun CountdownScreen(
         Row(
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             modifier = Modifier
-                .background(  timerBgColor(), shape = RoundedCornerShape(46.dp))
+                .background(timerBgColor(), shape = RoundedCornerShape(46.dp))
                 .padding(horizontal = 16.dp, vertical = 8.dp)
         ) {
             IconButton(onClick = {
@@ -105,13 +105,14 @@ fun CountdownScreen(
                 Text(text = "Reset")
             }
         }
-        Spacer( Modifier.height(8.dp))
+        Spacer(Modifier.height(32.dp))
         // Hide details below when Workout finishes : roundsCounter > initialRounds
-        Text(
-            "Round $roundsCounter / ${timerState.initRounds} "
-                    + " --- Exercise $exerciseCounter / ${timerState.initExercises} "
-                    + " --- Circles $circles"
-        )
+        if (isRunning || isPaused || roundsCounter > timerState.initRounds)
+            Text(
+                "Round $roundsCounter / ${timerState.initRounds} "
+                        + " --- Exercise $exerciseCounter / ${timerState.initExercises} "
+                        + " --- Circles $circles"
+            )
     }
 }
 
