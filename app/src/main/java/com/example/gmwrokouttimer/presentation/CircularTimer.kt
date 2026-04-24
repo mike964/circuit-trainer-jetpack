@@ -3,6 +3,7 @@ package com.example.gmwrokouttimer.presentation
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
@@ -12,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -21,7 +23,8 @@ fun CircularTimer(
     time: Int,
     totalTime: Int,
     finished: Boolean = false,
-    color: Color = Color(0xFF442585)
+    color: Color = Color(0xFF442585),
+    size: Dp = 100.dp,
 ) {
 //    val totalTime = 60L // Total time in seconds
 //    var currentTime by remember { mutableStateOf(totalTime) }
@@ -46,14 +49,13 @@ fun CircularTimer(
 
     Box(
         contentAlignment = Alignment.Center,
-        modifier = Modifier.size(92.dp)
+        modifier = Modifier.size( size)
     ) {
         CircularProgressIndicator(
             trackColor = Color(0xFFD7D7DE),
             color = color,
             progress = { animatedProgress },
-            modifier = Modifier
-                .size(100.dp),
+            modifier = Modifier.fillMaxSize(),
             strokeWidth = 6.dp,
             strokeCap = StrokeCap.Round, // Makes the ends rounded
         )

@@ -202,24 +202,24 @@ fun MainScreen(
             // # circles == 0 means "finished"
             Box(
                 contentAlignment = Alignment.Center,
-                modifier = Modifier.size(120.dp)
+//                modifier = Modifier.size(140.dp).background(Color.Red)
             ) {
                 CircularProgressBar(
                     percentage = 1 - (circles.toFloat() / totalCircles.toFloat()),
                     number = null,
-                    radius = 56.dp,
+                    radius = 130.dp,
                     color = Color(0xFF1F3C94),
                 )
                 CircularTimer(
                     1 - (timeRemaining.toFloat() / (timerState.workTimeSeconds * 1000)),
                     timeRemaining,
                     timerState.workTimeSeconds,
-//                    finished = roundsCounter > timerState.initRounds
                     finished = circles == 0,
-                    color = if (isWork) Color(0xFFD58812) else Color(0xFF4ABE1A)
+                    color = if (isWork) Color(0xFFD58812) else Color(0xFF4ABE1A),
+                    size   = 110.dp
                 )
             }
-            Text(timeRemaining.toString())
+//            Text(timeRemaining.toString())
 //            Text((timeRemaining.toFloat() / (timerState.workTimeSeconds*1000)).toString())
         }
 

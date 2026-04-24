@@ -45,13 +45,13 @@ fun CountdownScreen(
     val isPaused by viewModel.isPaused.collectAsState()
     val timerState by viewModel.uiState.collectAsState()
 
-    fun timerBgColor(): Long {
+    fun timerBgColor(): Color {
 //        val Purple40 = Color(0xFFD58812)
         if (isRunning || isPaused) {
-            return if (checkEvenNumber(circles)) 0xFFD58812
-            else 0xFF4ABE1A
+            return if (checkEvenNumber(circles)) Color(0xFFD58812)
+            else Color(0xFF4ABE1A)
         }
-        return 0xFF101F56
+        return Color(0xFF101F56)
     }
 
     Column(
@@ -84,12 +84,9 @@ fun CountdownScreen(
         Row(
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             modifier = Modifier
-                .background(Color(timerBgColor()), shape = RoundedCornerShape(46.dp))
+                .background(  timerBgColor(), shape = RoundedCornerShape(46.dp))
                 .padding(horizontal = 16.dp, vertical = 8.dp)
         ) {
-//            Button(onClick = { viewModel.startPauseTimer() }) {
-//                Text(text = if (isRunning) "Pause" else "Start")
-//            }
             IconButton(onClick = {
                 soundManager.playClickSound()
                 viewModel.startPauseTimer()
@@ -102,22 +99,20 @@ fun CountdownScreen(
                     modifier = Modifier.size(40.dp)
                 )
             }
-
             Button(onClick = {
                 viewModel.resetTimer()
             }) {
                 Text(text = "Reset")
             }
         }
+        Spacer( Modifier.height(8.dp))
         // Hide details below when Workout finishes : roundsCounter > initialRounds
         Text(
             "Round $roundsCounter / ${timerState.initRounds} "
-                    + " ** Exercise $exerciseCounter / ${timerState.initExercises} "
-                    + " ** Circles $circles"
+                    + " --- Exercise $exerciseCounter / ${timerState.initExercises} "
+                    + " --- Circles $circles"
         )
     }
-
-
 }
 
 fun checkEvenNumber(number: Int): Boolean {
