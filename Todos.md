@@ -42,6 +42,8 @@ Created on 07/16/2025
 - [x] Get activites by date range from db       4/19/2026
 - [x] Log first day n last day of selected month 
 - [x] Highligh active days in Calendar by repetition  4/21/2026
+- [x] Save activity manaully to room in progress screen 4/22/2026  
+- [ ] Settings screen - Add contdown veiwmodel 
 
 
 ✅ Show exercises with gif image   

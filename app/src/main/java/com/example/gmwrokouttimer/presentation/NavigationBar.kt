@@ -33,6 +33,7 @@ import com.example.gmwrokouttimer.presentation.settings.SettingsScreen
 fun NavigationBar(
     appViewModel: AppViewModel,
     noteViewModel: NoteViewModel,
+    timerViewModel: CountdownViewModel,
 ) {
 
     var navBarState by rememberSaveable {
@@ -89,18 +90,27 @@ fun NavigationBar(
             composable(Screen.Main.route) {
                 MainScreen(
                     viewModel = appViewModel,
-                      noteVm = noteViewModel,
+                    timerViewModel = timerViewModel,
+                    noteVm = noteViewModel,
                     navController = navController
                 )
             }
             composable(Screen.Plans.route) {
-                NoteScreen(appVm = appViewModel , noteVm = noteViewModel, navController = navController)
+                NoteScreen(
+                    appVm = appViewModel,
+                    noteVm = noteViewModel,
+                    navController = navController
+                )
             }
             composable(Screen.Progress.route) {
-                ProgressScreen( appVm = appViewModel,noteVm = noteViewModel,  navController = navController)
+                ProgressScreen(
+                    appVm = appViewModel,
+                    noteVm = noteViewModel,
+                    navController = navController
+                )
             }
             composable(Screen.Settings.route) {
-                SettingsScreen(navController = navController)
+                SettingsScreen( timerVm = timerViewModel, navController = navController)
             }
         }
     }

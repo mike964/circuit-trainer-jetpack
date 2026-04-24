@@ -22,13 +22,16 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class AppViewModel : ViewModel() {
-    // Workout Plans list
+    // Countdown Timer State
+
+    // # Workout Plans list
     // The internal, mutable list (private)
     private val _workoutList = mutableStateListOf<Preset>()
     private val _exerciseImages = mutableStateListOf<LocalImage>()
+
     // # Current Selected Workout preset
-     private var _currentPreset: MutableStateFlow<Preset> = MutableStateFlow(getPresetById(7))
-    val  currentPreset: StateFlow<Preset> = _currentPreset.asStateFlow()
+    private var _currentPreset: MutableStateFlow<Preset> = MutableStateFlow(getPresetById(7))
+    val currentPreset: StateFlow<Preset> = _currentPreset.asStateFlow()
 
     // The public, immutable list for the UI to observe
     val workoutList: List<Preset> get() = _workoutList
@@ -54,9 +57,9 @@ class AppViewModel : ViewModel() {
         // active days table
     }
 
-    fun setCurrentPreset(presetId:Int){
+    fun setCurrentPreset(presetId: Int) {
         Log.d("xx", getPresetById(presetId).toString())
-       _currentPreset.value = getPresetById(presetId)
+        _currentPreset.value = getPresetById(presetId)
     }
 
     /*
@@ -76,30 +79,12 @@ class AppViewModel : ViewModel() {
     }
      */
 
-    fun addActivity(activity: Activity) {
-        viewModelScope.launch {
-            // Fetch notes from repository (Room database)
-            _latestActivity.add(activity)
-            //repository.insertNote(note)
-        }
-}
+//    fun addActivity(activity: Activity) {
+//        viewModelScope.launch {
+//            // Fetch notes from repository (Room database)
+//            _latestActivity.add(activity)
+//            //repository.insertNote(note)
+//        }
+//    }
 
-    // # SIMPLE COUNTER
-// The state variable that holds the count value
-    private var _count by mutableIntStateOf(0)
-
-    val count: Int
-        get() = _count
-
-    // Function to increment the counter
-    fun incrementCount() {
-        _count++
-    }
-
-    // Function to decrement the counter (optional)
-    fun decrementCount() {
-        if (_count > 0) {
-            _count--
-        }
-    }
 }

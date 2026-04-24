@@ -129,7 +129,7 @@ class CountdownViewModel : ViewModel() {
         _roundsCounter.value = 1
     }
 
-    // Ensure the job is cancelled when the ViewModel is cleared
+    // Ensure the job is canceled when the ViewModel is cleared
     override fun onCleared() {
         super.onCleared()
         timerJob?.cancel()

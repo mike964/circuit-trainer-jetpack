@@ -8,6 +8,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.gmwrokouttimer.database.AppDatabase
 import com.example.gmwrokouttimer.presentation.AppViewModel
+import com.example.gmwrokouttimer.presentation.CountdownViewModel
 import com.example.gmwrokouttimer.presentation.NoteViewModel
 import com.example.gmwrokouttimer.presentation.NoteViewModelFactory
 import com.example.gmwrokouttimer.presentation.NavigationBar
@@ -30,13 +31,14 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             val appViewModel = viewModel<AppViewModel>()
+            val timerViewModel = viewModel<CountdownViewModel>()
             val noteViewModel = viewModel<NoteViewModel>(factory = noteViewModelFactory)
 
 
             GMWrokoutTimerTheme {
 //                    MainScreen(viewModel = appViewModel)
 //                    NoteScreen(noteViewModel)
-                    NavigationBar(appViewModel, noteViewModel)
+                    NavigationBar(appViewModel, noteViewModel, timerViewModel)
                 }
         }
     }

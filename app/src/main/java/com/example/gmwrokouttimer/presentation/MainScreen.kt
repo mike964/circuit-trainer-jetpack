@@ -48,8 +48,14 @@ import java.time.LocalDateTime
 
 
 @Composable
-fun MainScreen(viewModel: AppViewModel, navController: NavHostController, noteVm: NoteViewModel) {
-    val countdownVm = viewModel<CountdownViewModel>()
+fun MainScreen(
+    viewModel: AppViewModel,
+    timerViewModel: CountdownViewModel,
+    noteVm: NoteViewModel,
+    navController: NavHostController,
+) {
+//    val countdownVm = viewModel<CountdownViewModel>()
+    val countdownVm = timerViewModel
     val timerState by countdownVm.uiState.collectAsState()
     val exerciseCounter by countdownVm.exerciseCounter.collectAsState()
     val currentPreset by viewModel.currentPreset.collectAsState()
@@ -84,7 +90,7 @@ fun MainScreen(viewModel: AppViewModel, navController: NavHostController, noteVm
             // Content of the popup window
             Box(
                 modifier = Modifier
-                    .width(380.dp)
+                    .width(340.dp)
                     .height(540.dp)
                     .dropShadow(
                         shape = RoundedCornerShape(12.dp),
