@@ -3,6 +3,7 @@ package com.example.gmwrokouttimer.presentation.progress
 import kotlin.time.Duration.Companion.seconds
 import android.annotation.SuppressLint
 import android.util.Log
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -24,6 +25,8 @@ import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.AddCircle
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -102,7 +105,7 @@ fun ProgressScreen(appVm: AppViewModel, navController: NavController, noteVm: No
 
     val selectedMonthActivityDays = activitiesInTimePeriod.map { activity ->
         val date =
-            Instant.parse("${activity.dateTime.slice(0..19)}Z").atZone( UTC).toLocalDate()
+            Instant.parse("${activity.dateTime.slice(0..19)}Z").atZone(UTC).toLocalDate()
         date.dayOfMonth
     }
 //    data class DayWithActivity(val day: Int, val hasActivity: Boolean, val color: Color)
@@ -212,9 +215,12 @@ fun ProgressScreen(appVm: AppViewModel, navController: NavController, noteVm: No
 
 @Composable
 fun ActivityListItem(activity: Activity) {
+    var expanded by remember { mutableStateOf(false) }
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
+            .clickable { expanded = !expanded } // Toggle state on click
             .padding(6.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         colors = CardDefaults.cardColors(
@@ -223,26 +229,36 @@ fun ActivityListItem(activity: Activity) {
         ),
 //        onClick = onClick
     ) {
-        Row(
-            Modifier.padding(12.dp)
+        Column(
+            modifier = Modifier
+                .padding(16.dp)
+                .animateContentSize() // Smoothly animate the card's height change
         ) {
-            Column(
-                modifier = Modifier
-                    .weight(3f)
-            ) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Column(
+                    modifier = Modifier
+                        .weight(6f)
+                ) {
 //            Text(text = activity.id.toString())
-                Text(text = activity.title)
+                    Text(text = activity.title)
+
+                }
+                Column(Modifier.weight(5f)) {
+                        Text(text = formatDateString(activity.dateTime, "HH:mm  MM/dd/YYYY"))
+                }
+                Column(Modifier.weight(1f), horizontalAlignment =Alignment.End) {
+                    Icon(
+                        imageVector = if (expanded) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown,
+                        contentDescription = null
+                    )
+                }
 
             }
-            Column(
-                modifier = Modifier
-                    .weight(2f)
-            ) {
-                Text(text = formatSeconds(activity.duration.toLong()))
-//                Text(text = "Rate : ${activity.rate}")
-            }
-            Column(Modifier.weight(2f)) {
-                Text(text = formatDateString(activity.dateTime, "MM/dd/YYYY"))
+            if (expanded) {
+                Text("Duration : "+  formatSeconds(activity.duration.toLong()))
+                Text("Calories : ${activity.calories}")
+                Text("Rate : ${activity.rate}")
+                Text("Location : ${activity.location}")
             }
         }
         Row(modifier = Modifier.padding(12.dp, 8.dp)) {

@@ -43,7 +43,8 @@ Created on 07/16/2025
 - [x] Log first day n last day of selected month 
 - [x] Highligh active days in Calendar by repetition  4/21/2026
 - [x] Save activity manaully to room in progress screen 4/22/2026  
-- [ ] Settings screen - Add contdown veiwmodel 
+- [x] Settings screen - Add contdown veiwmodel 
+- [x] Activity list item expandable to show full details  4/24/2026  
 
 
 ✅ Show exercises with gif image   
@@ -54,6 +55,8 @@ Created on 07/16/2025
 Add new activity with describtion and type in progress screen. 
 For example, Cycling, Jump rope, Running 2 miles or whatever. 
 With duration n date 
+delete saved activity in db
+
 - Fix Plan screen
 - Make acticity items expandable
 - Export room data to file 
