@@ -74,7 +74,7 @@ fun CountdownScreen(
                 // ** Workout done - Show modal to save in DB with Note
                 Text(text = ("Finished. Good Job 💪😁"))
             } else {
-                if (exerciseCounter == 1)
+                if (exerciseCounter == 1 && !isPaused)
                     Text("Select a Plan and click Start")
             }
         }

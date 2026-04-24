@@ -25,11 +25,13 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.gmwrokouttimer.presentation.CountdownViewModel
 import com.example.gmwrokouttimer.presentation.HorizontalNumberPicker
+import com.example.gmwrokouttimer.utils.formatMilliseconds
 import com.example.gmwrokouttimer.utils.formatSeconds
 
 @Composable
 fun SettingsScreen(timerVm: CountdownViewModel, navController: NavController) {
     val timerState by timerVm.uiState.collectAsState()
+    val totalTimeLeft by timerVm.totalTimeLeft.collectAsState()
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -63,9 +65,9 @@ fun SettingsScreen(timerVm: CountdownViewModel, navController: NavController) {
         Spacer(modifier = Modifier.height(16.dp))
 
         Column {
-            Text("This is a Popup Window!")
+            Text("Set workout circuit timing")
             Spacer(modifier = Modifier.height(8.dp))
-            Text("Work (Seconds)")
+            Text("Work time (Seconds)")
             HorizontalNumberPicker(
                 default = 1,
                 displayNumber = timerState.workTimeSeconds,
@@ -74,15 +76,25 @@ fun SettingsScreen(timerVm: CountdownViewModel, navController: NavController) {
             ) {
                 timerVm.setWorkTime(it)
             }
-            Text("Rest (Seconds)")
-            HorizontalNumberPicker(height = 30.dp) {
-
+            Text("Rest time (Seconds)")
+            HorizontalNumberPicker(
+                default = 1,
+                displayNumber = timerState.workTimeSeconds,
+                min = 2, max = 20,
+                height = 30.dp
+            ) {
+                // # Same as work seconds picker
             }
             Text("Rounds")
             HorizontalNumberPicker(default = timerState.initRounds, height = 30.dp) {
                 timerVm.setInitRounds(it)
             }
 //            Text(   "Total time : "   + formatSeconds((totalTime).toLong())   )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // # Total workout time in MM:SS
+            Text("Total : ${formatMilliseconds(totalTimeLeft)}")
 
             Spacer(modifier = Modifier.height(8.dp))
 

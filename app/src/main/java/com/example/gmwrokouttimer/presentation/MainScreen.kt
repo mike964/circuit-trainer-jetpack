@@ -184,7 +184,7 @@ fun MainScreen(
         }
 //                        Text(text = "Current Exercise ID : $currentExerciseId", fontWeight = FontWeight.Bold, modifier = Modifier.padding(4.dp))
 
-        // # Total workout time countdown in MM:SS
+        // # Total workout time in MM:SS
         Text(formatMilliseconds(totalTimeLeft))
         Spacer(Modifier.height(8.dp))
         LocalGifExample(currentExercise.imageId)

@@ -55,13 +55,13 @@ fun HorizontalNumberPicker(
             }
         )
 
-        Text(
-            text =   number.intValue.toString(),
-            fontSize = (height.value / 2).sp,
-            modifier = Modifier.padding(10.dp)
-                .height(IntrinsicSize.Max)
-                .align(CenterVertically)
-        )
+//        Text(
+//            text =   number.intValue.toString(),
+//            fontSize = (height.value / 2).sp,
+//            modifier = Modifier.padding(10.dp)
+//                .height(IntrinsicSize.Max)
+//                .align(CenterVertically)
+//        )
         Text(
             text = displayNumber?.toString() ?: number.intValue.toString(),
             fontSize = (height.value / 2).sp,
