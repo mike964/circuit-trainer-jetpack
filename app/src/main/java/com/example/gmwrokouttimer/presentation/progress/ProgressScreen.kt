@@ -58,6 +58,7 @@ import com.example.gmwrokouttimer.presentation.AppViewModel
 import com.example.gmwrokouttimer.presentation.NoteViewModel
 import com.example.gmwrokouttimer.utils.formatDate
 import com.example.gmwrokouttimer.utils.formatDateString
+import com.example.gmwrokouttimer.utils.formatSeconds
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
@@ -231,7 +232,8 @@ fun ActivityListItem(activity: Activity) {
     ) {
         Column(
             modifier = Modifier
-                .padding(16.dp)
+                .background(Color(0xFF79BBDA))
+                .padding(8.dp)
                 .animateContentSize() // Smoothly animate the card's height change
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -241,12 +243,14 @@ fun ActivityListItem(activity: Activity) {
                 ) {
 //            Text(text = activity.id.toString())
                     Text(text = activity.title)
-
                 }
                 Column(Modifier.weight(5f)) {
-                        Text(text = formatDateString(activity.dateTime, "HH:mm  MM/dd/YYYY"))
+                    Text(text = formatDateString(activity.dateTime, "HH:mm   MM/dd/YYYY"))
                 }
-                Column(Modifier.weight(1f), horizontalAlignment =Alignment.End) {
+                Column(
+                    Modifier.weight(1f),
+                    horizontalAlignment = Alignment.End
+                ) {
                     Icon(
                         imageVector = if (expanded) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown,
                         contentDescription = null
@@ -255,10 +259,26 @@ fun ActivityListItem(activity: Activity) {
 
             }
             if (expanded) {
-                Text("Duration : "+  formatSeconds(activity.duration.toLong()))
-                Text("Calories : ${activity.calories}")
-                Text("Rate : ${activity.rate}")
-                Text("Location : ${activity.location}")
+                Row{
+                    Column(
+                        modifier = Modifier
+                            .background(Color(0xFF97CCE7))
+                            .weight(1f)
+                    ) {
+                        Text("Duration : " + formatSeconds(activity.duration.toLong()))
+                        Text("Calories : ${activity.calories}")
+                        Text("Rate : ${activity.rate}")
+                    }
+                    Column(
+                        modifier = Modifier
+                            .background(Color(0xFFA2EAE4))
+                            .weight(1f)
+                    ) {
+                        Text("Rate : ${activity.rate}")
+                        Text("Location : ${activity.location}")
+                    }
+                }
+
             }
         }
         Row(modifier = Modifier.padding(12.dp, 8.dp)) {
@@ -267,13 +287,7 @@ fun ActivityListItem(activity: Activity) {
     }
 }
 
-@SuppressLint("DefaultLocale")
-fun formatSeconds(totalSeconds: Long): String {
-    return totalSeconds.seconds.toComponents { hours, minutes, seconds, _ ->
-        // Formats as HH:MM:SS
-        String.format("%02d:%02d:%02d", hours, minutes, seconds)
-    }
-}
+
 
 /*
 Instead of hardcoding colors like Color.Red, use your

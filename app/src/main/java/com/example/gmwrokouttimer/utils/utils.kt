@@ -1,5 +1,6 @@
 package com.example.gmwrokouttimer.utils
 
+
 import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -7,16 +8,17 @@ import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 import kotlin.time.Duration.Companion.milliseconds
-import kotlin.time.Duration.Companion.seconds
 
 
 fun formatSeconds(totalSeconds: Long): String {
-    val duration = totalSeconds.seconds
-    // toComponents splits the duration into hours, minutes, seconds
-    return duration.toComponents { _, minutes, seconds, _ ->
-        "%02d:%02d".format(minutes, seconds)
+    //Format as MM:SS with leading zeros
+    val minutes = totalSeconds / 60
+    val seconds = totalSeconds % 60
+    // Formats as HH:MM:SS
+//    String.format("%02d:%02d:%02d", hours, minutes, seconds)
+    return "%02d:%02d".format(minutes, seconds)
+    //   println(formatSeconds(150)) // Output: 02:30
     }
-}
 
 fun formatMilliseconds(millis: Long): String {
     val duration = millis.milliseconds
