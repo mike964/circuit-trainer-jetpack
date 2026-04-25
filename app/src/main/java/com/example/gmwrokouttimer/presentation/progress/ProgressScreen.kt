@@ -217,12 +217,11 @@ fun ProgressScreen(appVm: AppViewModel, navController: NavController, noteVm: No
 @Composable
 fun ActivityListItem(activity: Activity) {
     var expanded by remember { mutableStateOf(false) }
-
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .clickable { expanded = !expanded } // Toggle state on click
-            .padding(6.dp),
+            .padding(6.dp),  // space between list items
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         colors = CardDefaults.cardColors(
             containerColor = Color.White, // Set background color here
@@ -232,11 +231,14 @@ fun ActivityListItem(activity: Activity) {
     ) {
         Column(
             modifier = Modifier
-                .background(Color(0xFF79BBDA))
-                .padding(8.dp)
+                .background(Color(0xFF83C7EF))
+
                 .animateContentSize() // Smoothly animate the card's height change
         ) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
+            Row(
+                Modifier.padding(8.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 Column(
                     modifier = Modifier
                         .weight(6f)
@@ -259,10 +261,11 @@ fun ActivityListItem(activity: Activity) {
 
             }
             if (expanded) {
-                Row{
+                Row(Modifier
+                    .background(Color(0xFFD5E7F1))
+                    .padding(4.dp)) {
                     Column(
                         modifier = Modifier
-                            .background(Color(0xFF97CCE7))
                             .weight(1f)
                     ) {
                         Text("Duration : " + formatSeconds(activity.duration.toLong()))
@@ -271,7 +274,6 @@ fun ActivityListItem(activity: Activity) {
                     }
                     Column(
                         modifier = Modifier
-                            .background(Color(0xFFA2EAE4))
                             .weight(1f)
                     ) {
                         Text("Rate : ${activity.rate}")
@@ -286,7 +288,6 @@ fun ActivityListItem(activity: Activity) {
         }
     }
 }
-
 
 
 /*
