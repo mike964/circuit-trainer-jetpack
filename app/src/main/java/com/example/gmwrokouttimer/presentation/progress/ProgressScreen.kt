@@ -207,15 +207,18 @@ fun ProgressScreen(appVm: AppViewModel, navController: NavController, noteVm: No
         Spacer(modifier = Modifier.height(16.dp))
         Text("Latest activity")
         LazyColumn {
-            items(activities, key = { it.id }) {
-                ActivityListItem(it)
+            items(activities, key = { it.id }) { it ->
+                ActivityListItem(
+                    it,
+                    onDelete = { noteVm.deleteActivity(it) }
+                )
             }
         }
     }
 }
 
 @Composable
-fun ActivityListItem(activity: Activity) {
+fun ActivityListItem(activity: Activity, onDelete: (Activity) -> Unit ) {
     var expanded by remember { mutableStateOf(false) }
     Card(
         modifier = Modifier
@@ -270,14 +273,19 @@ fun ActivityListItem(activity: Activity) {
                     ) {
                         Text("Duration : " + formatSeconds(activity.duration.toLong()))
                         Text("Calories : ${activity.calories}")
-                        Text("Rate : ${activity.rate}")
                     }
                     Column(
                         modifier = Modifier
                             .weight(1f)
                     ) {
-                        Text("Rate : ${activity.rate}")
                         Text("Location : ${activity.location}")
+                        Text(
+                            text = "Delete X",
+                            color = Color.Red,
+                            modifier = Modifier.clickable {
+                                onDelete(activity)
+                            }
+                        )
                     }
                 }
 

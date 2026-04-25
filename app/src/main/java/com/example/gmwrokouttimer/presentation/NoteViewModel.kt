@@ -54,17 +54,24 @@ class NoteViewModel(private val repository: ActivityRepository) : ViewModel() {
         }
     }
 
-//
-//    fun deleteNote(note: Note) {
-//        viewModelScope.launch {
-//            repository.delete(note)
-//        }
-//    }
+    fun deleteActivity(activity: Activity) {
+        viewModelScope.launch {
+            repository.delete(activity)
+        }
+    }
+
+    /*
 // Update operation
+fun deleteNote(note: Note) {
+    viewModelScope.launch {
+        repository.delete(note)
+    }
+}
 //    fun updateNote(note: Note) = viewModelScope.launch {
 //        repository.update(note)
 //    }
 }
+*/
 // # You don't have to use view model factory if you use hilt di
 //class NoteViewModelFactory(private val repository: NoteRepository) : ViewModelProvider.Factory {
 //    override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -72,8 +79,10 @@ class NoteViewModel(private val repository: ActivityRepository) : ViewModel() {
 //    }
 //}
 
-class NoteViewModelFactory(private val repository: ActivityRepository) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return NoteViewModel(repository) as T
+    class NoteViewModelFactory(private val repository: ActivityRepository) :
+        ViewModelProvider.Factory {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            return NoteViewModel(repository) as T
+        }
     }
 }

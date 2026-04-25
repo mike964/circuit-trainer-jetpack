@@ -10,7 +10,6 @@ import com.example.gmwrokouttimer.database.AppDatabase
 import com.example.gmwrokouttimer.presentation.AppViewModel
 import com.example.gmwrokouttimer.presentation.CountdownViewModel
 import com.example.gmwrokouttimer.presentation.NoteViewModel
-import com.example.gmwrokouttimer.presentation.NoteViewModelFactory
 import com.example.gmwrokouttimer.presentation.NavigationBar
 import com.example.gmwrokouttimer.repository.ActivityRepository
 import com.example.gmwrokouttimer.ui.theme.GMWrokoutTimerTheme
@@ -23,7 +22,7 @@ class MainActivity : ComponentActivity() {
         val database = AppDatabase.Companion.getDatabase(applicationContext)
 //        val repository = NoteRepository(database.noteDao())
         val repository = ActivityRepository(database.activityDao(),)
-        val noteViewModelFactory = NoteViewModelFactory(repository)
+        val noteViewModelFactory = NoteViewModel.NoteViewModelFactory(repository)
 
  // # Delete all database tables
 //        applicationContext.deleteDatabase("note_database")
