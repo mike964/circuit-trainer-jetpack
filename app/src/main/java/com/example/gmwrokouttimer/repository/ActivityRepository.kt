@@ -7,6 +7,9 @@ import kotlinx.coroutines.flow.Flow
 class ActivityRepository(private val activityDao: ActivityDao) {
     val allActivities: Flow<List<Activity>> = activityDao.getAllActivities()
 
+//    val allTransactions: Flow<List<TransactionEntity>> = transactionDao.getAllTransactions()
+
+
 //    val activitiesInTimePeriod: Flow<List<Activity>> = activityDao.getActivitiesInTimePeriod()
 
 //    fun getNotesInPeriod(start: Long, end: Long): Flow<List<Activity>> {
@@ -24,4 +27,6 @@ class ActivityRepository(private val activityDao: ActivityDao) {
     suspend fun delete(activity: Activity) {
         activityDao.deleteActivity(activity)
     }
+
+
 }

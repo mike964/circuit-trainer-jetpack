@@ -86,5 +86,13 @@ dependencies {
     // # Navigation
     implementation(libs.androidx.navigation.compose)
 //    implementation("org.jetbrains.kotlinx-serialization:kotlinx-serialization-json:1.6.3")
+    // # Room database backup
+//    implementation("com.github.dessalines:room-db-export-import:VERSION")
+//    implementation("net.lingala.zip4j:zip4j:2.11.5")
+    implementation("com.opencsv:opencsv:5.12.0")
+    // Exclude commons-logging if it causes build conflicts
+    configurations.all {
+        exclude(module = "commons-logging")
+    }
 }
 

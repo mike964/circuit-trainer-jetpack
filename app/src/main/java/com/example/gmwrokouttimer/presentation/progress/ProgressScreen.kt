@@ -234,7 +234,7 @@ fun ActivityListItem(activity: Activity, onDelete: (Activity) -> Unit ) {
     ) {
         Column(
             modifier = Modifier
-                .background(Color(0xFF83C7EF))
+                .background(Color(0xFFA1D3F1))
 
                 .animateContentSize() // Smoothly animate the card's height change
         ) {
@@ -265,7 +265,7 @@ fun ActivityListItem(activity: Activity, onDelete: (Activity) -> Unit ) {
             }
             if (expanded) {
                 Row(Modifier
-                    .background(Color(0xFFD5E7F1))
+                    .background(Color(0xFFEBF0F3))
                     .padding(4.dp)) {
                     Column(
                         modifier = Modifier

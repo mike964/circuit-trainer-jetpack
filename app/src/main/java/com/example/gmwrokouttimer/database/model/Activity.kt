@@ -2,6 +2,7 @@ package com.example.gmwrokouttimer.database.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.example.gmwrokouttimer.presentation.ActivityCSV
 
 @Entity(tableName = "activities")
 data class Activity (
@@ -18,4 +19,17 @@ data class Activity (
     val workoutPresetId: Int?,
     val note: String,
     val imageId: Int?
-)
+) {
+    fun toCSV(): ActivityCSV {
+        return ActivityCSV(
+            id = id,
+            title = title,
+            note = note,
+            dateTime = dateTime,
+            duration = duration,
+            calories = calories,
+            rate = rate,
+            workoutPresetId = workoutPresetId ?: 0
+        )
+    }
+}

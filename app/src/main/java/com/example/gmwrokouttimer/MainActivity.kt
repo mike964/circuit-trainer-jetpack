@@ -19,12 +19,14 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //
-        val database = AppDatabase.Companion.getDatabase(applicationContext)
+        val ctx = applicationContext
+        val database = AppDatabase.Companion.getDatabase(ctx)
 //        val repository = NoteRepository(database.noteDao())
         val repository = ActivityRepository(database.activityDao(),)
         val noteViewModelFactory = NoteViewModel.NoteViewModelFactory(repository)
 
- // # Delete all database tables
+
+        // # Delete all database tables
 //        applicationContext.deleteDatabase("note_database")
 
         enableEdgeToEdge()
@@ -38,7 +40,9 @@ class MainActivity : ComponentActivity() {
 //                    MainScreen(viewModel = appViewModel)
 //                    NoteScreen(noteViewModel)
                     NavigationBar(appViewModel, noteViewModel, timerViewModel)
+
                 }
         }
     }
 }
+

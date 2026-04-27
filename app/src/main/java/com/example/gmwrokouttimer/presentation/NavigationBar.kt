@@ -110,7 +110,7 @@ fun NavigationBar(
                 )
             }
             composable(Screen.Settings.route) {
-                SettingsScreen( timerVm = timerViewModel, navController = navController)
+                SettingsScreen( timerVm = timerViewModel,  noteVm = noteViewModel, navController = navController)
             }
         }
     }

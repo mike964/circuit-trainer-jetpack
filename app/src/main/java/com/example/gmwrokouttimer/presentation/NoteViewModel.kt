@@ -20,6 +20,7 @@ class NoteViewModel(private val repository: ActivityRepository) : ViewModel() {
     //        .map { it.sortedByDescending { todo -> todo.id   }  }
     //        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
+
     // Get activities in time range
     // Get this month all activities by default
 //    val startDateTime = "2025-03-21T12:27:35.124365453"
@@ -41,6 +42,9 @@ class NoteViewModel(private val repository: ActivityRepository) : ViewModel() {
             started = SharingStarted.WhileSubscribed(5000),
             initialValue = emptyList()
         )
+
+    val getAllActivities = repository.allActivities
+
 
 //    fun addNote(title: String, content: String) {
 //        viewModelScope.launch {

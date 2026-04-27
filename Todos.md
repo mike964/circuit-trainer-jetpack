@@ -45,6 +45,8 @@ Created on 07/16/2025
 - [x] Save activity manaully to room in progress screen 4/22/2026  
 - [x] Settings screen - Add contdown veiwmodel 
 - [x] Activity list item expandable to show full details  4/24/2026  
+- [x] Export & import to CSV files instead of backup  9:13 PM 4/27/2026
+- [x] This seems doable. Done  9:13 PM 4/27/2026 
 
 
 ✅ Show exercises with gif image   
