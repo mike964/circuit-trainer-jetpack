@@ -45,8 +45,10 @@ Created on 07/16/2025
 - [x] Save activity manaully to room in progress screen 4/22/2026  
 - [x] Settings screen - Add contdown veiwmodel 
 - [x] Activity list item expandable to show full details  4/24/2026  
-- [x] Export & import to CSV files instead of backup  9:13 PM 4/27/2026
+- [x] Export to CSV files instead of backup  9:13 PM 4/27/2026
 - [x] This seems doable. Done  9:13 PM 4/27/2026 
+- [x] Import from CSV file into room db  10:05 PM 4/28/2026
+- [ ] Push first version to Google play store 
 
 
 ✅ Show exercises with gif image   
@@ -54,15 +56,16 @@ Created on 07/16/2025
 ✅ Active days in a month table 
 ✅ Change to previous/next month with click  
 ✅ If more than one workout in a day, make it darker color in calendar
-Add new activity with describtion and type in progress screen. 
-For example, Cycling, Jump rope, Running 2 miles or whatever. 
+✅ Add new activity with describtion and type in progress screen. For example, Cycling, Jump rope, Running 2 miles or whatever. 
 With duration n date 
-delete saved activity in db
+✅ delete saved activity in db
+- Workout preset crud - build your own favorite workout plans n backup them. Or send to a friend. 
+
 
 - Fix Plan screen
 - Make acticity items expandable
 - Export room data to file 
-- Push to Google play store 
+
 
 
 # Later

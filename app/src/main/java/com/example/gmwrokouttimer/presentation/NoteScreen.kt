@@ -120,12 +120,7 @@ fun NoteScreen(appVm: AppViewModel, noteVm: NoteViewModel, navController: NavHos
     }
 }
 
-@Composable
-fun NoteItem(note: Note, onDelete: (Note) -> Unit) {
-    // Design your individual note item UI here (e.g., Card, Text fields, delete button)
-    Text(text = note.title)
-    // ...
-}
+
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable

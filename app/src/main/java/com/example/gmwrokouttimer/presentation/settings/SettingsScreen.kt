@@ -43,17 +43,17 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.time.Instant
 import android.net.Uri
+import androidx.compose.material3.ButtonDefaults
 
 @Composable
-fun SettingsScreen(timerVm: CountdownViewModel, navController: NavController, noteVm: NoteViewModel) {
+fun SettingsScreen(
+    timerVm: CountdownViewModel,
+    navController: NavController,
+    noteVm: NoteViewModel,
+) {
     val timerState by timerVm.uiState.collectAsState()
     val totalTimeLeft by timerVm.totalTimeLeft.collectAsState()
     val activities by noteVm.activities.collectAsStateWithLifecycle()
-
-    val activites2 = listOf<Activity>(
-        Activity(title = "title 1", rate = 1, dateTime = "2026-04-12T12:27:35.124365453", duration = 1, calories = 1, location = null, city = "city1", country = "country1", workoutPresetId = 1, note = "note1", imageId = 1),
-        Activity(title = "title 2", rate = 1, dateTime = "2026-04-13T12:27:35.124365453", duration = 1, calories = 1, location = null, city = "city1", country = "country1", workoutPresetId = 1, note = "note1", imageId = 1),
-    )
 
 
     val context = LocalContext.current
@@ -144,63 +144,52 @@ fun SettingsScreen(timerVm: CountdownViewModel, navController: NavController, no
             Text("Backup your data - export to CSV")
             Text("Import data - import from CSV")
 
-//            FileCopyExample()
-
-            Button( onClick = {
-                noteVm.insertActivities(activites2)
-            }) {
-                Text("Import activities")
-            }
-
-
+            // ======================================
+            // # Export activities to CSV file
+            // ======================================
             val launcher = rememberLauncherForActivityResult(
                 contract = ActivityResultContracts.CreateDocument("text/csv")
             ) { uri ->
-                uri?.let { exportToCsv(context, it, activities.map{ it.toCSV() }) }
+                uri?.let { exportToCsv(context, it, activities.map { it.toCSV() }) }
             }
 
             Button(onClick = {
                 val fileName = "gm-trainer-activities-${Instant.now().epochSecond}"
-                val data = activities.map{ it.toCSV() }
+                val data = activities.map { it.toCSV() }
                 Log.d("xx", data.toString())
                 launcher.launch("$fileName.csv")
             }) {
-                Text("Export Room DB to CSV")
+                Text("Export data to CSV")
             }
 
-
-            // =================================
-            // # Import many activities from CSV
-            // =================================
+            // ======================================
+            // # Import many activities from CSV file
+            // ======================================
             val launcher3 = rememberLauncherForActivityResult(
                 contract = ActivityResultContracts.OpenDocument(),
-                onResult = { uri ->
-                    uri?.let { importFromCsv(context, it, noteVm) }
-                        ?: "Failed to read file"
+                onResult = { uri: Uri? ->
+                    uri?.let {
+                        importFromCsv(context, it, noteVm)
+                    } ?: "Failed to read file"
                 }
             )
 
-            Button(onClick = { launcher3.launch(arrayOf("text/csv")) }) {
-                Text("Import from CSV")
+            Button(
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.Green, // Background color
+                    contentColor = Color.White  // Text/Icon color
+                ),
+                onClick = {
+                launcher3.launch(
+                    arrayOf(
+                        "text/comma-separated-values",
+                        "text/csv"
+                    )
+                )
+            }) {
+                Text("Import from CSV file")
             }
 
-            var textContent by remember { mutableStateOf("No file selected") }
-
-            val launcher4 = rememberLauncherForActivityResult(
-                contract = ActivityResultContracts.OpenDocument()
-            ) { uri: Uri? ->
-                uri?.let {
-                    // Read the content of the file
-                    textContent = context.contentResolver.openInputStream(it)?.use { inputStream ->
-                        inputStream.bufferedReader().readText()
-                    } ?: "Failed to read file"
-                }
-            }
-
-            Button(onClick = { launcher4.launch(arrayOf("text/plain")) }) {
-                Text("Open Text Document")
-            }
-            Text(textContent)
 
 
             /* TEST
@@ -217,7 +206,6 @@ fun SettingsScreen(timerVm: CountdownViewModel, navController: NavController, no
             Button(onClick = { launcher2.launch(fileName) }) {
                 Text("Save to Documents")
             }
-
              */
         }
     }
