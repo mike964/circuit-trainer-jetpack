@@ -18,7 +18,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -34,10 +37,12 @@ import com.example.gmwrokouttimer.presentation.CountdownViewModel
 import com.example.gmwrokouttimer.presentation.HorizontalNumberPicker
 import com.example.gmwrokouttimer.presentation.NoteViewModel
 import com.example.gmwrokouttimer.presentation.exportToCsv
+import com.example.gmwrokouttimer.presentation.importFromCsv
 import com.example.gmwrokouttimer.utils.formatMilliseconds
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.time.Instant
+import android.net.Uri
 
 @Composable
 fun SettingsScreen(timerVm: CountdownViewModel, navController: NavController, noteVm: NoteViewModel) {
@@ -142,7 +147,7 @@ fun SettingsScreen(timerVm: CountdownViewModel, navController: NavController, no
 //            FileCopyExample()
 
             Button( onClick = {
-                noteVm.insertManyActivities(activites2)
+                noteVm.insertActivities(activites2)
             }) {
                 Text("Import activities")
             }
@@ -163,20 +168,39 @@ fun SettingsScreen(timerVm: CountdownViewModel, navController: NavController, no
                 Text("Export Room DB to CSV")
             }
 
-            /*
-            val launcher = rememberLauncherForActivityResult(
+
+            // =================================
+            // # Import many activities from CSV
+            // =================================
+            val launcher3 = rememberLauncherForActivityResult(
                 contract = ActivityResultContracts.OpenDocument(),
                 onResult = { uri ->
-                    uri?.let { importCsv(context, it, viewModel) }
+                    uri?.let { importFromCsv(context, it, noteVm) }
+                        ?: "Failed to read file"
                 }
             )
 
-            Button(onClick = { launcher.launch(arrayOf("text/csv")) }) {
-                Text("Import CSV")
+            Button(onClick = { launcher3.launch(arrayOf("text/csv")) }) {
+                Text("Import from CSV")
             }
 
-             */
+            var textContent by remember { mutableStateOf("No file selected") }
 
+            val launcher4 = rememberLauncherForActivityResult(
+                contract = ActivityResultContracts.OpenDocument()
+            ) { uri: Uri? ->
+                uri?.let {
+                    // Read the content of the file
+                    textContent = context.contentResolver.openInputStream(it)?.use { inputStream ->
+                        inputStream.bufferedReader().readText()
+                    } ?: "Failed to read file"
+                }
+            }
+
+            Button(onClick = { launcher4.launch(arrayOf("text/plain")) }) {
+                Text("Open Text Document")
+            }
+            Text(textContent)
 
 
             /* TEST

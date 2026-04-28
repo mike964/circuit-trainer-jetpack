@@ -69,7 +69,7 @@ class NoteViewModel(private val repository: ActivityRepository) : ViewModel() {
 //            noteDao.insertNotes(notes)
 //        }
 //    }
-    fun insertManyActivities(activities: List<Activity>) {
+    fun insertActivities(activities: List<Activity>) {
         viewModelScope.launch {
             repository.insertMany(activities)
         }

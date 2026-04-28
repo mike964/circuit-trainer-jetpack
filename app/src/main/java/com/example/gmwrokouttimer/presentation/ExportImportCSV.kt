@@ -2,6 +2,8 @@ package com.example.gmwrokouttimer.presentation
 
 import android.content.Context
 import android.net.Uri
+import android.util.Log
+import com.example.gmwrokouttimer.database.model.Activity
 import com.opencsv.CSVWriter
 import com.opencsv.bean.CsvBindByName
 import java.io.BufferedWriter
@@ -70,17 +72,18 @@ fun exportToCsv(context: Context, uri : Uri, dataList: List<ActivityCSV>) {
     }
 }
 
-//private fun importCsv(context: Context, uri: Uri, viewModel: NoteViewModel) {
-//    context.contentResolver.openInputStream(uri)?.use { inputStream ->
-//        val reader = inputStream.bufferedReader()
-//        // Skip header and parse rows
-//        val activities = reader.lineSequence()
-//            .drop(1)
-//            .map { line ->
-//                val tokens = line.split(",")
-//                User(name = tokens[0], email = tokens[1])
-//            }.toList()
-//
+  fun importFromCsv(context: Context, uri: Uri, viewModel: NoteViewModel) {
+    context.contentResolver.openInputStream(uri)?.use { inputStream ->
+        val reader = inputStream.bufferedReader()
+        // Skip header and parse rows
+        val activities = reader.lineSequence()
+            .drop(1)
+            .map { line ->
+                val tokens = line.split(",")
+                Activity(title = tokens[0], note = tokens[1], dateTime = tokens[2], duration = tokens[3].toInt(), calories = tokens[4].toInt(), rate = tokens[5].toInt(), workoutPresetId = tokens[6].toInt(), imageId = null, city = "", country = "", location = null)
+            }.toList()
+
+        Log.d("xx", activities.toString())
 //        viewModel.insertActivities(activities)
-//    }
-//}
+    }
+}
