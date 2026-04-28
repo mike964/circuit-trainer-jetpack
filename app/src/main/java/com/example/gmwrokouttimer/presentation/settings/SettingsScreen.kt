@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
+import com.example.gmwrokouttimer.database.model.Activity
 import com.example.gmwrokouttimer.presentation.CountdownViewModel
 import com.example.gmwrokouttimer.presentation.HorizontalNumberPicker
 import com.example.gmwrokouttimer.presentation.NoteViewModel
@@ -36,12 +37,18 @@ import com.example.gmwrokouttimer.presentation.exportToCsv
 import com.example.gmwrokouttimer.utils.formatMilliseconds
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.time.Instant
 
 @Composable
 fun SettingsScreen(timerVm: CountdownViewModel, navController: NavController, noteVm: NoteViewModel) {
     val timerState by timerVm.uiState.collectAsState()
     val totalTimeLeft by timerVm.totalTimeLeft.collectAsState()
     val activities by noteVm.activities.collectAsStateWithLifecycle()
+
+    val activites2 = listOf<Activity>(
+        Activity(title = "title 1", rate = 1, dateTime = "2026-04-12T12:27:35.124365453", duration = 1, calories = 1, location = null, city = "city1", country = "country1", workoutPresetId = 1, note = "note1", imageId = 1),
+        Activity(title = "title 2", rate = 1, dateTime = "2026-04-13T12:27:35.124365453", duration = 1, calories = 1, location = null, city = "city1", country = "country1", workoutPresetId = 1, note = "note1", imageId = 1),
+    )
 
 
     val context = LocalContext.current
@@ -64,8 +71,6 @@ fun SettingsScreen(timerVm: CountdownViewModel, navController: NavController, no
             }
         }
     }
-
-
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -136,6 +141,13 @@ fun SettingsScreen(timerVm: CountdownViewModel, navController: NavController, no
 
 //            FileCopyExample()
 
+            Button( onClick = {
+                noteVm.insertManyActivities(activites2)
+            }) {
+                Text("Import activities")
+            }
+
+
             val launcher = rememberLauncherForActivityResult(
                 contract = ActivityResultContracts.CreateDocument("text/csv")
             ) { uri ->
@@ -143,7 +155,7 @@ fun SettingsScreen(timerVm: CountdownViewModel, navController: NavController, no
             }
 
             Button(onClick = {
-                val fileName = "gmtrainer-activities-${System.currentTimeMillis()}"
+                val fileName = "gm-trainer-activities-${Instant.now().epochSecond}"
                 val data = activities.map{ it.toCSV() }
                 Log.d("xx", data.toString())
                 launcher.launch("$fileName.csv")
@@ -151,17 +163,23 @@ fun SettingsScreen(timerVm: CountdownViewModel, navController: NavController, no
                 Text("Export Room DB to CSV")
             }
 
+            /*
+            val launcher = rememberLauncherForActivityResult(
+                contract = ActivityResultContracts.OpenDocument(),
+                onResult = { uri ->
+                    uri?.let { importCsv(context, it, viewModel) }
+                }
+            )
 
-            val fileName = "my_file2.txt"
-            val fileContent = "Hello, Compose!"
-//            Button(onClick = {
-//                context.openFileOutput(fileName, Context.MODE_PRIVATE).use { output ->
-//                    output.write(fileContent.toByteArray())
-//                }
-//            }) {
-//                Text("Save File")
-//            }
+            Button(onClick = { launcher.launch(arrayOf("text/csv")) }) {
+                Text("Import CSV")
+            }
 
+             */
+
+
+
+            /* TEST
             val launcher2 = rememberLauncherForActivityResult(
                 contract = ActivityResultContracts.CreateDocument("text/plain")
             ) { uri ->
@@ -175,6 +193,8 @@ fun SettingsScreen(timerVm: CountdownViewModel, navController: NavController, no
             Button(onClick = { launcher2.launch(fileName) }) {
                 Text("Save to Documents")
             }
+
+             */
         }
     }
 }

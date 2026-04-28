@@ -27,6 +27,8 @@ class ActivityRepository(private val activityDao: ActivityDao) {
     suspend fun delete(activity: Activity) {
         activityDao.deleteActivity(activity)
     }
+//    suspend fun addNotes(notes: List<Note>) = noteDao.insertMany(notes)
+    suspend fun insertMany(activities: List<Activity>)  =  activityDao.insertActivities(activities)
 
 
 }

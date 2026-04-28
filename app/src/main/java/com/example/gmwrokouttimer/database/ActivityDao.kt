@@ -2,6 +2,8 @@ package com.example.gmwrokouttimer.database
 
 import androidx.room.Dao
 import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Upsert
 import com.example.gmwrokouttimer.database.model.Activity
@@ -18,6 +20,11 @@ interface ActivityDao {
 
     @Upsert // Handles both insert and update
     suspend fun upsertActivity(activity: Activity)
+
+//    # Insert multiple activity objects
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertActivities(activities: List<Activity> )
+
 
     @Delete
     suspend fun deleteActivity(activity: Activity)

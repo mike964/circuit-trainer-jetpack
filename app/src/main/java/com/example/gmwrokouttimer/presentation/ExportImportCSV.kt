@@ -2,13 +2,9 @@ package com.example.gmwrokouttimer.presentation
 
 import android.content.Context
 import android.net.Uri
-import android.os.Environment
 import com.opencsv.CSVWriter
 import com.opencsv.bean.CsvBindByName
-import com.opencsv.bean.StatefulBeanToCsvBuilder
 import java.io.BufferedWriter
-import java.io.File
-import java.io.FileWriter
 import java.io.OutputStreamWriter
 
 //data class TransactionCSV(
@@ -73,3 +69,18 @@ fun exportToCsv(context: Context, uri : Uri, dataList: List<ActivityCSV>) {
         e.printStackTrace()
     }
 }
+
+//private fun importCsv(context: Context, uri: Uri, viewModel: NoteViewModel) {
+//    context.contentResolver.openInputStream(uri)?.use { inputStream ->
+//        val reader = inputStream.bufferedReader()
+//        // Skip header and parse rows
+//        val activities = reader.lineSequence()
+//            .drop(1)
+//            .map { line ->
+//                val tokens = line.split(",")
+//                User(name = tokens[0], email = tokens[1])
+//            }.toList()
+//
+//        viewModel.insertActivities(activities)
+//    }
+//}
