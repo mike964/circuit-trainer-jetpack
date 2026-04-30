@@ -2,17 +2,9 @@
 
 > A brief, one-sentence description of what this project does and why it exists.
 
-## 📌 Table of Contents
-
-* [Features](https://www.google.com/search?q=%23-features)
-* [Tech Stack](https://www.google.com/search?q=%23-tech-stack)
-* [Getting Started](https://www.google.com/search?q=%23-getting-started)
-* [Usage](https://www.google.com/search?q=%23-usage)
-* [Roadmap](https://www.google.com/search?q=%23-roadmap)
-* [Contributing](https://www.google.com/search?q=%23-contributing)
-* [License](https://www.google.com/search?q=%23-license)
-
----
+## 📌 Screenshots 
+<img src="screenshots/Screenshot%202026-04-30%20210936.png" alt="Alt text" width="900">
+<img src="screenshots/Screenshot%202026-04-30%20211021.png" alt="Alt text" width="900">
 
 ## ✨ Features
 
